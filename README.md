@@ -28,5 +28,4 @@ Framework: Express
 
     $ npm install
     $ node app.js
-    
-Then visit http://localhost:8000/ in browser
+    $ npm start
