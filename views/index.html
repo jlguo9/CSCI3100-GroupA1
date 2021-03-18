@@ -150,12 +150,46 @@
                     <p>Total price: {{ result }} HKD.</p>
                 </div>
                 <input type="button" class="textButton" value="Remove All" @click="removeCart()">
+                <input type="button" class="textButton" value="Order" @click="addToRecord()">
             </div>
 
             <div class="search">
                 <h1> Search Here! </h1>
                 Canteen Name:
                 <input type="text" class="searchingTextBox" placeholder="Input Search Criteria">
+            </div>
+            
+            <div class = "records">
+                <h1>Your Order Records:</h1>
+                <div>
+                    <table class="tb">
+                        <tr>
+                            <th>Date</th>
+                            <th>Canteen Name</th>
+                            <th>Dish Name</th>
+                            <th>Dish Price</th>
+                            <th>Quantity</th>
+                            <th>Subtotal</th>    
+                            <th>Action</th>
+                        </tr>
+                        <tr v-for="(value, index) in recordList">
+                            <td>{{ value.time }}</td>
+                            <td>{{ value.canName}}</td>
+                            <td>{{ value.dishName}}</td>
+                            <td>{{ value.dishPrice}}</td>
+                            <td>{{ value.quantity}}</td>
+                            <td>{{ value.subtotal}}</td>
+
+                            <td>
+                                <input type="button" class="trashButton" @click.prevent="removeFromRecordList(index)">
+                            </td>
+                        </tr>
+                        <tr v-show="recordList.length ===0">
+                            <td colspan="7">Your record List is empty.</td>
+                        </tr>
+                    </table>
+                </div>
+                <input type="button" class="textButton" value="Remove All" @click="removeRecord()">
             </div>
 
         </div>
@@ -185,6 +219,7 @@
 
         var cartList = [];
         var total = 0;
+        var recordList = []
 
         var vm = new Vue({
             el: "#menu",
@@ -237,6 +272,7 @@
                 // dishPriceList:dishPriceList,
                 list: list,
                 cartList: cartList,
+                recordList:recordList,
                 newCanName: "",
                 newDishName: "",
                 newDishPrice: "",
@@ -286,6 +322,21 @@
                     this.total = 0;
                     this.result = 0;
                 },
+                addToRecord(){
+                    for(i= 0; i < this.cartList.length; i++){
+                        this.recordList.unshift({
+                            time: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
+                            canName: this.cartList[i].canName,
+                            dishName: this.cartList[i].dishName,
+                            dishPrice: this.cartList[i].dishPrice,
+                            subtotal:this.cartList[i].dishPrice * this.cartList[i].quantity,
+                            quantity: this.cartList[i].quantity
+                        })
+                    }
+                    this.cartList = [];
+                    this.total = 0;
+                    this.result = 0;
+                },
                 calculateTotal() {
                     this.total += parseFloat(this.cartList[0].dishPrice) * parseInt(this.cartList[0].quantity);
                     this.result = parseFloat(this.total).toFixed(2);
@@ -297,6 +348,12 @@
                     if (this.cartList.length == 0) {
                         this.result = 0;
                     }
+                },
+                removeFromRecordList(index) {
+                    this.recordList.splice(index, 1);
+                },
+                removeRecord(){
+                    this.recordList = []
                 },
                 subQuant(index) {
                     if (this.cartList[index].quantity > 1) {
