@@ -9,9 +9,9 @@ var http = require("http");
 var app = express();
 const port = 8000;
 
-var MongoClient = require('mongodb').MongoClient;
-const dburl = "mongodb://localhost:27017/foodification";
 var mongoose = require('mongoose');
+const db_url = "mongodb://localhost:27017/foodification";
+mongoose.connect(db_url,{useUnifiedTopology:true, useNewUrlParser:true});
 
 // view engine setup
 var ejs = require('ejs');
