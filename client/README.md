@@ -2,6 +2,8 @@
 
 > A Vue.js project
 
+> TEMPORARILY, Homepage <static page> is stored inside folder "homepage".
+
 ## Build Setup
 
 ``` bash
