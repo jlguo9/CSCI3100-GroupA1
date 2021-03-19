@@ -16,7 +16,9 @@ Developed in HTML, CSS, JavaScript
 
 Framework: Vue.js
 
-> Current Progres (Up to Mar.19, 2021): vue-cli started; seleted functions of the homepage (static page) built and stored in the folder "/client/homepage"
+> Current Progres (Up to Mar.19, 2021): 
+> vue-cli started; 
+> seleted functions of the homepage (static page) built and stored in the folder "/client/homepage"
 
 ## Backend
 
