@@ -20,7 +20,7 @@ Framework: Vue.js
 
 > @vue-cli started; 
 
-> seleted functions of the homepage (static page) built using Vue and stored in the folder "/client/homepage"
+> Seleted core functions of the homepage (static page) built using Vue and stored in the folder "/client/homepage"
 
 ## Backend
 
