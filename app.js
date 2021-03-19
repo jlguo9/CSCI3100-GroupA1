@@ -7,7 +7,6 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var http = require("http");
 var app = express();
-const port = 8000;
 
 var mongoose = require('mongoose');
 const db_url = "mongodb://localhost:27017/foodification";
@@ -43,7 +42,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-http.createServer(app).listen(port);
 
 module.exports = app;
