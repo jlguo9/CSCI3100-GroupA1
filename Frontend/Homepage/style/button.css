@@ -1,0 +1,94 @@
+.textButton{
+    background-color: #750f6d; /* Green */
+    border: 2px solid white;
+    border-radius: 5px;
+    color: white;
+    margin: 20px 30px 10px 30px;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    font-family: 'Oswald', sans-serif; /* this should be the rest of the output you got from Google fonts */
+  }
+  .textButton:hover {
+    background-color: white;
+    border: 2px solid #750f6d;
+    color: #750f6d;
+}
+
+.operandButton{
+  width: 30px;
+  height: 30px;
+  background-color: #750f6d; /* Green */
+  border: 2px solid black;
+  border-radius: 5px;
+  color: white;
+  padding: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  line-height: 15px;
+}
+.operandButton:hover{
+  background-color: white;
+  border: 2px solid #750f6d;
+  color: #750f6d;
+}
+
+.trashButton{
+  width: 30px;
+  height: 30px;
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 5px 13px;
+  display: inline-block;
+  font-size: 16px;
+  background-image: url('img/trash-icon.webp');
+  background-size: 24px;
+  background-position: 1px 0.5px;
+  background-repeat: no-repeat;
+}
+.trashButton:hover{
+  background-color: #750f6d;
+  border: 2px solid white;
+  color: #750f6d;
+}
+
+.editButton{
+  width: 30px;
+  height: 30px;
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 5px 13px;
+  display: inline-block;
+  background-image: url('img/pencil-icon.png');
+  background-size: 38px;
+  background-position: -5px -7px;
+  background-repeat: no-repeat;
+}
+.editButton:hover{
+  background-color: #750f6d;
+  border: 2px solid white;
+  color: #750f6d;
+}
+
+.cartButton{
+  width: 30px;
+  height: 30px;
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 5px 13px;
+  display: inline-block;
+  font-size: 16px;
+  background-image: url('img/cart-icon.webp');
+  background-size: 25px;
+  background-position: 0px 1px;
+  background-repeat: no-repeat;
+}
+.cartButton:hover{
+  background-color: #750f6d;
+  border: 2px solid white;
+  color: #750f6d;
+}

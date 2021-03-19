@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="./style/style.css" rel="stylesheet">
+    <link href="./style/button.css" rel="stylesheet">
     <link href="./style/box.css" rel="stylesheet">
     <link href="./style/img.css" rel="stylesheet">
 
@@ -132,11 +133,11 @@
                             <td>{{ value.dishName}}</td>
                             <td>{{ value.dishPrice}}</td>
                             <td>
-                                <input type="button" class="smallButton" value="-" @click="subQuant(index)">
-                                <!-- <input type="button" class="smallButton" value="- @click="subQuant(index)"> -->
+                                <input type="button" class="operandButton" value="-" @click="subQuant(index)">
+                                <!-- <input type="button" class="operandButton" value="- @click="subQuant(index)"> -->
                                 &nbsp;{{ value.quantity}}&nbsp;
-                                <!-- <input type="button" class="smallButton" value="+ @click="addQuant(index)"> -->
-                                <input type="button" class="smallButton" value="+" @click="addQuant(index)">
+                                <!-- <input type="button" class="operandButton" value="+ @click="addQuant(index)"> -->
+                                <input type="button" class="operandButton" value="+" @click="addQuant(index)">
 
                             <td>
                                 <input type="button" class="trashButton" @click.prevent="removeFromList(index)">
