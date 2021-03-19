@@ -1,1 +1,1 @@
-index.js
+app.js
