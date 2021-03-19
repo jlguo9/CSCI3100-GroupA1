@@ -1,0 +1,8 @@
+    img {
+      display: block;
+      margin: auto auto;
+      border: 5px solid #750f6d;
+      border-radius: 10px;
+      background-color: white;
+      padding: 10px;
+    }
