@@ -37,4 +37,5 @@ Framework: Express
 > MongoDB connected (with Mongoose);
 
 > Paths(to static resources, models, controllers, etc.) setted;
-Router created (APIs need to be implemented later).
+
+> Router created (APIs need to be implemented later).
