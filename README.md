@@ -27,5 +27,5 @@ Framework: Express
 ## How to start
 
     $ npm install
-    $ node app.js
     $ npm start
+Then visit localhost:3000 to view
