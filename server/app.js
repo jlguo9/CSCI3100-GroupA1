@@ -3,8 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var router = require('./router');
+
 var http = require("http");
 var app = express();
 
@@ -12,20 +12,18 @@ var mongoose = require('mongoose');
 const db_url = "mongodb://localhost:27017/foodification";
 mongoose.connect(db_url,{useUnifiedTopology:true, useNewUrlParser:true});
 
-// view engine setup
-var ejs = require('ejs');
-app.set('views', path.join(__dirname, 'views'));
-app.engine('.html',ejs.__express);
-app.set('view engine', 'html');
-
+/*currently no use
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieParser());*/
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+var rootDir=path.resolve(__dirname);
+var projectDir=path.resolve(__dirname,'../','client');
+app.use(express.static(rootDir));
+app.use(express.static(projectDir));
+
+app.use('/api',router);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -40,7 +38,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.json({code:500,msg:"error"});
 });
 
 module.exports = app;
