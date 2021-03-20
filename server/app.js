@@ -53,6 +53,6 @@ db.once('open', function() {
 var models = path.join(__dirname,"models");
 fs.readdirSync(models)
     .filter(file => ~file.search(/^[^\.].*\.js$/))
-    .forEach(file => require(join(models, file)));
+    .forEach(file => require(path.join(models, file)));
 
 module.exports = app;
