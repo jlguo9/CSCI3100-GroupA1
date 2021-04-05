@@ -225,12 +225,28 @@
         </div>
 
         <div class="search">
-          <h1>Search Here!</h1>
+          <h1>Search & Filter Menu Here!</h1>
           Canteen Name:
           <input
             type="text"
             class="searchingTextBox"
-            placeholder="Input Search Criteria" v-model="searchVar"
+            placeholder="Input Search Criteria"
+            v-model="searchCanteen"
+          />
+          <br />
+          Dish Name:
+          <input
+            type="text"
+            class="searchingTextBox"
+            placeholder="Input Search Criteria"
+            v-model="searchDish"
+          />
+          <br />
+          <input
+            type="button"
+            class="textButton"
+            value="Remove Filter Criteria"
+            @click="removeSearchFilter()"
           />
         </div>
 
@@ -372,13 +388,21 @@
           result: 0,
           operandButtonValid: [],
           operandButtonInvalid: [],
-          searchVar:'',
+          searchCanteen: "",
+          searchDish: "",
         },
         computed: {
           searchedList() {
-            return this.list.filter((item)=>{
-              return item.canName.toUpperCase().startsWith(this.searchVar.toUpperCase());
-            })
+            return this.list.filter((item) => {
+              return (
+                item.canName
+                  .toUpperCase()
+                  .startsWith(this.searchCanteen.toUpperCase()) &&
+                item.dishName
+                  .toUpperCase()
+                  .startsWith(this.searchDish.toUpperCase())
+              );
+            });
           },
         },
         methods: {
@@ -498,6 +522,10 @@
             this.cartList[index].quantity++;
             this.operandButtonValid[index] = true;
             this.operandButtonInvalid[index] = false;
+          },
+          removeSearchFilter(){
+            this.searchCanteen = "";
+            this.searchDish = "";
           },
           removeFromRecordList(index) {
             this.recordList.splice(index, 1);
