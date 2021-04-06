@@ -1,0 +1,34 @@
+{
+  "list": [
+    {
+      "canName": "Chung Chi College Student Canteen",
+      "dishName": "Siu Mei",
+      "dishPrice": "20.5",
+      "id": 1
+    },
+    {
+      "canName": "United College Student Canteen",
+      "dishName": "Three Dishes",
+      "dishPrice": "27.3",
+      "id": 2
+    },
+    {
+      "canName": "new Canteen revised",
+      "dishName": "new Dish revised",
+      "dishPrice": 1001,
+      "id": 3
+    },
+    {
+      "canName": "new Canteen",
+      "dishName": "new Dish",
+      "dishPrice": 200,
+      "id": 4
+    },
+    {
+      "canName": "new Canteen",
+      "dishName": "new Dish",
+      "dishPrice": 400,
+      "id": 5
+    }
+  ]
+}

@@ -114,6 +114,23 @@
       font-family: 'Oswald', cursive; /* this should be the rest of the output you got from Google fonts */
     }
     
+    .smallNumBox{
+      width: 80px;
+      height: 30px;
+      margin: 0px 10px;
+      background-color: white;
+      background-image: url('img/write-icon.png');
+      background-size: 30px;
+      background-position: 3px 2px;
+      background-repeat: no-repeat;
+      padding-left: 35px; 
+      border-radius: 5px;
+      border-color: #750f6d;
+      font-size: 15px;
+      color: #750f6d;
+      font-family: 'Oswald', sans-serif; /* this should be the rest of the output you got from Google fonts */
+    }
+
     .tb {
       border-collapse: collapse;
       width: 100%;
