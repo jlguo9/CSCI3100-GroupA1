@@ -16,6 +16,12 @@ Developed in HTML, CSS, JavaScript
 
 Framework: Vue.js
 
+> Current Progres (Up to Mar.19, 2021): 
+
+> @vue-cli started; 
+
+> Seleted core functions of the homepage (static page) built using Vue and stored in the folder "/client/homepage"
+
 ## Backend
 
 Developed in JavaScript with Node.js
@@ -23,3 +29,13 @@ Developed in JavaScript with Node.js
 Database: MongoDB
 
 Framework: Express
+
+> Current Progres (Up to Mar.19, 2021): 
+
+> Initialized backend with Express framework;
+
+> MongoDB connected (with Mongoose);
+
+> Paths(to static resources, models, controllers, etc.) setted;
+
+> Router created (APIs need to be implemented later).
