@@ -3,6 +3,9 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import axios from  'axios'
+
+Vue.prototype.axios = axios
 
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './assets/index.css'

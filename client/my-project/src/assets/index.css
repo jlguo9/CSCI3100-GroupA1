@@ -12,7 +12,7 @@ h1,
 h2,
 h3 {
     font-family: 'PT Serif', serif;
-  color: #01256e;
+  color: #750f6d;
 }
 
 p {
@@ -267,4 +267,10 @@ a.article:hover {
   #sidebarCollapse span {
     display: none;
   }
+}
+
+
+.btn-purple{
+  background-color: #750f6d;
+  color: white;
 }

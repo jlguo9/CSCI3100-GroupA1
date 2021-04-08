@@ -82,11 +82,11 @@
               <input type="button" class="cartButton" @click.prevent="addToCart(index,value.id)" />
             </td>
           </tr>
-          <tr v-show="list.length ===0">
+          <tr v-show="menuList.length ===0">
             <td colspan="6">No Dish Data</td>
           </tr>
         </table>
-        <input type="button" :disabled="list.length==0" class="textButton" value="Remove All" @click="removeMenu()" />
+        <input type="button" :disabled="menuList.length==0" class="textButton" value="Remove All" @click="removeMenu()" />
       </div>
 
       <div class="add">
@@ -329,7 +329,7 @@
           "Wu Yee Sun College Staff Dining Room",
           "Wu Yee Sun College Student Canteen",
         ],
-        list: [],
+        menuList: [],
         dishNameList: [],
         menuIDList: [],
         newCanName: "",
@@ -350,7 +350,7 @@
       },
       computed: {
         searchedList() {
-          return this.list.filter((item) => {
+          return this.menuList.filter((item) => {
             return (
               item.canName
                 .toUpperCase()
@@ -371,10 +371,10 @@
       },
       methods: {
         getMenu() {
-          axios.get("http://localhost:3000/list").then((res) => {
+          axios.get("http://localhost:3000/menuList").then((res) => {
             const { status, data } = res;
             if (status == 200) {
-              this.list = data;
+              this.menuList = data;
               this.menuIDList = data.map(e => e["id"]);
               this.dishNameList = [...new Set(data.map(e => e["dishName"]))];
             }
@@ -418,7 +418,7 @@
             console.log(this.menuIDList);
             for (var j = 0; j < this.menuIDList.length; j++) {
               var item = this.menuIDList[j]
-              axios.delete("http://localhost:3000/list/" + item).then((res) => {
+              axios.delete("http://localhost:3000/menuList/" + item).then((res) => {
                 const { status, data } = res;
                 if (status === 200) {
                   this.getMenu();
@@ -428,7 +428,7 @@
           }
         },
         addItem() {
-          axios.post("http://localhost:3000/list", {
+          axios.post("http://localhost:3000/menuList", {
             canName: this.newCanName,
             dishName: this.newDishName,
             dishPrice: this.newDishPrice,
@@ -444,7 +444,7 @@
         },
         deleteItem(id) {
           if (confirm("Are you sure?")) {
-            axios.delete("http://localhost:3000/list/" + id).then((res) => {
+            axios.delete("http://localhost:3000/menuList/" + id).then((res) => {
               const { status, data } = res;
               if (status === 200) {
                 this.getMenu();
@@ -469,7 +469,7 @@
             if (r3 === null) {
               r3 = this.searchedList[index].dishPrice;
             }
-            axios.put("http://localhost:3000/list/" + id, {
+            axios.put("http://localhost:3000/menuList/" + id, {
               canName: r1,
               dishName: r2,
               dishPrice: r3,
@@ -480,7 +480,7 @@
               }
             });
           }
-          this.dishNameList[index] = this.list[index].dishName;
+          // this.dishNameList[index] = this.menuList[index].dishName;
         },
         addToCart(index, id) {
           axios.post("http://localhost:3000/cart", {
