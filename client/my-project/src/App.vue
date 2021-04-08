@@ -9,7 +9,7 @@
     <div id="content">
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-          <button type="button" id="sidebarCollapse" class="btn btn-info">
+          <button type="button" id="sidebarCollapse" class="btn btn-purple">
             <i class="fas fa-align-left"></i>
             <span>Toggle Sidebar</span>
           </button>
@@ -44,13 +44,8 @@
         </div>
       </nav>
 
-      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        <!-- <canteenMenu id="canteenMenu"></canteenMenu> -->
-        <!-- <h1>You are using Foodification!</h1> -->
+      <div class="col-sm-9 col-sm-offset-3 col-md-12 col-md-offset-20 main">
         <router-view></router-view>
-
-
-      <!-- <intro id="intro"></intro> -->
       </div>
 
 
@@ -92,6 +87,6 @@ h1,
 h2,
 h3 {
     font-family: 'PT Serif', serif;
-  color: #01256e;
+  color: #750f6d;
 }
 </style>
