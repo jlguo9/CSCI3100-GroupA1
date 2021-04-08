@@ -1,6 +1,16 @@
 <template>
   <div>
-    <h1 class="sub-header">Your Shopping Cart</h1>
+    <h1 class="sub-header">
+      Your Shopping Cart
+      <span style="float: right">
+        <a class="btn btn-danger" href="/#/cart" @click="clearCart()"
+          >Remove All</a
+        >&nbsp;
+        <a class="btn btn-primary" href="/#" @click="transferToRecord()"
+          >Transfer All to Record</a
+        >
+      </span>
+    </h1>
     <br />
     <div class="table-responsive">
       <table class="table table-striped">
@@ -52,7 +62,6 @@
           </tr>
         </tbody>
       </table>
-      <a class="btn btn-danger" href="#" @click="clearCart">Remove All</a>
     </div>
   </div>
 </template>
@@ -62,7 +71,8 @@ export default {
   data() {
     return {
       cartList: [],
-      cartIDList:[],
+      cartQuantList: [],
+      cartIDList: [],
       total: 0,
     };
   },
@@ -81,18 +91,23 @@ export default {
           this.total = 0;
           for (var j = 0; j < this.cartQuantList.length; j++) {
             var item = this.cartQuantList[j];
-            if (parseInt(item) <= 1) {
-              this.operandButtonValid.push(false);
-              this.operandButtonInvalid.push(true);
-            } else {
-              this.operandButtonValid.push(true);
-              this.operandButtonInvalid.push(false);
-            }
+            // if (parseInt(item) <= 1) {
+            //   this.operandButtonValid.push(false);
+            //   this.operandButtonInvalid.push(true);
+            // } else {
+            //   this.operandButtonValid.push(true);
+            //   this.operandButtonInvalid.push(false);
+            // }
             this.total +=
               parseFloat(this.cartList[j].dishPrice) *
               parseInt(this.cartList[j].quantity);
           }
+          console.log("now is doing get-cart");
           console.log(this.total);
+          console.log(this.cartList);
+          console.log(this.cartIDList);
+          this.$forceUpdate();
+          console.log("refreshing is done");
         }
       });
     },
@@ -138,8 +153,8 @@ export default {
             this.getCart();
           }
         });
-      this.operandButtonValid[index] = true;
-      this.operandButtonInvalid[index] = false;
+      // this.operandButtonValid[index] = true;
+      // this.operandButtonInvalid[index] = false;
     },
     removeFromCart(index, id) {
       if (confirm("Are you sure?")) {
@@ -154,15 +169,67 @@ export default {
       }
     },
     clearCart() {
-      if (confirm("Are you sure?")) {
-        for (var j = 0; j < this.cartIDList.length; j++) {
-          var item = this.cartIDList[j];
-          this.axios.delete("http://localhost:3000/cart/" + item).then((res) => {
-            const { status, data } = res;
-            if (status === 200) {
-              this.getCart();
-            }
-          });
+      if (this.cartList.length === 0) {
+        window.alert("Your shopping cart is already empty.");
+      } else {
+        if (confirm("Are you sure?")) {
+          // console.log(this.menuIDList);
+          for (var j = 0; j < this.cartIDList.length; j++) {
+            var item = this.cartIDList[j];
+            this.axios
+              .delete("http://localhost:3000/cart/" + item)
+              .then((res) => {
+                const { status, data } = res;
+                this.getCart();
+              });
+          }
+        }
+      }
+    },
+    transferToRecord() {
+      if (this.cartIDList.length === 0) {
+        window.alert("Your shopping cart is already empty.");
+      } else {
+        if (confirm("Are you sure?")) {
+          var copyCartIDList = this.cartIDList;
+          for (var j = copyCartIDList.length - 1; j >= 0; j--) {
+            console.log("below is j");
+            console.log(j);
+            this.axios
+              .post("http://localhost:3000/record", {
+                time: new Date().toJSON().slice(0, 10).replace(/-/g, "/"),
+                canName: this.cartList[j].canName,
+                dishName: this.cartList[j].dishName,
+                dishPrice: this.cartList[j].dishPrice,
+                subtotal:
+                  this.cartList[j].dishPrice * this.cartList[j].quantity,
+                quantity: this.cartList[j].quantity,
+              })
+              .then((res) => {
+                console.log("post succeeds");
+                this.getCart();
+              })
+              .catch(function (error) {
+                console.log("post fails");
+                this.getCart();
+              });
+            var item = copyCartIDList[j];
+            console.log("below is id");
+            console.log(item);
+            console.log("now is deleting the above id");
+            this.axios
+              .delete("http://localhost:3000/cart/" + item)
+              .then((res) => {
+                console.log("delete succeeds");
+                this.getCart();
+              })
+              .catch(function (error) {
+                console.log("delete fails");
+                this.getCart();
+              });
+          }
+          this.getCart();
+          this.total = 0;
         }
       }
     },

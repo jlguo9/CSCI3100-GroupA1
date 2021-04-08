@@ -1,7 +1,15 @@
 <template>
   <div>
-    <h1 class="sub-header">Today's Menu</h1>
+    <h1 class="sub-header">
+      Today's Menu
+      <span style="float: right">
+        <a class="btn btn-danger" href="/#/canteenMenu" @click="clearMenu"
+          >Remove All</a
+        >
+      </span>
+    </h1>
     <br />
+
     <div class="table-responsive">
       <table class="table table-striped">
         <thead>
@@ -11,7 +19,7 @@
             <th>Canteen Name</th>
             <th>Dish Name</th>
             <th>Dish Price</th>
-            <th>Action</th>
+            <th>Action &nbsp; &nbsp;</th>
           </tr>
         </thead>
         <tbody>
@@ -22,7 +30,8 @@
             <td>{{ value.dishName }}</td>
             <td>{{ value.dishPrice }}</td>
             <td>
-              <a href="#"
+              <a
+                href="#"
                 class="btn btn-primary btn-sm"
                 @click.prevent="editItem(index, value.id)"
                 >Edit</a
@@ -36,18 +45,79 @@
               <a
                 class="btn btn-success btn-sm"
                 href="javascript:window.confirm('Are you sure?')"
-                @click="addToCart(index,id)"
+                @click="addToCart(index, id)"
                 >Add to My Cart</a
               >
             </td>
           </tr>
-            <tr v-show="menuList.length ===0">
+          <tr v-show="menuList.length === 0">
             <td colspan="6">No Dish Data Available.</td>
           </tr>
         </tbody>
       </table>
-      <a class="btn btn-danger" href="#" @click="clearMenu">Remove All</a>
     </div>
+
+    <div class="table-responsive" id="search">
+      <h2>
+        Search & Filter Menu Here!
+        <span style="float: right">
+          <a
+            class="btn btn-danger"
+            href="/#/canteenMenu"
+            @click="removeSearchFilter()"
+            >Remove Filter Criteria</a
+          >
+        </span>
+      </h2>
+      <br>
+      <table class="table table-striped">
+        <tbody>
+          <tr>
+            <td>Canteen Name Includes:</td>
+            <td>
+              <input
+                type="text"
+                class="searchingTextBox"
+                placeholder="Input Search Criteria"
+                v-model="searchCanteen"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Dish Name Includes:</td>
+            <td>
+               <input
+        type="text"
+        class="searchingTextBox"
+        placeholder="Input Search Criteria"
+        v-model="searchDish"
+      />
+            </td>
+          </tr>
+          <tr>
+            <td>Dish Price Range:</td>
+            <td>      <input
+        type="number"
+        class="smallNumBox"
+        step="0.5"
+        v-model="searchDishPriceMin"
+        placeholder="Input or Click"
+        min="0"
+      />
+      -
+      <input
+        type="number"
+        class="smallNumBox"
+        step="0.5"
+        v-model="searchDishPriceMax"
+        placeholder="Input or Click"
+        min="0"
+      /></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
 </template>
 
@@ -57,27 +127,28 @@ export default {
     return {
       menuList: [],
       menuIDList: [],
+      searchCanteen: "",
+      searchDish: "",
+      searchDishPriceMin: 0,
+      searchDishPriceMax: 1000,
     };
   },
   mounted() {
     this.getMenu();
   },
   computed: {
-        searchedList() {
-          // return this.menuList.filter((item) => {
-          //   return (
-          //     item.canName
-          //       .toUpperCase()
-          //       .includes(this.searchCanteen.toUpperCase()) &&
-          //     item.dishName
-          //       .toUpperCase()
-          //       .includes(this.searchDish.toUpperCase()) &&
-          //     item.dishPrice >= parseFloat(this.searchDishPriceMin) &&
-          //     item.dishPrice <= parseFloat(this.searchDishPriceMax)
-          //   );
-          // });
-          return this.menuList
-        },
+    searchedList() {
+      return this.menuList.filter((item) => {
+        return (
+          item.canName
+            .toUpperCase()
+            .includes(this.searchCanteen.toUpperCase()) &&
+          item.dishName.toUpperCase().includes(this.searchDish.toUpperCase()) &&
+          item.dishPrice >= parseFloat(this.searchDishPriceMin) &&
+          item.dishPrice <= parseFloat(this.searchDishPriceMax)
+        );
+      });
+    },
   },
   methods: {
     getMenu() {
@@ -155,20 +226,32 @@ export default {
           const { status, data } = res;
         });
     },
-      clearMenu() {
-          if (confirm("Are you sure?")) {
-            // console.log(this.menuIDList);
-            for (var j = 0; j < this.menuIDList.length; j++) {
-              var item = this.menuIDList[j]
-              this.axios.delete("http://localhost:3000/menuList/" + item).then((res) => {
+    clearMenu() {
+      if (this.menuIDList.length === 0) {
+        window.alert("Menu is already empty.");
+      } else {
+        if (confirm("Are you sure?")) {
+          // console.log(this.menuIDList);
+          for (var j = 0; j < this.menuIDList.length; j++) {
+            var item = this.menuIDList[j];
+            this.axios
+              .delete("http://localhost:3000/menuList/" + item)
+              .then((res) => {
                 const { status, data } = res;
                 if (status === 200) {
                   this.getMenu();
                 }
               });
-            }
           }
-        },
+        }
+      }
+    },
+    removeSearchFilter() {
+      this.searchCanteen = "";
+      this.searchDish = "";
+      this.searchDishPriceMin = 0;
+      this.searchDishPriceMax = 1000;
+    },
   },
 };
 </script>
