@@ -11,8 +11,8 @@
     <br />
 
     <div class="table-responsive">
-      <table class="table table-striped">
-        <thead>
+      <table class="table table-striped table-hover" style="text-align: center" id="mydatatable3">
+        <thead style="background-color: #dda300">
           <tr>
             <th>Index</th>
             <th>ID</th>
@@ -28,11 +28,12 @@
             <td>{{ value.id }}</td>
             <td>{{ value.canName }}</td>
             <td>{{ value.dishName }}</td>
-            <td>{{ value.dishPrice }}</td>
+            <td>{{ value.dishPrice | formatCurrency}}</td>
             <td>
+              <span> 
               <a
                 href="#"
-                class="btn btn-primary btn-sm"
+                class="btn btn-success btn-sm"
                 @click.prevent="editItem(index, value.id)"
                 >Edit</a
               >&nbsp;&nbsp;
@@ -43,19 +44,22 @@
                 >Delete</a
               >&nbsp;&nbsp;
               <a
-                class="btn btn-success btn-sm"
+                class="btn btn-purple btn-sm"
                 href="javascript:window.confirm('Are you sure?')"
                 @click="addToCart(index, id)"
                 >Add to My Cart</a
               >
+              </span>
             </td>
           </tr>
-          <tr v-show="menuList.length === 0">
+          <!-- <tr v-show="menuList.length === 0">
             <td colspan="6">No Dish Data Available.</td>
-          </tr>
+          </tr> -->
         </tbody>
       </table>
     </div>
+
+    <!-- <div class="line"></div>
 
     <div class="table-responsive" id="search">
       <h2>
@@ -69,7 +73,7 @@
           >
         </span>
       </h2>
-      <br>
+      <br />
       <table class="table table-striped">
         <tbody>
           <tr>
@@ -86,38 +90,40 @@
           <tr>
             <td>Dish Name Includes:</td>
             <td>
-               <input
-        type="text"
-        class="searchingTextBox"
-        placeholder="Input Search Criteria"
-        v-model="searchDish"
-      />
+              <input
+                type="text"
+                class="searchingTextBox"
+                placeholder="Input Search Criteria"
+                v-model="searchDish"
+              />
             </td>
           </tr>
           <tr>
             <td>Dish Price Range:</td>
-            <td>      <input
-        type="number"
-        class="smallNumBox"
-        step="0.5"
-        v-model="searchDishPriceMin"
-        placeholder="Input or Click"
-        min="0"
-      />
-      -
-      <input
-        type="number"
-        class="smallNumBox"
-        step="0.5"
-        v-model="searchDishPriceMax"
-        placeholder="Input or Click"
-        min="0"
-      /></td>
+            <td>
+              <input
+                type="number"
+                class="smallNumBox"
+                step="0.5"
+                v-model="searchDishPriceMin"
+                placeholder="Input or Click"
+                min="0"
+              />
+              -
+              <input
+                type="number"
+                class="smallNumBox"
+                step="0.5"
+                v-model="searchDishPriceMax"
+                placeholder="Input or Click"
+                min="0"
+              />
+            </td>
           </tr>
         </tbody>
       </table>
-    </div>
-
+    </div> -->
+    
   </div>
 </template>
 
@@ -135,6 +141,16 @@ export default {
   },
   mounted() {
     this.getMenu();
+  },
+  filters:{
+    formatCurrency(v){
+      if (parseFloat(v) <= 0) {
+        var revealNum = 0;
+      } else {
+        var revealNum = parseFloat(v).toFixed(2);
+      }
+      return "$ " + revealNum;
+    }
   },
   computed: {
     searchedList() {

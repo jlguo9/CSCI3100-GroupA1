@@ -6,15 +6,16 @@
         <a class="btn btn-danger" href="/#/cart" @click="clearCart()"
           >Remove All</a
         >&nbsp;
-        <a class="btn btn-primary" href="/#" @click="transferToRecord()"
+        <a class="btn btn-purple" href="/#" @click="transferToRecord()"
           >Transfer All to Record</a
         >
       </span>
     </h1>
     <br />
+    
     <div class="table-responsive">
-      <table class="table table-striped">
-        <thead>
+      <table class="table table-striped table-hover" style="text-align: center" id="mydatatable">
+        <thead style="background-color: #dda300">
           <tr>
             <th>Index</th>
             <th>ID</th>
@@ -31,22 +32,29 @@
             <td>{{ value.id }}</td>
             <td>{{ value.canName }}</td>
             <td>{{ value.dishName }}</td>
-            <td>{{ value.dishPrice }}</td>
+            <td>{{ value.dishPrice | formatCurrency}}</td>
             <td>
+              <span>
               <a
                 href="#"
-                class="btn btn-success btn-sm"
+                v-bind:class="{
+                  'btn btn-danger btn-sm': value.quantity <= 1,
+                  'btn btn-success btn-sm': value.quantity > 1,
+                }"
                 role="button"
                 @click="subCartQuant(index, value.id)"
+                style="width: 30px; height: 30px; color: white"
                 >-</a
               >
               &nbsp;{{ value.quantity }}&nbsp;
               <a
                 href="#"
-                class="btn btn-primary btn-sm"
+                class="btn btn-success btn-sm"
                 @click="addCartQuant(index, value.id)"
+                style="width: 30px; height: 30 px"
                 >+</a
               >
+              </span>
             </td>
             <td>
               <a
@@ -57,12 +65,15 @@
               >
             </td>
           </tr>
-          <tr v-show="cartList.length === 0">
+          <!-- <tr v-show="cartList.length === 0">
             <td colspan="7">Your shopping cart is empty.</td>
-          </tr>
+          </tr> -->
         </tbody>
       </table>
+
+      <h3>Total price of your shopping cart is {{ total | formatCurrency}}.</h3>
     </div>
+
   </div>
 </template>
 
@@ -79,6 +90,16 @@ export default {
   mounted() {
     this.getCart();
   },
+    filters:{
+    formatCurrency(v){
+      if (parseFloat(v) <= 0) {
+        var revealNum = 0;
+      } else {
+        var revealNum = parseFloat(v).toFixed(2);
+      }
+      return "$ " + revealNum;
+    }
+  },
   computed: {},
   methods: {
     getCart() {
@@ -91,13 +112,6 @@ export default {
           this.total = 0;
           for (var j = 0; j < this.cartQuantList.length; j++) {
             var item = this.cartQuantList[j];
-            // if (parseInt(item) <= 1) {
-            //   this.operandButtonValid.push(false);
-            //   this.operandButtonInvalid.push(true);
-            // } else {
-            //   this.operandButtonValid.push(true);
-            //   this.operandButtonInvalid.push(false);
-            // }
             this.total +=
               parseFloat(this.cartList[j].dishPrice) *
               parseInt(this.cartList[j].quantity);
@@ -113,13 +127,6 @@ export default {
     },
     subCartQuant(index, id) {
       if (this.cartList[index].quantity > 1) {
-        // if (this.cartList[index].quantity > 2) {
-        //   this.operandButtonValid[index] = true;
-        //   this.operandButtonInvalid[index] = false;
-        // } else if (this.cartList[index].quantity <= 2) {
-        //   this.operandButtonValid[index] = false;
-        //   this.operandButtonInvalid[index] = true;
-        // }
         this.total -= parseFloat(this.cartList[index].dishPrice) * 1;
         this.axios
           .put("http://localhost:3000/cart/" + id, {
@@ -135,6 +142,19 @@ export default {
               this.getCart();
             }
           });
+      } else {
+        if (
+          confirm(
+            "This will remove this item from your shopping cart.\nAre you sure?"
+          )
+        ) {
+          this.axios.delete("http://localhost:3000/cart/" + id).then((res) => {
+            const { status, data } = res;
+            if (status === 200) {
+              this.getCart();
+            }
+          });
+        }
       }
     },
     addCartQuant(index, id) {
@@ -153,8 +173,6 @@ export default {
             this.getCart();
           }
         });
-      // this.operandButtonValid[index] = true;
-      // this.operandButtonInvalid[index] = false;
     },
     removeFromCart(index, id) {
       if (confirm("Are you sure?")) {
@@ -164,8 +182,6 @@ export default {
             this.getCart();
           }
         });
-        // this.operandButtonValid.splice(index, 1);
-        // this.operandButtonInvalid.splice(index, 1);
       }
     },
     clearCart() {
