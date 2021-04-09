@@ -1,74 +1,46 @@
 <template>
-  <div id="recrod">
-    <h1 class="sub-header">Your Record</h1>
-    <a class="btn btn-success" href="add.html">Add</a>
+  <div>
+    <h1 class="sub-header">
+      Your History Record
+      <span style="float: right">
+        <a class="btn btn-danger" href="/#/record" @click="clearRecord()"
+          >Remove All</a
+        >
+      </span>
+    </h1>
+    <br />
     <div class="table-responsive">
       <table class="table table-striped">
         <thead>
           <tr>
-            <th>Index</th>
-            <th>ID</th>
+            <th>Date</th>
             <th>Canteen Name</th>
             <th>Dish Name</th>
             <th>Dish Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th>1</th>
-            <th>1</th>
-            <th>Chung Chi College Student Canteen</th>
-            <th>Siu Mei</th>
-            <th>20.5</th>
+          <tr v-for="(value, index) in recordList" :key="index">
+            <td>{{ value.time }}</td>
+            <td>{{ value.canName }}</td>
+            <td>{{ value.dishName }}</td>
+            <td>{{ value.dishPrice }}</td>
+            <td>{{ value.quantity }}</td>
+            <td>{{ value.subtotal }}</td>
             <td>
-              <a href="edit.html">Edit</a>&nbsp;&nbsp;
-              <a href="javascript:window.confirm('Are you sure'?)">Delete</a>
+              <a
+                class="btn btn-danger btn-sm"
+                href="javascript:window.confirm('Are you sure?')"
+                @click.prevent="removeFromRecord(index, value.id)"
+                >Delete</a
+              >
             </td>
           </tr>
-          <tr>
-            <th>2</th>
-            <th>2</th>
-            <th>United College Student Canteen</th>
-            <th>Three Dishes</th>
-            <th>27.3</th>
-            <td>
-              <a href="edit.html">Edit</a>&nbsp;&nbsp;
-              <a href="javascript:window.confirm('Are you sure'?)">Delete</a>
-            </td>
-          </tr>
-          <tr>
-            <th>3</th>
-            <th>3</th>
-            <th>New Asia College Student Canteen</th>
-            <th>Hot Pot</th>
-            <th>60.4</th>
-            <td>
-              <a href="edit.html">Edit</a>&nbsp;&nbsp;
-              <a href="javascript:window.confirm('Are you sure'?)">Delete</a>
-            </td>
-          </tr>
-          <tr>
-            <th>4</th>
-            <th>4</th>
-            <th>Chung Chi College Student Canteen</th>
-            <th>Siu Mei</th>
-            <th>20.5</th>
-            <td>
-              <a href="edit.html">Edit</a>&nbsp;&nbsp;
-              <a href="javascript:window.confirm('Are you sure'?)">Delete</a>
-            </td>
-          </tr>
-          <tr>
-            <th>5</th>
-            <th>5</th>
-            <th>Chung Chi College Student Canteen</th>
-            <th>Siu Mei</th>
-            <th>20.5</th>
-            <td>
-              <a href="edit.html">Edit</a>&nbsp;&nbsp;
-              <a href="javascript:window.confirm('Are you sure'?)">Delete</a>
-            </td>
+          <tr v-show="recordList.length === 0">
+            <td colspan="7">Your record history is empty.</td>
           </tr>
         </tbody>
       </table>
@@ -77,7 +49,59 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      recordList: [],
+      recordIDList: [],
+    };
+  },
+  mounted() {
+    this.getRecord();
+  },
+  methods: {
+    getRecord() {
+      this.axios.get("http://localhost:3000/record").then((res) => {
+        const { status, data } = res;
+        if (status == 200) {
+          console.log("find");
+          this.recordList = data;
+          console.log(this.recordList);
+          this.recordIDList = data.map((e) => e["id"]);
+        }
+      });
+    },
+    removeFromRecord(index, id) {
+      if (confirm("Are you sure?")) {
+        this.axios.delete("http://localhost:3000/record/" + id).then((res) => {
+          const { status, data } = res;
+          if (status === 200) {
+            this.getRecord();
+          }
+        });
+      }
+    },
+    clearRecord() {
+      if (this.recordIDList.length === 0) {
+        window.alert("Your history record is already empty.");
+      } else {
+        if (confirm("Are you sure?")) {
+          for (var j = 0; j < this.recordIDList.length; j++) {
+            var item = this.recordIDList[j];
+            this.axios
+              .delete("http://localhost:3000/record/" + item)
+              .then((res) => {
+                const { status, data } = res;
+                if (status === 200) {
+                  this.getRecord();
+                }
+              });
+          }
+        }
+      }
+    },
+  },
+};
 </script>
 
 <style>
