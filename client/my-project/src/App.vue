@@ -25,13 +25,13 @@
             <i class="fas fa-align-justify"></i>
           </button>
 
-          <div class="collapse navbar-collapse" id="navbarSupportedContent" >
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="nav navbar-nav ml-auto" style="float:right">
               <li class="nav-item">
-                <a class="nav-link" href="#"  style="float:right">Login</a>
+                <a class="nav-link" href="#" style="float:right">Login</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#"  style="float:right">Register</a>
+                <a class="nav-link" href="#" style="float:right">Register</a>
               </li>
             </ul>
           </div>
@@ -41,8 +41,6 @@
       <div class="col-sm-9 col-sm-offset-3 col-md-12 col-md-offset-20 main">
         <router-view></router-view>
       </div>
-
-
     </div>
   </div>
 
@@ -55,22 +53,24 @@ import intro from './components/intro.vue'
 import canteenMenu from './components/canteenMenu.vue'
 import cart from './components/cart.vue'
 import record from './components/record.vue'
+import forum from './components/forum.vue'
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
     sidebar: sidebar,
-     intro:intro,
+    intro: intro,
     canteenMenu: canteenMenu,
-    cart:cart,
-    record:record
-  },
-};
+    cart: cart,
+    record: record,
+    forum: forum
+  }
+}
 </script>
 
 <style>
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -80,7 +80,7 @@ export default {
 h1,
 h2,
 h3 {
-    font-family: 'PT Serif', serif;
+  font-family: 'PT Serif', serif;
   color: #750f6d;
 }
 </style>

@@ -11,9 +11,13 @@
     <br />
 
     <div class="table-responsive">
-      <table class="table table-striped table-hover" style="text-align: center" id="mydatatable">
+      <table
+        class="table table-striped table-hover"
+        style="text-align: center"
+        id="mydatatable"
+      >
         <thead style="background-color: #dda300">
-          <tr >
+          <tr>
             <th>Date</th>
             <th>Canteen Name</th>
             <th>Dish Name</th>
@@ -28,9 +32,9 @@
             <td>{{ value.time }}</td>
             <td>{{ value.canName }}</td>
             <td>{{ value.dishName }}</td>
-            <td>{{ value.dishPrice | formatCurrency}}</td>
+            <td>{{ value.dishPrice | formatCurrency }}</td>
             <td>{{ value.quantity }}</td>
-            <td>{{ value.subtotal | formatCurrency}}</td>
+            <td>{{ value.subtotal | formatCurrency }}</td>
             <td>
               <a
                 class="btn btn-danger btn-sm"
@@ -40,99 +44,80 @@
               >
             </td>
           </tr>
+          <!-- <tr >
+            <td colspan="7">Your record history is empty.</td>
+          </tr> -->
         </tbody>
       </table>
     </div>
-
-    <!-- <div class="table-responsive" v-show="recordList.length === 0" >
-      <table v-show="recordList.length === 0"  class="table table-striped table-hover" style="text-align: center">
-        <thead style="background-color: #dda300">
-          <tr>
-            <th>Date</th>
-            <th>Canteen Name</th>
-            <th>Dish Name</th>
-            <th>Dish Price</th>
-            <th>Quantity</th>
-            <th>Subtotal</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr >
-            <td colspan="7">Your record history is empty.</td>
-          </tr>
-        </tbody>
-      </table>
-      </div> -->
-
   </div>
 </template>
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       recordList: [],
-      recordIDList: [],
-    };
+      recordIDList: []
+    }
   },
-  mounted() {
-    this.getRecord();
+  mounted () {
+    this.getRecord()
   },
   filters: {
-    formatCurrency(v) {
+    formatCurrency (v) {
+      var revealNum
       if (parseFloat(v) <= 0) {
-        var revealNum = 0;
+        revealNum = 0
       } else {
-        var revealNum = parseFloat(v).toFixed(2);
+        revealNum = parseFloat(v).toFixed(2)
       }
-      return "$ " + revealNum;
-    },
+      return '$ ' + revealNum
+    }
   },
   methods: {
-    getRecord() {
-      this.axios.get("http://localhost:3000/record").then((res) => {
-        const { status, data } = res;
-        if (status == 200) {
-          console.log("find");
-          this.recordList = data;
-          console.log(this.recordList);
-          this.recordIDList = data.map((e) => e["id"]);
+    getRecord () {
+      this.axios.get('http://localhost:3000/record').then(res => {
+        const { status, data } = res
+        if (status === 200) {
+          console.log('find')
+          this.recordList = data
+          console.log(this.recordList)
+          this.recordIDList = data.map(e => e['id'])
         }
-      });
+      })
     },
-    removeFromRecord(index, id) {
-      if (confirm("Are you sure?")) {
-        this.axios.delete("http://localhost:3000/record/" + id).then((res) => {
-          const { status, data } = res;
+    removeFromRecord (index, id) {
+      if (confirm('Are you sure?')) {
+        this.axios.delete('http://localhost:3000/record/' + id).then(res => {
+          // const { status, data } = res
           if (status === 200) {
-            this.getRecord();
+            this.getRecord()
           }
-        });
+        })
       }
     },
-    clearRecord() {
+    clearRecord () {
       if (this.recordIDList.length === 0) {
-        window.alert("Your history record is already empty.");
+        window.alert('Your history record is already empty.')
       } else {
-        if (confirm("Are you sure?")) {
+        if (confirm('Are you sure?')) {
           for (var j = 0; j < this.recordIDList.length; j++) {
-            var item = this.recordIDList[j];
+            var item = this.recordIDList[j]
             this.axios
-              .delete("http://localhost:3000/record/" + item)
-              .then((res) => {
-                const { status, data } = res;
+              .delete('http://localhost:3000/record/' + item)
+              .then(res => {
+                // const { status, data } = res
                 if (status === 200) {
-                  this.getRecord();
+                  this.getRecord()
                 }
-              });
+              })
           }
         }
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
-<style>
-</style>
+<style></style>

@@ -1,15 +1,16 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+// import HelloWorld from '@/components/HelloWorld'
 import intro from '@/components/intro'
 import canteenMenu from '@/components/canteenMenu'
 import cart from '@/components/cart'
 import record from '@/components/record'
+import forum from '@/components/forum'
 
 Vue.use(Router)
 
 export default new Router({
-  linkExactActiveClass:'active',
+  linkExactActiveClass: 'active',
   routes: [
     {
       path: '/',
@@ -31,6 +32,11 @@ export default new Router({
       name: 'record',
       component: record
     },
+    {
+      path: '/forum',
+      name: 'forum',
+      component: forum
+    }
   ]
 })
 
