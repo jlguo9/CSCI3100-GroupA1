@@ -186,7 +186,7 @@ export default {
     deleteItem (index, id) {
       if (confirm('Are you sure?')) {
         this.axios.delete('http://localhost:3000/menuList/' + id).then(res => {
-          // const { status, data } = res
+          const { status } = res
           if (status === 200) {
             this.getMenu()
           }
@@ -224,7 +224,7 @@ export default {
             dishPrice: r3
           })
           .then(res => {
-            // const { status, data } = res
+            const { status } = res
             if (status === 200) {
               this.getMenu()
             }
@@ -232,16 +232,15 @@ export default {
       }
     },
     addToCart (index, id) {
-      this.axios
-        .post('http://localhost:3000/cart', {
-          canName: this.searchedList[index].canName,
-          dishName: this.searchedList[index].dishName,
-          dishPrice: this.searchedList[index].dishPrice,
-          quantity: 1
-        })
-        // .then(res => {
-        //   const { status, data } = res
-        // })
+      this.axios.post('http://localhost:3000/cart', {
+        canName: this.searchedList[index].canName,
+        dishName: this.searchedList[index].dishName,
+        dishPrice: this.searchedList[index].dishPrice,
+        quantity: 1
+      })
+      // .then(res => {
+      //   const { status, data } = res
+      // })
     },
     clearMenu () {
       if (this.menuIDList.length === 0) {
@@ -254,7 +253,7 @@ export default {
             this.axios
               .delete('http://localhost:3000/menuList/' + item)
               .then(res => {
-                // const { status, data } = res
+                const { status } = res
                 if (status === 200) {
                   this.getMenu()
                 }

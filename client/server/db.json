@@ -21,7 +21,7 @@
     {
       "canName": "Café 330",
       "dishName": "Chicken Pot",
-      "dishPrice": "888",
+      "dishPrice": "666",
       "id": 4
     },
     {
@@ -48,8 +48,15 @@
       "canName": "New Asia College Student Canteen",
       "dishName": "Fish Bowl",
       "dishPrice": "32.4",
-      "quantity": 6,
+      "quantity": 3,
       "id": 7
+    },
+    {
+      "canName": "Chung Chi College Student Canteen",
+      "dishName": "Siu Mei",
+      "dishPrice": "27.8",
+      "quantity": 1,
+      "id": 8
     }
   ],
   "record": [
@@ -70,24 +77,6 @@
       "subtotal": 41,
       "quantity": 2,
       "id": 2
-    },
-    {
-      "time": "2021/04/07",
-      "canName": "Chung Chi College Student Canteen",
-      "dishName": "Siu Mei",
-      "dishPrice": 20.5,
-      "subtotal": 41,
-      "quantity": 2,
-      "id": 3
-    },
-    {
-      "time": "2021/04/07",
-      "canName": "Chung Chi College Student Canteen",
-      "dishName": "Siu Mei",
-      "dishPrice": 20.5,
-      "subtotal": 20.5,
-      "quantity": 1,
-      "id": 4
     },
     {
       "time": "2021/04/07",
@@ -169,15 +158,6 @@
       "subtotal": 888,
       "quantity": 1,
       "id": 14
-    },
-    {
-      "time": "2021/04/09",
-      "canName": "Café 330",
-      "dishName": "Chicken Pot",
-      "dishPrice": "888",
-      "subtotal": 888,
-      "quantity": 1,
-      "id": 15
     },
     {
       "time": "2021/04/09",

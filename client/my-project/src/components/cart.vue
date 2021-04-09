@@ -17,7 +17,7 @@
       <table
         class="table table-striped table-hover"
         style="text-align: center"
-        id="mydatatable"
+        id="mydatatable2"
       >
         <thead style="background-color: #dda300">
           <tr>
@@ -40,7 +40,7 @@
             <td>
               <span>
                 <a
-                  href="#"
+                  href="#/cart"
                   v-bind:class="{
                     'btn btn-danger btn-sm': value.quantity <= 1,
                     'btn btn-success btn-sm': value.quantity > 1
@@ -52,7 +52,7 @@
                 >
                 &nbsp;{{ value.quantity }}&nbsp;
                 <a
-                  href="#"
+                  href="#/cart"
                   class="btn btn-success btn-sm"
                   @click="addCartQuant(index, value.id)"
                   style="width: 30px; height: 30 px"
@@ -143,7 +143,7 @@ export default {
             id: id
           })
           .then(res => {
-            // const { status, data } = res
+            const { status } = res
             if (status === 200) {
               this.getCart()
             }
@@ -155,7 +155,7 @@ export default {
           )
         ) {
           this.axios.delete('http://localhost:3000/cart/' + id).then(res => {
-            // const { status, data } = res
+            const { status } = res
             if (status === 200) {
               this.getCart()
             }
@@ -174,7 +174,7 @@ export default {
           id: id
         })
         .then(res => {
-          // const { status, data } = res
+          const { status } = res
           if (status === 200) {
             this.getCart()
           }
@@ -234,10 +234,10 @@ export default {
                 console.log('post succeeds')
                 this.getCart()
               })
-              // .catch(function (error) {
-              //   console.log('post fails')
-              //   this.getCart()
-              // })
+            // .catch(function (error) {
+            //   console.log('post fails')
+            //   this.getCart()
+            // })
             var item = copyCartIDList[j]
             console.log('below is id')
             console.log(item)
@@ -248,10 +248,10 @@ export default {
                 console.log('delete succeeds')
                 this.getCart()
               })
-              // .catch(function (error) {
-              //   console.log('delete fails')
-              //   this.getCart()
-              // })
+            // .catch(function (error) {
+            //   console.log('delete fails')
+            //   this.getCart()
+            // })
           }
           this.getCart()
           this.total = 0

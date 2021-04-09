@@ -282,6 +282,69 @@ a.article:hover {
   background-color: #750f6d;
   color: white;
 }
+.btn-purple {
+  color: #fff;
+  background-color: #750f6d;
+  border-color: #600a59;
+}
+.btn-purple {
+  color: #fff;
+  background-color: #750f6d;
+  border-color: #600a59;
+}
+.btn-purple:focus,
+.btn-purple.focus {
+  color: #fff;
+  background-color: #600a59;
+  border-color: #3b0836;
+}
+.btn-purple:hover {
+  color: #fff;
+  background-color: #600a59;
+  border-color: #4c0946;
+}
+.btn-purple:active,
+.btn-purple.active,
+.open > .dropdown-toggle.btn-purple {
+  color: #fff;
+  background-color: #600a59;
+  border-color: #4c0946;
+}
+.btn-purple:active:hover,
+.btn-purple.active:hover,
+.open > .dropdown-toggle.btn-purple:hover,
+.btn-purple:active:focus,
+.btn-purple.active:focus,
+.open > .dropdown-toggle.btn-purple:focus,
+.btn-purple:active.focus,
+.btn-purple.active.focus,
+.open > .dropdown-toggle.btn-purple.focus {
+  color: #fff;
+  background-color: #600a59;
+  border-color: #3b0836;
+}
+.btn-purple:active,
+.btn-purple.active,
+.open > .dropdown-toggle.btn-purple {
+  background-image: none;
+}
+.btn-purple.disabled:hover,
+.btn-purple[disabled]:hover,
+fieldset[disabled] .btn-purple:hover,
+.btn-purple.disabled:focus,
+.btn-purple[disabled]:focus,
+fieldset[disabled] .btn-purple:focus,
+.btn-purple.disabled.focus,
+.btn-purple[disabled].focus,
+fieldset[disabled] .btn-purple.focus {
+  background-color: #750f6d;
+  border-color: #711469;
+}
+.btn-purple .badge {
+  color: #711469;
+  background-color: #fff;
+}
+
 
 .searchingTextBox {
   width: 200px;

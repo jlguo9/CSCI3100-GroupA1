@@ -90,7 +90,7 @@ export default {
     removeFromRecord (index, id) {
       if (confirm('Are you sure?')) {
         this.axios.delete('http://localhost:3000/record/' + id).then(res => {
-          // const { status, data } = res
+          const { status } = res
           if (status === 200) {
             this.getRecord()
           }
@@ -107,7 +107,7 @@ export default {
             this.axios
               .delete('http://localhost:3000/record/' + item)
               .then(res => {
-                // const { status, data } = res
+                const { status } = res
                 if (status === 200) {
                   this.getRecord()
                 }
