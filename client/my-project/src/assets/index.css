@@ -105,7 +105,12 @@ span {
 #sidebar.active ul li a {
   padding: 20px 5px;
   text-align: center;
-  font-size: 0.8em;
+  font-size: 0.9em;
+}
+
+#sidebar.active ul li ul {
+  text-align: center;
+  font-size: 0.75em;
 }
 
 #sidebar.active ul li a i {
@@ -118,6 +123,7 @@ span {
 #sidebar.active ul ul a {
   padding: 10px !important;
 }
+
 
 #sidebar.active .dropdown-toggle::after {
   top: auto;
@@ -149,6 +155,7 @@ span {
   display: block;
 }
 
+
 #sidebar ul li a:hover {
   color: #750f6d;
   background: #fff;
@@ -163,6 +170,7 @@ a[aria-expanded="true"] {
   color: #fff;
   background: #750f6d;
 }
+
 
 a[data-toggle="collapse"] {
   position: relative;
@@ -315,3 +323,4 @@ a.article:hover {
   color: #750f6d;
   font-family: "Oswald", sans-serif; /* this should be the rest of the output you got from Google fonts */
 }
+

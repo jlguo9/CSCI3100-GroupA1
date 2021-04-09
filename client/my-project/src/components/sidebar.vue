@@ -50,7 +50,7 @@
           <router-link to="/gallery10" tag="li"><a>CW Chu College</a>
           </router-link>
         </ul>
-      </li>
+
 
       <router-link to="/forum" tag="li"><a><i class="fas fa-comments"></i> Forum</a>
       </router-link>
@@ -60,6 +60,7 @@
       
       <router-link to="/contact" tag="li"><a><i class="fas fa-paper-plane"></i> Contact</a>
       </router-link>
+            </li>
 
     </ul>
   </nav>

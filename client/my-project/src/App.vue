@@ -14,7 +14,7 @@
             <span>Toggle Sidebar</span>
           </button>
           <button
-            class="btn btn-dark d-inline-block d-lg-none ml-auto"
+            class="btn btn-purple d-inline-block d-lg-none ml-auto"
             type="button"
             data-toggle="collapse"
             data-target="#navbarSupportedContent"

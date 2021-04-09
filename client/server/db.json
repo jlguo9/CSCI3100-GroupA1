@@ -48,49 +48,49 @@
       "canName": "Chung Chi College Student Canteen",
       "dishName": "Siu Mei",
       "dishPrice": 20.5,
-      "quantity": 2,
+      "quantity": 4,
       "id": 1
     },
     {
       "canName": "United College Student Canteen",
       "dishName": "Three Dishes",
       "dishPrice": 27.3,
-      "quantity": 1,
+      "quantity": 4,
       "id": 2
     },
     {
       "canName": "United College Student Canteen",
       "dishName": "Hot Pot",
       "dishPrice": "23.33",
-      "quantity": 4,
+      "quantity": 1,
       "id": 3
     },
     {
       "canName": "Basic Medical Sciences Building Snack Bar",
       "dishName": "Three Dishes",
       "dishPrice": "25.5",
-      "quantity": 2,
+      "quantity": 5,
       "id": 6
     },
     {
       "canName": "New Asia College Student Canteen",
       "dishName": "Fish Bowl",
       "dishPrice": "32.4",
-      "quantity": 3,
+      "quantity": 1,
       "id": 7
     },
     {
       "canName": "Café 330",
       "dishName": "Chicken Pot",
       "dishPrice": "888",
-      "quantity": 2,
+      "quantity": 1,
       "id": 8
     },
     {
       "canName": "Café 330",
       "dishName": "Three Dishes",
       "dishPrice": "33.2",
-      "quantity": 2,
+      "quantity": 4,
       "id": 9
     },
     {
@@ -99,6 +99,13 @@
       "dishPrice": "27.8",
       "quantity": 1,
       "id": 10
+    },
+    {
+      "canName": "Chung Chi College Student Canteen",
+      "dishName": "Siu Mei",
+      "dishPrice": "27.8",
+      "quantity": 1,
+      "id": 11
     }
   ],
   "record": [
@@ -164,15 +171,6 @@
       "subtotal": 20.5,
       "quantity": 1,
       "id": 7
-    },
-    {
-      "time": "2021/04/07",
-      "canName": "Chung Chi College Student Canteen",
-      "dishName": "Siu Mei",
-      "dishPrice": 20.5,
-      "subtotal": 41,
-      "quantity": 2,
-      "id": 8
     },
     {
       "time": "2021/04/07",

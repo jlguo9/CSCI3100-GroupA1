@@ -9,10 +9,11 @@
       </span>
     </h1>
     <br />
+
     <div class="table-responsive">
-      <table class="table table-striped">
-        <thead>
-          <tr>
+      <table class="table table-striped table-hover" style="text-align: center" id="mydatatable">
+        <thead style="background-color: #dda300">
+          <tr >
             <th>Date</th>
             <th>Canteen Name</th>
             <th>Dish Name</th>
@@ -27,9 +28,9 @@
             <td>{{ value.time }}</td>
             <td>{{ value.canName }}</td>
             <td>{{ value.dishName }}</td>
-            <td>{{ value.dishPrice }}</td>
+            <td>{{ value.dishPrice | formatCurrency}}</td>
             <td>{{ value.quantity }}</td>
-            <td>{{ value.subtotal }}</td>
+            <td>{{ value.subtotal | formatCurrency}}</td>
             <td>
               <a
                 class="btn btn-danger btn-sm"
@@ -39,12 +40,31 @@
               >
             </td>
           </tr>
-          <tr v-show="recordList.length === 0">
+        </tbody>
+      </table>
+    </div>
+
+    <!-- <div class="table-responsive" v-show="recordList.length === 0" >
+      <table v-show="recordList.length === 0"  class="table table-striped table-hover" style="text-align: center">
+        <thead style="background-color: #dda300">
+          <tr>
+            <th>Date</th>
+            <th>Canteen Name</th>
+            <th>Dish Name</th>
+            <th>Dish Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr >
             <td colspan="7">Your record history is empty.</td>
           </tr>
         </tbody>
       </table>
-    </div>
+      </div> -->
+
   </div>
 </template>
 
@@ -58,6 +78,16 @@ export default {
   },
   mounted() {
     this.getRecord();
+  },
+  filters: {
+    formatCurrency(v) {
+      if (parseFloat(v) <= 0) {
+        var revealNum = 0;
+      } else {
+        var revealNum = parseFloat(v).toFixed(2);
+      }
+      return "$ " + revealNum;
+    },
   },
   methods: {
     getRecord() {
