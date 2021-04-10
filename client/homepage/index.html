@@ -54,6 +54,72 @@
         </div>
       </div>
     </div> -->
+    <div class="forum">
+      <div class="board">
+        <h1>Forum</h1>
+        <table class="tb">
+          <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Canteen Name</th>
+            <th>Dish Name</th>
+            <th>Dish Comment</th>
+            <th>Likes</th>
+            <th>Action</th>
+          </tr>
+          <tr v-for="(value, index) in commentList">
+            <!-- <td>{{ index + 1 }}</td> -->
+            <td>{{ value.id }}</td>
+            <td>{{ value.date }}</td>
+            <td>{{ value.canName}}</td>
+            <td>{{ value.dishName}}</td>
+            <td>{{ value.dishComment }}</td>
+            <td>{{ value.numOfLike }}</td>
+            <td>
+              <input type="button" class="likeButton" value = "Like" @click.prevent="likeComment(value.numOfLike, value.id)" />
+            </td>
+          </tr>
+          <tr v-show="commentList.length === 0">
+            <td colspan="7">No Comment</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="add">
+        <h1>Leave your comment here!</h1>
+        <label for="cars">Step 1: Select A Canteen:</label>
+
+        <span class="box">
+          <select v-model="commentedCanName">
+            <option disabled :value="null">Select A Canteen</option>
+            <option v-for="option in options" :value="option">
+              {{ option }}
+            </option>
+          </select></span>
+        <br />
+        <label for="cars">Step 2: Select An Existing Dish:</label>
+        <span class="box">
+          <select v-model="commentedDishName">
+            <option disabled :value="null">
+              Select An Existing/Existed Dish
+            </option>
+            <option v-for="option in dishNameList" :value="option">
+              {{ option }}
+            </option>
+          </select> </span><br />
+
+        Step 3: Input Your Comment:
+        <input type="text" class="addingTextBox"  v-model="dishComment"
+          placeholder="Input Here" style=" width: 1000px; height: 100px" />
+        <br />
+
+        <input type="button"
+          class="textButton" value="Add Now" @click="addComment()" />
+      </div>
+
+
+
+
 
     <div class="menu">
       <div class="board">
@@ -347,6 +413,7 @@
         operandButtonInvalid: [],
         recordList: [],
         recordIDList: [],
+        commentList: []
       },
       computed: {
         searchedList() {
@@ -368,10 +435,48 @@
         this.getMenu();
         this.getCart();
         this.getRecord();
+        this.getComment();
       },
       methods: {
+        getComment(){
+            axios.get("http://localhost:3000/forum").then((res) => {
+            const { status, data } = res;
+            if (status == 200) {
+              this.commentList = data;
+              this.commentIDList = data.map(e => e["id"]);
+              this.commentDishNameList = [...new Set(data.map(e => e["dishName"]))];
+            }
+          });},
+  
+        addComment() {
+          axios.post("http://localhost:3000/forum", {
+            canName: this.commentedCanName,
+            dishName: this.commentedDishName,
+            dishComment: this.dishComment,
+            numOfLike: 0,
+            date:new Date().toJSON().slice(0, 10).replace(/-/g, "/"),
+          }).then((res) => {
+            const { status, data } = res;
+            if (status === 201) {
+              this.getComment();
+            }
+          });
+          this.commentedCanName = "";
+          this.commentedDishName = "";
+          this.dishComment = "";
+        },
+        likeComment(Likes, id) {
+          axios.patch("http://localhost:3000/forum/" + id, {numOfLike:Likes + 1}).then((res) => {
+            const { status, data } = res;
+            if (status === 200) {
+              this.getComment();
+            }
+          });
+          
+        },
+
         getMenu() {
-          axios.get("http://localhost:3000/menuList").then((res) => {
+          axios.get("http://localhost:3000/list").then((res) => {
             const { status, data } = res;
             if (status == 200) {
               this.menuList = data;
