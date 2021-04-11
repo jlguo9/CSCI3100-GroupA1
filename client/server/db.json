@@ -48,7 +48,7 @@
       "canName": "New Asia College Student Canteen",
       "dishName": "Fish Bowl",
       "dishPrice": "32.4",
-      "quantity": 3,
+      "quantity": 5,
       "id": 7
     },
     {
@@ -221,6 +221,42 @@
       "subtotal": 127.5,
       "quantity": 5,
       "id": 22
+    }
+  ],
+  "gallery1": [
+    {
+      "title": "Big vulture flying",
+      "url": "'@/assets/images/tunnel.jpg'",
+      "id": 1
+    },
+    {
+      "title": "Frog soak on water",
+      "url": "@/assets/images/park.jpg",
+      "id": 2
+    },
+    {
+      "title": "Big vulture flying",
+      "url": "@/assets/images/sky.jpg",
+      "id": 3
+    },
+    {
+      "title": "Frog soak on water",
+      "url": "require(@/assets/images/rails.jpg)",
+      "id": 4
+    }
+  ],
+  "uploadImg": [
+    {
+      "id": 1
+    },
+    {
+      "id": 2
+    },
+    {
+      "id": 3
+    },
+    {
+      "id": 4
     }
   ]
 }

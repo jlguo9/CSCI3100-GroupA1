@@ -7,25 +7,28 @@
 
     <!-- Page Content  -->
     <div id="content">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
+      <nav class="navbar navbar-expand navbar-light bg-light">
+        <div class="container-fluid" id="myHeader">
           <button type="button" id="sidebarCollapse" class="btn btn-purple">
             <i class="fas fa-align-left"></i>
             <span>Toggle Sidebar</span>
           </button>
-          <button
-            class="btn btn-purple d-inline-block d-lg-none ml-auto"
+          <!-- <button
+            class="btn  d-inline-block d-lg-none ml-auto"
             type="button"
             data-toggle="collapse"
             data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent"
             aria-expanded="false"
             aria-label="Toggle navigation"
+            style="float:right"
           >
             <i class="fas fa-align-justify"></i>
           </button>
 
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent"> -->
+            <div>
             <ul class="nav navbar-nav ml-auto" style="float:right">
               <li class="nav-item">
                 <a class="nav-link" href="#" style="float:right">Login</a>
@@ -38,9 +41,10 @@
         </div>
       </nav>
 
-      <div class="col-sm-9 col-sm-offset-3 col-md-12 col-md-offset-20 main">
+      <div class="container-fluid">
         <router-view></router-view>
       </div>
+      
     </div>
   </div>
 
@@ -53,6 +57,8 @@ import intro from './components/intro.vue'
 import canteenMenu from './components/canteenMenu.vue'
 import cart from './components/cart.vue'
 import record from './components/record.vue'
+import gallery1 from './components/gallery1.vue'
+import gallery2 from './components/gallery2.vue'
 import forum from './components/forum.vue'
 
 export default {
@@ -63,6 +69,8 @@ export default {
     canteenMenu: canteenMenu,
     cart: cart,
     record: record,
+    gallery1: gallery1,
+    gallery2: gallery2,
     forum: forum
   }
 }
@@ -70,17 +78,11 @@ export default {
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
 }
-h1,
-h2,
-h3 {
-  font-family: 'PT Serif', serif;
-  color: #750f6d;
-}
+
 </style>

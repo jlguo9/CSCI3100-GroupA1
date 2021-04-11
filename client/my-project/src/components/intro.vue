@@ -1,7 +1,69 @@
 <template>
-  <div id="intro">
-    <h1>Welcome to Foodification!</h1>
-    <br />
+  <div id="intro" class="container-fluid">
+    
+            
+    <h1> Welcome to Foodification!</h1>
+
+    <div
+      id="carouselExampleIndicators"
+      class="carousel slide "
+      data-ride="carousel"
+    >
+      <ol class="carousel-indicators">
+        <li
+          data-target="#carouselExampleIndicators"
+          data-slide-to="0"
+          class="active"
+        ></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="carousel-item active img-responsive">
+          <img
+            class="d-block w-100"
+            src="../assets/images/rails.jpg"
+            alt="First slide"
+          />
+        </div>
+        <div class="carousel-item">
+          <img
+            class="d-block w-100"
+            src="../assets/images/park.jpg"
+            alt="Second slide"
+          />
+        </div>
+        <div class="carousel-item">
+          <img
+            class="d-block w-100"
+            src="../assets/images/traffic.jpg"
+            alt="Third slide"
+          />
+        </div>
+      </div>
+      <a
+        class="carousel-control-prev"
+        href="#carouselExampleIndicators"
+        role="button"
+        data-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a
+        class="carousel-control-next"
+        href="#carouselExampleIndicators"
+        role="button"
+        data-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+
+            
+    <h2>Overview</h2>
+
     <p>
       Canteens on the campus of The Chinese University of Hong Kong (CUHK) are
       popular dining choices for students, faculties as well as staff from CUHK.
@@ -44,11 +106,11 @@
     <div class="line"></div>
 
     <h2>Team Member</h2>
-    <h5>GUO Jialiang 1155124399</h5>
-    <h5>LI Zechen 1155124542</h5>
-    <h5>LI Keqi 1155107825</h5>
-    <h5>YAO Sicong1155107856</h5>
-    <h5>HU Fangxin 1155107872</h5>
+    <p>GUO Jialiang 1155124399
+    <p>LI Zechen 1155124542</p>
+    <p>LI Keqi 1155107825</p>
+    <p>YAO Sicong1155107856</p>
+    <p>HU Fangxin 1155107872</p>
 
     <!-- <div class="line"></div> -->
 
