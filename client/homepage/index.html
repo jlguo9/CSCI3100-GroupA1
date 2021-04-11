@@ -11,6 +11,7 @@
   <link href="./style/box.css" rel="stylesheet" />
   <link href="./style/img.css" rel="stylesheet" />
   <link href="./style/style.css" rel="stylesheet" />
+  <link href="./style/forum.css" rel="stylesheet" />
 
 
   <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet" />
@@ -21,7 +22,14 @@
   <title>Menu & Shopping Cart</title>
 </head>
 
-<body>
+<script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+      integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+      crossorigin="anonymous"
+    ></script>
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">  
+
+ <body>
 
   <!-- <img src="images/hamburger.jpeg" alt="CUHK.jpeg" width="100"> -->
   <h1 style="font-size: 100px">Foodification</h1>
@@ -54,6 +62,33 @@
         </div>
       </div>
     </div> -->
+    <div class="container mt-3 d-flex justify-content-center">
+      <div class="row d-flex justify-content-center">
+          <div class="col-md-8">
+              <div class="text-left">
+                  <h6>All comment({{commentList.length}})</h6>
+              </div>
+              <div v-for="(value, index) in commentList" class="card p-3 mb-2" >
+                  <div class="d-flex flex-row"> <!-- <img src="https://i.imgur.com/dwiGgJr.jpg" height="40" width="40" class="rounded-circle"> -->
+                      <div class="d-flex flex-column ms-2">
+                          <h6 class="mb-1 text-primary">{{ value.dishName }}</h6>
+                          <p class="comment-text">{{ value.dishComment }}</p>
+                      </div>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                      <div class="d-flex flex-row gap-3 align-items-center">
+                          <div class="d-flex align-items-center"> <i class="fa fa-heart-o"></i> <span class="ms-1 fs-10">Like</span> </div>
+                          <div class="d-flex align-items-center"> <i class="fa fa-comment-o"></i> <span class="ms-1 fs-10">Comments</span> </div>
+                      </div>
+                      <div class="d-flex flex-row"> <span class="text-muted fw-normal fs-10">{{value.date}}</span> </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+
     <div class="forum">
       <div class="board">
         <h1>Forum</h1>
