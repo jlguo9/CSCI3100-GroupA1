@@ -34,7 +34,7 @@
         </a>
         <ul class="collapse list-unstyled" id="gallerySubmenu">
           <router-link to="/gallery1" tag="li"
-            ><a>Centeral Campus</a>
+            ><a>Central Campus</a>
           </router-link>
           <router-link to="/gallery2" tag="li"
             ><a>Chung Chi College</a>
@@ -63,6 +63,7 @@
           <router-link to="/gallery10" tag="li"
             ><a>CW Chu College</a>
           </router-link>
+          <router-link to="/gallery11" tag="li"><a>Others</a> </router-link>
         </ul>
 
         <router-link to="/forum" tag="li"

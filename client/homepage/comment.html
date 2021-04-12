@@ -1,3 +1,5 @@
+
+  
 <!doctype html>
 <html>
 
@@ -78,46 +80,72 @@
     <script type='text/javascript'></script>
 </head>
 
-<body oncontextmenu='return false' class='snippet-body'>
-    <div class="container mt-5">
+<body oncontextmenu='return false' class='snippet-body' >
+
+    <div class="container mt-5" id="menu">
+
+
+
+    <div class="add" style = "margin: auto; width: 60%; padding: 10px; ">
+        <h1>Leave your comment here!</h1>
+        <label for="cars">Select A Canteen:</label>
+
+        <span class="box">
+          <select v-model="commentedCanName">
+            <option disabled :value="null">Select A Canteen</option>
+            <option v-for="option in options" :value="option">
+              {{ option }}
+            </option>
+          </select></span>
+        <br />
+        <label for="cars">Select An Existing Dish:</label>
+        <span class="box">
+          <select v-model="commentedDishName">
+            <option disabled :value="null">
+              Select An Existing/Existed Dish
+            </option>
+            <option v-for="option in dishNameList" :value="option">
+              {{ option }}
+            </option>
+          </select> </span><br />
+
+          <div class="d-flex flex-row align-items-start"><textarea
+            class="form-control ml-1 shadow-none textarea" v-model="dishComment" style="width: 100%;"></textarea></div>
+        <div class="mt-2 text-right"><button class="btn btn-primary btn-sm shadow-none"
+            type="button" @click.prevent="addComment()" >Post comment</button>
+        </div>
+
+
+    </div>
+
+
+
         <div class="d-flex justify-content-center row">
             <div class="col-md-8">
-                <div class="d-flex flex-column comment-section" id="myGroup">
+                <div class="d-flex flex-column comment-section" v-for="(value, index) in commentList" id="myGroup">
                     <div class="bg-white p-2">
-                        <div class="d-flex flex-row user-info"><img class="rounded-circle"
-                                src="https://i.imgur.com/RpzrMR2.jpg" width="40">
+                        <div class="d-flex flex-row user-info">
                             <div class="d-flex flex-column justify-content-start ml-2"><span
-                                    class="d-block font-weight-bold name">Marry Andrews</span><span
-                                    class="date text-black-50">Shared publicly - Jan 2020</span></div>
+                                    class="d-block font-weight-bold name">{{value.dishName}}</span><span
+                                    class="date text-black-50">{{ value.date }}</span></div>
                         </div>
                         <div class="mt-2">
-                            <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                            <p class="comment-text">{{ value.dishComment }}</p>
                         </div>
                     </div>
                     <div class="bg-white p-2">
                         <div class="d-flex flex-row fs-12">
-                            <div class="like p-2 cursor"><i class="fa fa-thumbs-o-up"></i><span class="ml-1">Like</span>
+                            <div class="like p-2 cursor"><i class="fa fa-thumbs-o-up"></i><span class="ml-1" @click.prevent="likeComment(value.numOfLike, value.id)">Like {{value.numOfLike}} </span>
                             </div>
+
                             <div class="like p-2 cursor action-collapse" data-toggle="collapse" aria-expanded="true"
-                                aria-controls="collapse-1" href="#collapse-1"><i class="fa fa-commenting-o"></i><span
-                                    class="ml-1">Comment</span></div>
-                            <div class="like p-2 cursor action-collapse" data-toggle="collapse" aria-expanded="true"
-                                aria-controls="collapse-2" href="#collapse-2"><i class="fa fa-share"></i><span
+                                aria-controls="collapse-2" v-bind:href="'#collapse-share-'+index"><i class="fa fa-share"></i><span
                                     class="ml-1">Share</span></div>
                         </div>
                     </div>
-                    <div id="collapse-1" class="bg-light p-2 collapse" data-parent="#myGroup">
-                        <div class="d-flex flex-row align-items-start"><img class="rounded-circle"
-                                src="https://i.imgur.com/RpzrMR2.jpg" width="40"><textarea
-                                class="form-control ml-1 shadow-none textarea"></textarea></div>
-                        <div class="mt-2 text-right"><button class="btn btn-primary btn-sm shadow-none"
-                                type="button">Post comment</button><button
-                                class="btn btn-outline-primary btn-sm ml-1 shadow-none" type="button">Cancel</button>
-                        </div>
-                    </div>
-                    <div id="collapse-2" class="bg-light p-2 collapse" data-parent="#myGroup">
+                    
+                    <div v-bind:id="'collapse-share-'+index" class="bg-light p-2 collapse" data-parent="#myGroup">
+					
                         <div class="d-flex flex-row align-items-start"><i
                                 class="fa fa-facebook border p-3 rounded mr-1"></i><i
                                 class="fa fa-twitter border p-3 rounded mr-1"></i><i
@@ -131,5 +159,405 @@
         </div>
     </div>
 </body>
+
+
+<script src="./script/vue.js"></script>
+<script src="./script/axios.min.js"></script>
+<script src="./script/vue-router.js"></script>
+
+<script>
+var vm = new Vue({
+    el: "#menu",
+    data: {
+      imgSRC: "images/CUHK.jpeg",
+      selected: "NA",
+      options: [
+        "Basic Medical Sciences Building Snack Bar",
+        "Benjamin Franklin Centre Coffee Corner",
+        "Benjamin Franklin Centre Staff Canteen",
+        "Benjamin Franklin Centre Student Canteen",
+        "Benjamin Franklin Centre Vegetarian Food Shop",
+        "Café 330",
+        "Canteen of CW Chu College",
+        "Canteen of S.H. Ho College",
+        "Connexion, S.H. Ho College Staff Common Room",
+        "Chung Chi College Staff Club",
+        "Chung Chi College Student Canteen",
+        "Lee Shau Kee Building Snack Bar",
+        "Lee Woo Sing College - Cafe Tolo",
+        "Lee Woo Sing College - The Green",
+        "Lee Woo Sing College - The Harmony",
+        "Lee Woo Sing College - WS Pavilion",
+        "Li Wai Chun Building Café",
+        "Li Wai Chun Building Halal Food Outlet",
+        "Morningside College Café",
+        "Morningside College Dining Hall",
+        "New Asia College Coffee Shop (Coffee Lover Café)",
+        "New Asia College Staff Canteen",
+        "New Asia College Student Canteen",
+        "New Asia College Yun Chi Hsien",
+        "Orchid Lodge",
+        "Pommerenke Student Centre Café (Paper&Coffee)",
+        "Postgraduate Hall 3 Café (Area 39)",
+        "S.H. Ho College Café",
+        "Staff Common Room Clubhouse",
+        "SeeYou@Shaw (with Café)",
+        "The Stage",
+        "United College Si Yuan Amenities Centre",
+        "United College Staff Canteen",
+        "United College Staff Common Room",
+        "United College Student Canteen",
+        "Women Cooperative Store",
+        "Wu Yee Sun College Staff Dining Room",
+        "Wu Yee Sun College Student Canteen",
+      ],
+      menuList: [],
+      dishNameList: [],
+      menuIDList: [],
+      newCanName: "",
+      newDishName: "",
+      newDishPrice: "",
+      total: 0,
+      searchCanteen: "",
+      searchDish: "",
+      searchDishPriceMin: 0,
+      searchDishPriceMax: 1000,
+      cartList: [],
+      cartQuantList: [],
+      cartIDList: [],
+      operandButtonValid: [],
+      operandButtonInvalid: [],
+      recordList: [],
+      recordIDList: [],
+      commentList: [],
+      commentOnComment:"",
+    },
+    computed: {
+      searchedList() {
+        return this.menuList.filter((item) => {
+          return (
+            item.canName
+              .toUpperCase()
+              .includes(this.searchCanteen.toUpperCase()) &&
+            item.dishName
+              .toUpperCase()
+              .includes(this.searchDish.toUpperCase()) &&
+            item.dishPrice >= parseFloat(this.searchDishPriceMin) &&
+            item.dishPrice <= parseFloat(this.searchDishPriceMax)
+          );
+        });
+      },
+    },
+    mounted() {
+      this.getMenu();
+      this.getCart();
+      this.getRecord();
+      this.getComment();
+    },
+    methods: {
+      getComment(){
+          axios.get("http://localhost:3000/forum").then((res) => {
+          const { status, data } = res;
+          if (status == 200) {
+            this.commentList = data;
+            this.commentIDList = data.map(e => e["id"]);
+            this.commentDishNameList = [...new Set(data.map(e => e["dishName"]))];
+          }
+        });},
+
+      addComment() {
+        axios.post("http://localhost:3000/forum", {
+          canName: this.commentedCanName,
+          dishName: this.commentedDishName,
+          dishComment: this.dishComment,
+          commentOnComment:[],
+          numOfLike: 0,
+          date:new Date().toJSON().slice(0, 10).replace(/-/g, "/"),
+        }).then((res) => {
+          const { status, data } = res;
+          if (status === 201) {
+            this.getComment();
+          }
+        });
+        this.commentedCanName = "";
+        this.commentedDishName = "";
+        this.dishComment = "";
+      },
+      likeComment(Likes, id) {
+        axios.patch("http://localhost:3000/forum/" + id, {numOfLike:Likes + 1}).then((res) => {
+          const { status, data } = res;
+          if (status === 200) {
+            this.getComment();
+          }
+        });
+        
+      },
+      commentComment(id){
+        var comments = [];
+        axios.get("http://localhost:3000/forum/" + id).then((res) => {
+          const { status, data } = res;
+          if (status == 200) {
+            comments = data.commentOnComment
+          }
+          comments.push(this.commentOnComment)
+          axios.patch("http://localhost:3000/forum/" + id, {commentOnComment:comments}).then((res) => {
+          const { status, data } = res;
+          if (status === 200) {
+            this.getComment();
+            this.commentOnComment = "";
+          }
+          });
+        });
+      },
+
+      getMenu() {
+        axios.get("http://localhost:3000/list").then((res) => {
+          const { status, data } = res;
+          if (status == 200) {
+            this.menuList = data;
+            this.menuIDList = data.map(e => e["id"]);
+            this.dishNameList = [...new Set(data.map(e => e["dishName"]))];
+          }
+        });
+      },
+      getCart() {
+        axios.get("http://localhost:3000/cart").then((res) => {
+          const { status, data } = res;
+          if (status == 200) {
+            this.cartList = data;
+            this.cartQuantList = data.map(e => e["quantity"]);
+            this.cartIDList = data.map(e => e["id"]);
+            this.total = 0;
+            for (var j = 0; j < this.cartQuantList.length; j++) {
+              var item = this.cartQuantList[j]
+              if (parseInt(item) <= 1) {
+                this.operandButtonValid.push(false);
+                this.operandButtonInvalid.push(true);
+              }
+              else {
+                this.operandButtonValid.push(true);
+                this.operandButtonInvalid.push(false);
+              }
+              this.total += parseFloat(this.cartList[j].dishPrice) * parseInt(this.cartList[j].quantity);
+            }
+            console.log(this.total);
+          }
+        });
+      },
+      getRecord() {
+        axios.get("http://localhost:3000/record").then((res) => {
+          const { status, data } = res;
+          if (status == 200) {
+            this.recordList = data;
+            this.recordIDList = data.map(e => e["id"]);
+          }
+        });
+      },
+      removeMenu() {
+        if (confirm("Are you sure?")) {
+          console.log(this.menuIDList);
+          for (var j = 0; j < this.menuIDList.length; j++) {
+            var item = this.menuIDList[j]
+            axios.delete("http://localhost:3000/menuList/" + item).then((res) => {
+              const { status, data } = res;
+              if (status === 200) {
+                this.getMenu();
+              }
+            });
+          }
+        }
+      },
+      addItem() {
+        axios.post("http://localhost:3000/menuList", {
+          canName: this.newCanName,
+          dishName: this.newDishName,
+          dishPrice: this.newDishPrice,
+        }).then((res) => {
+          const { status, data } = res;
+          if (status === 201) {
+            this.getMenu();
+          }
+        });
+        this.newCanName = "";
+        this.newDishName = "";
+        this.newDishPrice = "";
+      },
+      deleteItem(id) {
+        if (confirm("Are you sure?")) {
+          axios.delete("http://localhost:3000/menuList/" + id).then((res) => {
+            const { status, data } = res;
+            if (status === 200) {
+              this.getMenu();
+            }
+          });
+        }
+      },
+      editItem(index, id) {
+        var r1 = window.prompt("Edit the canteen name of this item:", "New canteen name");
+        var r2 = window.prompt("Edit the dish name of this item:", "New dish name");
+        var r3 = window.prompt("Edit the dish price of this item:", "New dish price");
+        if (r1 === null && r2 === null && r3 === null) {
+          return;
+        }
+        else {
+          if (r1 === null) {
+            r1 = this.searchedList[index].canName;
+          }
+          if (r2 === null) {
+            r2 = this.searchedList[index].dishName;
+          }
+          if (r3 === null) {
+            r3 = this.searchedList[index].dishPrice;
+          }
+          axios.put("http://localhost:3000/menuList/" + id, {
+            canName: r1,
+            dishName: r2,
+            dishPrice: r3,
+          }).then((res) => {
+            const { status, data } = res;
+            if (status === 200) {
+              this.getMenu();
+            }
+          });
+        }
+        // this.dishNameList[index] = this.menuList[index].dishName;
+      },
+      addToCart(index, id) {
+        axios.post("http://localhost:3000/cart", {
+          canName: this.searchedList[index].canName,
+          dishName: this.searchedList[index].dishName,
+          dishPrice: this.searchedList[index].dishPrice,
+          quantity: 1,
+        }).then((res) => {
+          const { status, data } = res;
+          if (status === 201) {
+            this.getCart();
+          }
+        });
+      },
+      subCartQuant(index, id) {
+        if (this.cartList[index].quantity > 1) {
+          if (this.cartList[index].quantity > 2) {
+            this.operandButtonValid[index] = true;
+            this.operandButtonInvalid[index] = false;
+          } else if (this.cartList[index].quantity <= 2) {
+            this.operandButtonValid[index] = false;
+            this.operandButtonInvalid[index] = true;
+          }
+          this.total -= parseFloat(this.cartList[index].dishPrice) * 1;
+          axios.put("http://localhost:3000/cart/" + id, {
+            canName: this.cartList[index].canName,
+            dishName: this.cartList[index].dishName,
+            dishPrice: this.cartList[index].dishPrice,
+            quantity: this.cartList[index].quantity - 1,
+            id: id
+          }).then((res) => {
+            const { status, data } = res;
+            if (status === 200) {
+              this.getCart();
+            }
+          });
+        }
+      },
+      addCartQuant(index, id) {
+        this.total += parseFloat(this.cartList[index].dishPrice) * 1;
+        axios.put("http://localhost:3000/cart/" + id, {
+          canName: this.cartList[index].canName,
+          dishName: this.cartList[index].dishName,
+          dishPrice: this.cartList[index].dishPrice,
+          quantity: this.cartList[index].quantity + 1,
+          id: id
+        }).then((res) => {
+          const { status, data } = res;
+          if (status === 200) {
+            this.getCart();
+          }
+        });
+        this.operandButtonValid[index] = true;
+        this.operandButtonInvalid[index] = false;
+      },
+      removeFromCart(index, id) {
+        if (confirm("Are you sure?")) {
+          axios.delete("http://localhost:3000/cart/" + id).then((res) => {
+            const { status, data } = res;
+            if (status === 200) {
+              this.getCart();
+            }
+          });
+          this.operandButtonValid.splice(index, 1);
+          this.operandButtonInvalid.splice(index, 1);
+        }
+      },
+      removeCart() {
+        if (confirm("Are you sure?")) {
+          for (var j = 0; j < this.cartIDList.length; j++) {
+            var item = this.cartIDList[j]
+            axios.delete("http://localhost:3000/cart/" + item).then((res) => {
+              const { status, data } = res;
+              if (status === 200) {
+                this.getCart();
+              }
+            });
+          }
+        }
+      },
+      moveToRecord() {
+        if (confirm("Are you sure?")) {
+          for (j = 0; j < this.cartList.length; j++) {
+            axios.post("http://localhost:3000/record", {
+              time: new Date().toJSON().slice(0, 10).replace(/-/g, "/"),
+              canName: this.cartList[j].canName,
+              dishName: this.cartList[j].dishName,
+              dishPrice: this.cartList[j].dishPrice,
+              subtotal: this.cartList[j].dishPrice * this.cartList[j].quantity,
+              quantity: this.cartList[j].quantity,
+            }).then((res) => {
+              const { status, data } = res;
+              if (status === 201) {
+                console.log("Add to record success.")
+              }
+            });
+            var item = this.cartIDList[j]
+            axios.delete("http://localhost:3000/cart/" + item).then((res) => {
+              const { status, data } = res;
+              if (status === 200) {
+                console.log("remove item from cart success.")
+              }
+            });
+          }
+          this.getCart();
+          this.getRecord();
+          this.total = 0;
+        }
+      },
+      removeSearchFilter() {
+        this.searchCanteen = "";
+        this.searchDish = "";
+        this.searchDishPriceMin = 0;
+        this.searchDishPriceMax = 1000;
+      },
+      removeFromRecordList(index) {
+        if (confirm("Are you sure?")) {
+          this.recordList.splice(index, 1);
+        }
+      },
+      removeRecord() {
+        if (confirm("Are you sure?")) {
+          console.log(this.recordIDList);
+          for (var j = 0; j < this.recordIDList.length; j++) {
+            var item = this.recordIDList[j]
+            axios.delete("http://localhost:3000/record/" + item).then((res) => {
+              const { status, data } = res;
+              if (status === 200) {
+                this.getRecord();
+              }
+            });
+          }
+        }
+      },
+    },
+  });
+</script>
+
 
 </html>

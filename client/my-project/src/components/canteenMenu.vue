@@ -14,7 +14,7 @@
       <table
         class="table table-striped table-hover"
         style="text-align: center"
-        id="mydatatable3"
+        id="mydatatable1"
       >
         <thead style="background-color: #dda300">
           <tr>
@@ -177,6 +177,9 @@ export default {
         if (status === 200) {
           console.log('find')
           this.menuList = data
+          $(document).ready(function () {
+            $('#mydatatable1').DataTable()
+          })
           console.log(this.menuList)
           this.menuIDList = data.map(e => e['id'])
           this.dishNameList = [...new Set(data.map(e => e['dishName']))]
