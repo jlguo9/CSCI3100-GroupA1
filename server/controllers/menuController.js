@@ -1,4 +1,3 @@
-// menu_
 const Menu = require('../models/menu');
 
 exports.menu_add = (req, res) => {

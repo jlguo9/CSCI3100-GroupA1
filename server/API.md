@@ -9,9 +9,9 @@
 |     email_null    |              空邮箱                     |        注册       |
 |     email_format_error    |      错误的邮箱格式              |       注册        |
 |    email_exist    |               邮箱已被使用               |       注册       |
-|  username_exist   |              用户名已被使用              | 注册、更改用户名 |
+|  username_exist   |              用户名已被使用              |        注册       |
 | username_not_exist |               用户名不存在               |       登陆       |
-|  password_error   |                 密码错误                 |       登陆       |
+|  wrong_password   |                 密码错误                 |       登陆、更改密码    |
 |     no_this_id    |              请求的id不存在              | 获取用户信息     |
 |     not_login     |                  未登录                  | 获取用户信息、点赞、取消点赞、发布文章、修改菜单、购物车操作  |
 |     like_exist    |              已经对该对象点赞过了        |        点赞     |
@@ -106,7 +106,7 @@ POST /api/user/login
 
 | 参数名 |  类型  | 描述 |                       参数                        |
 | :----: | :----: | :--: | :-----------------------------------------------: |
-| State  | string | 状态 | success, username_notexist,password_error,bad_req |
+| State  | string | 状态 | success, username_notexist,wrong_password,bad_req |
 |  Data  | string | 令牌 |                       暂无                        |
 
 * 参数使用json形式解析
@@ -159,7 +159,7 @@ POST /api/user/logout
 ### 更改密码
 
 ```
-POST /api/user/name
+PUT /api/user/password
 ```
 * Token required
 #### Request
@@ -188,7 +188,7 @@ POST /api/user/name
 
 | 参数名 |  类型  | 描述 |              状态              |
 | :----: | :----: | :--: | :----------------------------: |
-| State  | string | 状态 | success,username_exist,bad_req |
+| State  | string | 状态 | success,wrong_password,bad_req |
 |  Data  | string | 数据 |              暂无              |
 
 * 参数使用json形式解析
@@ -251,7 +251,7 @@ GET /api/user/info/{userID:string}
 ### 获取指定内容
 
 ```
-GET /api/content/detail/{contentID:string}
+GET /api/content/{contentID:string}
 ```
 
 * contentID string 内容id
@@ -267,7 +267,7 @@ GET /api/content/detail/{contentID:string}
 
 > Status: 200 OK
 >
-> Location: /api/content/detail/5c3774187a2bdd000111e10c
+> Location: /api/content/5c3774187a2bdd000111e10c
 
 | 参数名      | 类型   | 描述          |
 | :---------: | :----: | :-----------: |
@@ -514,37 +514,7 @@ POST /api/content/publish
 
 
 ## Like
-### 获取用户点赞列表
-```
-GET /api/like/{contentID}
-```
-* contentID string 内容id
 
-#### Response
-
-> Status: 200 OK
->
-> Location: /api/like/5c3765bd7a2bdd000111e107
-
-|  参数名  |  类型  |   描述   |       参数       |
-| :------: | :----: | :------: | :--------------: |
-|  State   | string |   状态   |success,no_this_content|
-|   Data   | array  | 点赞列表 |       暂无       |
-| DataItem | string |  用户名  |       暂无       |
-
-
-* 参数使用json形式解析
-
-##### Example
-```json
-{
- "State": "success",
- "Data": [
-     "xiaoming",
-     "xiaohong"
- ]
-}
-```
 ### 对某个内容点赞
 ```
 POST /api/like/{contentID}
@@ -580,7 +550,7 @@ POST /api/like/{contentID}
 
 ### 取消用户对某个内容的点赞
 ```
-PATCH /api/like/{contentID:string}
+DELETE /api/like/{contentID:string}
 ```
 * contentID string 内容id
 #### Request
@@ -783,7 +753,7 @@ PUT /api/menu/{dishID:string}
 ##   Shopping Cart
 ###  获取所有条目
 ```
-GET /api/shoppingcart/index
+GET /api/cart/index
 ```
 #### Request
 
@@ -795,15 +765,13 @@ GET /api/shoppingcart/index
 
 > Status: 200 OK
 >
-> Location: /api/shoppingcart/index
+> Location: /api/cart/index
 
 | 参数名      | 类型   | 描述          |
 | ----------- | ------ | ------------- |
 | State       | string | 状态          |
 | Data        | array  | 内容信息数组  |
 | DataItem    | dictionary | 内容信息数组项 |
-| DataItem.Data | dictionary | 内容信息  |
-| DataItem.Dish | dictionary | 菜品信息  |
 
 * 参数使用json形式解析
 
@@ -813,28 +781,21 @@ GET /api/shoppingcart/index
  "State": "success",
  "Data": [
   {
-    "Data": {
       "ID": "asd22iwu2198",
-      "number": "1"
-    },
-    "Dish": {
-      "ID": "asdjxjoq1on",
+      "dishID": "asdjxjoq1on",
       "name": "test",
       "price": 25.5,
-      "canteen": "UC can"
-      
-    }
+      "canteen": "UC can",
+      "number": "1"
   },
   {
     "Data": {
       "ID": "asd22iasdkjn28",
-      "number": "2"
-    },
-    "Dish": {
-      "ID": "asasdasw221q1on",
+      "dishID": "asasdasw221q1on",
       "name": "test2",
       "price": 28,
-      "canteen": "NA can"
+      "canteen": "NA can",
+      "number": "2"
     }
   }]
 }
@@ -842,7 +803,7 @@ GET /api/shoppingcart/index
 
 ###  增加条目
 ```
-POST /api/shoppingcart/add
+POST /api/cart/add
 ```
 #### Request
 
@@ -870,7 +831,7 @@ POST /api/shoppingcart/add
 
 > Status: 200 OK
 >
-> Location: /api/shoppingcart/add
+> Location: /api/cart/add
 
 | 参数名      | 类型   | 描述          |
 | ----------- | ------ | ------------- |
@@ -888,7 +849,7 @@ POST /api/shoppingcart/add
 ```
 ###  删除条目
 ```
-DELETE /api/shoppingcart/{itemID:string}
+DELETE /api/cart/{itemID:string}
 ```
 * itemID string 购物车条目ID 
 #### Request
@@ -901,7 +862,7 @@ DELETE /api/shoppingcart/{itemID:string}
 
 > Status: 200 OK
 >
-> Location: /api/shoppingcart/5c376abbs2a2bdd000111e
+> Location: /api/cart/5c376abbs2a2bdd000111e
 
 | 参数名      | 类型   | 描述          |
 | ----------- | ------ | ------------- |
@@ -940,8 +901,6 @@ GET /api/record/index
 | State       | string | 状态          |
 | Data        | array  | 内容信息数组  |
 | DataItem    | dictionary | 内容信息数组项 |
-| DataItem.Data | dictionary | 内容信息  |
-| DataItem.Dish | dictionary | 菜品信息  |
 
 * 参数使用json形式解析
 
@@ -951,30 +910,22 @@ GET /api/record/index
  "State": "success",
  "Data": [
   {
-    "Data": {
-      "ID": "asd22iwu2198",
-      "number": "1",
-      "time": "2021/4/1 10:00:00"
-    },
-    "Dish": {
-      "ID": "asdjxjoq1on",
-      "name": "test",
-      "price": 25.5,
-      "canteen": "UC can"
-    }
+    "ID": "asd22iwu2198",
+    "dishID": "asdjxjoq1on",
+    "name": "test",
+    "price": 25.5,
+    "canteen": "UC can",
+    "number": "1",
+    "time": "2021/4/1 10:00:00"
   },
   {
-    "Data": {
-      "ID": "asd22iasdkjn28",
-      "number": "2",
-      "time": "2021/4/1 10:00:00"
-    },
-    "Dish": {
-      "ID": "asasdasw221q1on",
-      "name": "test2",
-      "price": 28,
-      "canteen": "NA can"
-    }
+    "ID": "asd22iasdkjn28",
+    "dishID": "asasdasw221q1on",
+    "name": "test2",
+    "price": 28,
+    "canteen": "NA can",
+    "number": "2",
+    "time": "2021/4/1 10:00:00"
   }]
 }
 ```
@@ -991,7 +942,6 @@ POST /api/record/add
 | price       | float |  菜品价格      |
 | canteen      | string |  菜品所属餐厅   |
 | number       |  int  |  数量    |
-|  time       |   string | 落单时间 |
 * 参数使用json形式提交
 
 ##### Example
@@ -1002,8 +952,7 @@ POST /api/record/add
   "name": "test",
   "price": 25.5,
   "canteen": "UC can",
-  "number": "1",
-  "time": "2021/4/1 10:00:00"
+  "number": "1"
 }
 ```
 #### Response
@@ -1041,7 +990,7 @@ DELETE /api/record/{recordID:string}
 
 > Status: 200 OK
 >
-> Location: /api/shoppingcart/5c376abbs2a2bdd000111e
+> Location: /api/cart/5c376abbs2a2bdd000111e
 
 | 参数名      | 类型   | 描述          |
 | ----------- | ------ | ------------- |
