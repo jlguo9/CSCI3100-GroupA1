@@ -13,12 +13,6 @@
       "id": 2
     },
     {
-      "canName": "New Asia College Student Canteen",
-      "dishName": "Hot Pot",
-      "dishPrice": 60.4,
-      "id": 3
-    },
-    {
       "canName": "Café 330",
       "dishName": "Chicken Pot",
       "dishPrice": "666",
@@ -242,20 +236,6 @@
     {
       "title": "Frog soak on water",
       "url": "require(@/assets/images/rails.jpg)",
-      "id": 4
-    }
-  ],
-  "uploadImg": [
-    {
-      "id": 1
-    },
-    {
-      "id": 2
-    },
-    {
-      "id": 3
-    },
-    {
       "id": 4
     }
   ]

@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());*/
 
-//set the path to static sources
+//set the path to rootDir and projectDir
 var rootDir=path.resolve(__dirname);
 var projectDir=path.resolve(__dirname,'../','client');
 app.use(express.static(rootDir));

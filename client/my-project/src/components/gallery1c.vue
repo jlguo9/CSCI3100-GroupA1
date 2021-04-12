@@ -1,51 +1,49 @@
 <template>
-  <div class="container-fluid" id="gallery1">
-    <h1>Gallery</h1>
-    <h2>Canteens in Central Campus</h2>
-
-    <ul class="components">
-      <li>
-        <router-link to="/gallery1a" tag="li"
-          ><a>Basic Medical Sciences Building Snack Bar</a>
+  <div id="gallery1c" class="container-fluid">
+    <div>
+      <h1>
+        Gallery:
+        <router-link to="/gallery1"
+          ><a class="btn btn-purple" style="color:white;float:right;"
+            >Return to Last Page</a
+          >
         </router-link>
-      </li>
-
-      <li>
-        <router-link to="/gallery1b" tag="li"
-          ><a>Benjamin Franklin Centre Coffee Corner</a>
-        </router-link>
-      </li>
-
-      <li>
-        <router-link to="/gallery1c" tag="li"
-          ><a>Benjamin Franklin Centre Staff Canteen</a>
-        </router-link>
-      </li>
-
-      <li>
-        <router-link to="/gallery1d" tag="li"
-          ><a>Benjamin Franklin Centre Student Canteen</a>
-        </router-link>
-      </li>
-
-      <li>
-        <router-link to="/gallery1e" tag="li"
-          ><a>Benjamin Franklin Centre Vegetarian Food Shop</a>
-        </router-link>
-      </li>
-
-      <li>
-        <router-link to="/gallery1f" tag="li"
-          ><a>Lee Shau Kee Building Snack Bar</a>
-        </router-link>
-      </li>
-      <li>
-        <router-link to="/gallery1g" tag="li"
-          ><a>Women Cooperative Store</a>
-        </router-link>
-      </li>
-
-    </ul>
+      </h1>
+      <h2>Benjamin Franklin Centre Staff Canteen</h2>
+    </div>
+    <light-gallery
+      :images="images"
+      :index="index"
+      :disable-scroll="true"
+      @close="index = null"
+    ></light-gallery>
+    <div class="container-fluid" style="padding:0px; margin:0px">
+      <ul style="list-style:none; display:inline;float:center">
+        <div class="container-fluid" style="padding:0px; margin:0px">
+          <li
+            v-for="(image, imageIndex) in images"
+            :key="imageIndex"
+            class="thumb"
+            @click="index = imageIndex"
+            style="float:left;margin:0px; padding:0px"
+          >
+            <div style="margin:25px">
+              <div
+                style="width:300px;height:225px;display: table-cell;
+    vertical-align: middle;
+    text-align: center;"
+              >
+                <img :src="image.url" style="width:300px" class="thumbnail" />
+              </div>
+              <h4 style="text-align:center;margin:10px 0px">
+                Dish: {{ image.title }}
+              </h4>
+              <p style="text-align:center">Author: {{ image.author }}</p>
+            </div>
+          </li>
+        </div>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -194,25 +192,4 @@ export default {
 }
 </script>
 
-<style>
-#gallery1 ul li a {
-  color: blue;
-}
-/* 未被访问的链接 */
-#gallery1 ul li a:link {
-  color: blue;
-}
-/* 已被访问的链接 */
-#gallery1 ul li a:visited {
-  color: purple;
-}
-
-/* 将鼠标悬停在链接上 */
-#gallery1 ul li a:hover {
-  color: red;
-}
-
-/* 被选择的链接 */
-#gallery1 ul li a:active {
-  color: red;
-}</style>
+<style></style>

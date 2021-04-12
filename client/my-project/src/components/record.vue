@@ -14,7 +14,7 @@
       <table
         class="table table-striped table-hover"
         style="text-align: center"
-        id="mydatatable"
+        id="mydatatable3"
       >
         <thead style="background-color: #dda300">
           <tr>
@@ -82,6 +82,9 @@ export default {
         if (status === 200) {
           console.log('find')
           this.recordList = data
+                    $(document).ready(function () {
+            $('#mydatatable3').DataTable()
+          })
           console.log(this.recordList)
           this.recordIDList = data.map(e => e['id'])
         }
