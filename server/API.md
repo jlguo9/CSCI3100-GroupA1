@@ -10,7 +10,7 @@
 |     email_format_error    |      错误的邮箱格式              |       注册        |
 |    email_exist    |               邮箱已被使用               |       注册       |
 |  username_exist   |              用户名已被使用              | 注册、更改用户名 |
-| username_notexist |               用户名不存在               |       登陆       |
+| username_not_exist |               用户名不存在               |       登陆       |
 |  password_error   |                 密码错误                 |       登陆       |
 |     no_this_id    |              请求的id不存在              | 获取用户信息     |
 |     not_login     |                  未登录                  | 获取用户信息、点赞、取消点赞、发布文章、修改菜单、购物车操作  |
@@ -349,7 +349,7 @@ DELETE /api/content/{contentID:string}
 ### 获取公共内容
 
 ```
-GET /api/content/public
+GET /api/content/index
 ```
 
 #### Parameters
@@ -363,7 +363,7 @@ GET /api/content/public
 
 > Status: 200 OK
 >
-> Location: /api/content/public?page=1&per_page=2
+> Location: /api/content/index?page=1&per_page=2
 
 | 参数名      | 类型   | 描述          |
 | ----------- | ------ | ------------- |
@@ -436,8 +436,8 @@ PUT /api/content/{contentID:string}
 
 ```json
 {
-    "name": "test",
-	  "detail": "test content",
+    "name": "test", 
+    "detail": "test content"
 }
 ```
 
@@ -616,7 +616,7 @@ PATCH /api/like/{contentID:string}
 
 ###  获取所有菜品信息
 ```
-GET /api/menu/public
+GET /api/menu/index
 ```
 #### Request
 
@@ -629,7 +629,7 @@ GET /api/menu/public
 
 > Status: 200 OK
 >
-> Location: /api/menu/public
+> Location: /api/menu/index
 
 | 参数名      | 类型   | 描述          |
 | ----------- | ------ | ------------- |
@@ -687,7 +687,7 @@ POST /api/menu/add
 {
   "name": "test",
   "price": 25.5,
-  "canteen": "UC can",
+  "canteen": "UC can"
 }
 ```
 #### Response
@@ -757,7 +757,7 @@ PUT /api/menu/{dishID:string}
 ```json
 {
   "name": "test",
-  "price": 25.5,
+  "price": 25.5
 }
 ```
 #### Response
@@ -783,7 +783,7 @@ PUT /api/menu/{dishID:string}
 ##   Shopping Cart
 ###  获取所有条目
 ```
-GET /api/shoppingcart/public
+GET /api/shoppingcart/index
 ```
 #### Request
 
@@ -795,7 +795,7 @@ GET /api/shoppingcart/public
 
 > Status: 200 OK
 >
-> Location: /api/shoppingcart/public
+> Location: /api/shoppingcart/index
 
 | 参数名      | 类型   | 描述          |
 | ----------- | ------ | ------------- |
@@ -821,7 +821,7 @@ GET /api/shoppingcart/public
       "ID": "asdjxjoq1on",
       "name": "test",
       "price": 25.5,
-      "canteen": "UC can",
+      "canteen": "UC can"
       
     }
   },
@@ -834,7 +834,7 @@ GET /api/shoppingcart/public
       "ID": "asasdasw221q1on",
       "name": "test2",
       "price": 28,
-      "canteen": "NA can",
+      "canteen": "NA can"
     }
   }]
 }
@@ -921,7 +921,7 @@ DELETE /api/shoppingcart/{itemID:string}
 
 ### 获取所有纪录
 ```
-GET /api/record/public
+GET /api/record/index
 ```
 #### Request
 
@@ -933,7 +933,7 @@ GET /api/record/public
 
 > Status: 200 OK
 >
-> Location: /api/record/public
+> Location: /api/record/index
 
 | 参数名      | 类型   | 描述          |
 | ----------- | ------ | ------------- |
@@ -960,7 +960,7 @@ GET /api/record/public
       "ID": "asdjxjoq1on",
       "name": "test",
       "price": 25.5,
-      "canteen": "UC can",
+      "canteen": "UC can"
     }
   },
   {
@@ -973,7 +973,7 @@ GET /api/record/public
       "ID": "asasdasw221q1on",
       "name": "test2",
       "price": 28,
-      "canteen": "NA can",
+      "canteen": "NA can"
     }
   }]
 }
