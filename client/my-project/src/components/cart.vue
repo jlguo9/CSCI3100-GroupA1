@@ -113,6 +113,9 @@ export default {
         const { status, data } = res
         if (status === 200) {
           this.cartList = data
+          $(document).ready(function () {
+            $('#mydatatable2').DataTable()
+          })
           this.cartQuantList = data.map(e => e['quantity'])
           this.cartIDList = data.map(e => e['id'])
           this.total = 0
@@ -128,6 +131,7 @@ export default {
           console.log(this.cartIDList)
           this.$forceUpdate()
           console.log('refreshing is done')
+          console.log('cart is alreday read')
         }
       })
     },

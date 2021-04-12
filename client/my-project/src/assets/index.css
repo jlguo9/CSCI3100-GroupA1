@@ -16,7 +16,7 @@ h3 {
 }
 
 p {
-  font-family: 'PT Serif', serif;
+  font-family: 'Fira Sans Condensed', sans-serif;
   font-size: 1.1em;
   font-weight: 300;
   line-height: 1.7em;
@@ -359,13 +359,13 @@ a.article:hover {
 }
 
 
-#gallery1 body {
+#gallery1a body {
   background-color: #fff;
   min-height: 100vh;
   font: normal 16px sans-serif;
 }
 
-#gallery1 .gallery-container h1 {
+#gallery1a .gallery-container h1 {
   text-align: center;
   margin-top: 70px;
   font-family: 'Droid Sans', sans-serif;
@@ -373,12 +373,13 @@ a.article:hover {
   color: #58595a;
 }
 
-#gallery1 .gallery-container p.page-description {
+#gallery1a .gallery-container p.page-description {
   text-align: center;
   margin: 30px auto;
   font-size: 18px;
   color: #85878c;
 }
+
 
 /* Styles for the gallery */
 
