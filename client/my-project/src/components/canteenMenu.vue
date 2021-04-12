@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container-fluid">
     <h1 class="sub-header">
       Today's Menu
       <span style="float: right">

@@ -16,7 +16,7 @@ h3 {
 }
 
 p {
-  font-family: 'Fira Sans Condensed', sans-serif;
+  font-family: 'PT Serif', serif;
   font-size: 1.1em;
   font-weight: 300;
   line-height: 1.7em;
@@ -103,9 +103,9 @@ span {
 }
 
 #sidebar.active ul li a {
-  padding: 20px 5px;
+  padding: 20px -1px;
   text-align: center;
-  font-size: 0.9em;
+  font-size: 0.8em;
 }
 
 #sidebar.active ul li ul {
@@ -169,11 +169,11 @@ a[aria-expanded='true'] {
   background: #750f6d;
 }
 
-a[data-toggle='collapse'] {
+#sidebar a[data-toggle='collapse'] {
   position: relative;
 }
 
-.dropdown-toggle::after {
+#sidebar .dropdown-toggle::after {
   display: block;
   position: absolute;
   top: 50%;
@@ -181,17 +181,17 @@ a[data-toggle='collapse'] {
   transform: translateY(-50%);
 }
 
-ul ul a {
+#sidebar ul ul a {
   font-size: 0.9em !important;
   padding-left: 30px !important;
   background: #750f6d;
 }
 
-ul.CTAs {
+#sidebar ul.CTAs {
   padding: 20px;
 }
 
-ul.CTAs a {
+#sidebar ul.CTAs a {
   text-align: center;
   font-size: 0.9em !important;
   display: block;
@@ -199,12 +199,12 @@ ul.CTAs a {
   margin-bottom: 5px;
 }
 
-a.download {
+#sidebar a.download {
   background: #fff;
   color: #750f6d;
 }
 
-a.article,
+#sidebar a.article,
 a.article:hover {
   background: #dda300 !important;
   color: #fff !important;
@@ -232,7 +232,7 @@ a.article:hover {
     text-align: center;
     margin-left: -80px !important;
   }
-  .dropdown-toggle::after {
+  #sidebar .dropdown-toggle::after {
     top: auto;
     bottom: 10px;
     right: 50%;
@@ -280,6 +280,7 @@ a.article:hover {
 
 .btn-purple {
   background-color: #750f6d;
+  font-family: 'Fira Sans Condensed', sans-serif;
   color: white;
 }
 .btn-purple {
@@ -303,48 +304,6 @@ a.article:hover {
   background-color: #600a59;
   border-color: #4c0946;
 }
-.btn-purple:active,
-.btn-purple.active,
-.open > .dropdown-toggle.btn-purple {
-  color: #fff;
-  background-color: #600a59;
-  border-color: #4c0946;
-}
-.btn-purple:active:hover,
-.btn-purple.active:hover,
-.open > .dropdown-toggle.btn-purple:hover,
-.btn-purple:active:focus,
-.btn-purple.active:focus,
-.open > .dropdown-toggle.btn-purple:focus,
-.btn-purple:active.focus,
-.btn-purple.active.focus,
-.open > .dropdown-toggle.btn-purple.focus {
-  color: #fff;
-  background-color: #600a59;
-  border-color: #3b0836;
-}
-.btn-purple:active,
-.btn-purple.active,
-.open > .dropdown-toggle.btn-purple {
-  background-image: none;
-}
-.btn-purple.disabled:hover,
-.btn-purple[disabled]:hover,
-fieldset[disabled] .btn-purple:hover,
-.btn-purple.disabled:focus,
-.btn-purple[disabled]:focus,
-fieldset[disabled] .btn-purple:focus,
-.btn-purple.disabled.focus,
-.btn-purple[disabled].focus,
-fieldset[disabled] .btn-purple.focus {
-  background-color: #750f6d;
-  border-color: #711469;
-}
-.btn-purple .badge {
-  color: #711469;
-  background-color: #fff;
-}
-
 
 .searchingTextBox {
   width: 200px;
@@ -380,3 +339,125 @@ fieldset[disabled] .btn-purple.focus {
   color: #750f6d;
   font-family: 'Oswald', sans-serif; /* this should be the rest of the output you got from Google fonts */
 }
+
+/* carousel */
+
+.carousel{
+  height: 70% !important;
+  width: 70% !important;
+  margin: 30px auto;
+}
+
+.carousel .carousel-item {
+  background-size: cover;
+  background-position: center;
+  margin: auto;
+}
+
+.carousel-inner img {
+  margin: auto;
+}
+
+
+#gallery1 body {
+  background-color: #fff;
+  min-height: 100vh;
+  font: normal 16px sans-serif;
+}
+
+#gallery1 .gallery-container h1 {
+  text-align: center;
+  margin-top: 70px;
+  font-family: 'Droid Sans', sans-serif;
+  font-weight: bold;
+  color: #58595a;
+}
+
+#gallery1 .gallery-container p.page-description {
+  text-align: center;
+  margin: 30px auto;
+  font-size: 18px;
+  color: #85878c;
+}
+
+/* Styles for the gallery */
+
+
+
+#forum body{
+  background-color: #eee;
+  font-family: "Fira Sans Condensed", sans-serif;
+}
+
+#forum .card {
+  border: none;
+  -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.03);
+}
+
+#forum .comment-text {
+  font-size: 15px;
+  font-family: "PT Serif", serif;
+}
+
+#forum .fs-10 {
+  font-size: 12px;
+}
+
+ #forum .date {
+  font-size: 11px
+}
+
+#forum .fs-12 {
+  font-size: 15px;
+  font-family: "PT Serif", serif;
+}
+
+#forum .shadow-none {
+  box-shadow: none
+}
+
+#forum  .name {
+  color: #007bff
+}
+
+#forum  .cursor:hover {
+  color: blue
+}
+
+#forum .cursor {
+  cursor: pointer
+}
+
+#forum .textarea {
+  resize: none
+}
+
+#forum .fa-facebook {
+  color: #3b5999
+}
+
+#forum .fa-twitter {
+  color: #55acee
+}
+
+#forum .fa-linkedin {
+  color: #0077B5
+}
+
+#forum .fa-instagram {
+  color: #e4405f
+}
+
+#forum .fa-dribbble {
+  color: #ea4c89
+}
+
+#forum .fa-pinterest {
+  color: #bd081c
+}
+
+#forum .fa {
+  cursor: pointer
+}
+

@@ -18,18 +18,88 @@
   <link href="https://fonts.googleapis.com/css2?family=Goudy+Bookletter+1911&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Redressed&display=swap" rel="stylesheet" />
+  <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+
+  <link href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' rel='stylesheet'>
+  <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
+  <style>
+      body {
+          background: #eee
+      }
+
+      .date {
+          font-size: 11px
+      }
+
+      .comment-text {
+          font-size: 12px
+      }
+
+      .fs-12 {
+          font-size: 12px
+      }
+
+      .shadow-none {
+          box-shadow: none
+      }
+
+      .name {
+          color: #007bff
+      }
+
+      .cursor:hover {
+          color: blue
+      }
+
+      .cursor {
+          cursor: pointer
+      }
+
+      .textarea {
+          resize: none
+      }
+
+      .fa-facebook {
+          color: #3b5999
+      }
+
+      .fa-twitter {
+          color: #55acee
+      }
+
+      .fa-linkedin {
+          color: #0077B5
+      }
+
+      .fa-instagram {
+          color: #e4405f
+      }
+
+      .fa-dribbble {
+          color: #ea4c89
+      }
+
+      .fa-pinterest {
+          color: #bd081c
+      }
+
+      .fa {
+          cursor: pointer
+      }
+  </style>
+  <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+  <script type='text/javascript'
+      src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js'></script>
+  <script type='text/javascript'></script>
 
   <title>Menu & Shopping Cart</title>
 </head>
 
-<script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
-      integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
-      crossorigin="anonymous"
-    ></script>
- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">  
 
- <body>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+  integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<body>
 
   <!-- <img src="images/hamburger.jpeg" alt="CUHK.jpeg" width="100"> -->
   <h1 style="font-size: 100px">Foodification</h1>
@@ -40,10 +110,10 @@
   <div id="menu">
 
     <div class="router">
-    <router-link to="/aaa">首页</router-link>
-    <router-link to="/bbb">购物车</router-link>
-    <router-link to="/ccc">记录</router-link>
-    <router-view></router-view>
+      <router-link to="/aaa">首页</router-link>
+      <router-link to="/bbb">购物车</router-link>
+      <router-link to="/ccc">记录</router-link>
+      <router-view></router-view>
     </div>
 
     <!-- <ul class="nav nav-pills">
@@ -62,30 +132,87 @@
         </div>
       </div>
     </div> -->
-    <div class="container mt-3 d-flex justify-content-center">
-      <div class="row d-flex justify-content-center">
+
+    <div class="container mt-5">
+      <div class="d-flex justify-content-center row">
           <div class="col-md-8">
-              <div class="text-left">
-                  <h6>All comment({{commentList.length}})</h6>
-              </div>
-              <div v-for="(value, index) in commentList" class="card p-3 mb-2" >
-                  <div class="d-flex flex-row"> <!-- <img src="https://i.imgur.com/dwiGgJr.jpg" height="40" width="40" class="rounded-circle"> -->
-                      <div class="d-flex flex-column ms-2">
-                          <h6 class="mb-1 text-primary">{{ value.dishName }}</h6>
-                          <p class="comment-text">{{ value.dishComment }}</p>
+              <div class="d-flex flex-column comment-section" id="myGroup">
+                  <div class="bg-white p-2">
+                      <div class="d-flex flex-row user-info"><img class="rounded-circle"
+                              src="https://i.imgur.com/RpzrMR2.jpg" width="40">
+                          <div class="d-flex flex-column justify-content-start ml-2"><span
+                                  class="d-block font-weight-bold name">Marry Andrews</span><span
+                                  class="date text-black-50">Shared publicly - Jan 2020</span></div>
+                      </div>
+                      <div class="mt-2">
+                          <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                       </div>
                   </div>
-                  <div class="d-flex justify-content-between">
-                      <div class="d-flex flex-row gap-3 align-items-center">
-                          <div class="d-flex align-items-center"> <i class="fa fa-heart-o"></i> <span class="ms-1 fs-10">Like</span> </div>
-                          <div class="d-flex align-items-center"> <i class="fa fa-comment-o"></i> <span class="ms-1 fs-10">Comments</span> </div>
+                  <div class="bg-white p-2">
+                      <div class="d-flex flex-row fs-12">
+                          <div class="like p-2 cursor"><i class="fa fa-thumbs-o-up"></i><span class="ml-1">Like</span>
+                          </div>
+                          <div class="like p-2 cursor action-collapse" data-toggle="collapse" aria-expanded="true"
+                              aria-controls="collapse-1" href="#collapse-1"><i class="fa fa-commenting-o"></i><span
+                                  class="ml-1">Comment</span></div>
+                          <div class="like p-2 cursor action-collapse" data-toggle="collapse" aria-expanded="true"
+                              aria-controls="collapse-2" href="#collapse-2"><i class="fa fa-share"></i><span
+                                  class="ml-1">Share</span></div>
                       </div>
-                      <div class="d-flex flex-row"> <span class="text-muted fw-normal fs-10">{{value.date}}</span> </div>
+                  </div>
+                  <div id="collapse-1" class="bg-light p-2 collapse" data-parent="#myGroup">
+                      <div class="d-flex flex-row align-items-start"><img class="rounded-circle"
+                              src="https://i.imgur.com/RpzrMR2.jpg" width="40"><textarea
+                              class="form-control ml-1 shadow-none textarea"></textarea></div>
+                      <div class="mt-2 text-right"><button class="btn btn-primary btn-sm shadow-none"
+                              type="button">Post comment</button><button
+                              class="btn btn-outline-primary btn-sm ml-1 shadow-none" type="button">Cancel</button>
+                      </div>
+                  </div>
+                  <div id="collapse-2" class="bg-light p-2 collapse" data-parent="#myGroup">
+                      <div class="d-flex flex-row align-items-start"><i
+                              class="fa fa-facebook border p-3 rounded mr-1"></i><i
+                              class="fa fa-twitter border p-3 rounded mr-1"></i><i
+                              class="fa fa-linkedin border p-3 rounded mr-1"></i><i
+                              class="fa fa-instagram border p-3 rounded mr-1"></i><i
+                              class="fa fa-dribbble border p-3 rounded mr-1"></i> <i
+                              class="fa fa-pinterest-p border p-3 rounded mr-1"></i> </div>
                   </div>
               </div>
           </div>
       </div>
   </div>
+
+
+    <div class="container mt-3 d-flex justify-content-center">
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-8">
+          <div class="text-left">
+            <h6>All comment({{commentList.length}})</h6>
+          </div>
+          <div v-for="(value, index) in commentList" class="card p-3 mb-2">
+            <div class="d-flex flex-row">
+              <!-- <img src="https://i.imgur.com/dwiGgJr.jpg" height="40" width="40" class="rounded-circle"> -->
+              <div class="d-flex flex-column ms-2">
+                <h6 class="mb-1 text-primary">{{ value.dishName }}</h6>
+                <p class="comment-text">{{ value.dishComment }}</p>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div class="d-flex flex-row gap-3 align-items-center">
+                <div class="d-flex align-items-center"> <i class="fa fa-heart-o"></i> <span
+                    class="ms-1 fs-10">Like</span> </div>
+                <div class="d-flex align-items-center"> <i class="fa fa-comment-o"></i> <span
+                    class="ms-1 fs-10">Comments</span> </div>
+              </div>
+              <div class="d-flex flex-row"> <span class="text-muted fw-normal fs-10">{{value.date}}</span> </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
 
 
@@ -111,7 +238,8 @@
             <td>{{ value.dishComment }}</td>
             <td>{{ value.numOfLike }}</td>
             <td>
-              <input type="button" class="likeButton" value = "Like" @click.prevent="likeComment(value.numOfLike, value.id)" />
+              <input type="button" class="likeButton" value="Like"
+                @click.prevent="likeComment(value.numOfLike, value.id)" />
             </td>
           </tr>
           <tr v-show="commentList.length === 0">
@@ -144,512 +272,532 @@
           </select> </span><br />
 
         Step 3: Input Your Comment:
-        <input type="text" class="addingTextBox"  v-model="dishComment"
-          placeholder="Input Here" style=" width: 1000px; height: 100px" />
+        <input type="text" class="addingTextBox" v-model="dishComment" placeholder="Input Here"
+          style=" width: 1000px; height: 100px" />
         <br />
 
-        <input type="button"
-          class="textButton" value="Add Now" @click="addComment()" />
+        <input type="button" class="textButton" value="Add Now" @click="addComment()" />
       </div>
 
 
 
 
 
-    <div class="menu">
-      <div class="board">
-        <h1>Today's Menu</h1>
-        <table class="tb">
-          <tr>
-            <th>Index</th>
-            <th>ID</th>
-            <th>Canteen Name</th>
-            <th>Dish Name</th>
-            <th>Dish Price</th>
-            <th>Action</th>
-          </tr>
-          <tr v-for="(value, index) in searchedList">
-            <!-- <td>{{ index + 1 }}</td> -->
-            <td>{{ index + 1 }}</td>
-            <td>{{ value.id }}</td>
-            <td>{{ value.canName}}</td>
-            <td>{{ value.dishName}}</td>
-            <td>{{ value.dishPrice | formatCurrency }}</td>
-            <td>
-              <input type="button" class="editButton" @click.prevent="editItem(index,value.id)" />
-              &nbsp;
-              <input type="button" class="trashButton" @click.prevent="deleteItem(value.id)" />
-              &nbsp;
-              <input type="button" class="cartButton" @click.prevent="addToCart(index,value.id)" />
-            </td>
-          </tr>
-          <tr v-show="menuList.length ===0">
-            <td colspan="6">No Dish Data</td>
-          </tr>
-        </table>
-        <input type="button" :disabled="menuList.length==0" class="textButton" value="Remove All" @click="removeMenu()" />
-      </div>
-
-      <div class="add">
-        <h1>Add Today's New Dish Here!</h1>
-        <label for="cars">Step 1: Select A Canteen:</label>
-
-        <span class="box">
-          <select v-model="newCanName">
-            <option disabled :value="null">Select A Canteen</option>
-            <option v-for="option in options" :value="option">
-              {{ option }}
-            </option>
-          </select></span>
-        <br />
-        <label for="cars">Step 2: Select An Existing Dish:</label>
-        <span class="box">
-          <select v-model="newDishName">
-            <option disabled :value="null">
-              Select An Existing/Existed Dish
-            </option>
-            <option v-for="option in dishNameList" :value="option">
-              {{ option }}
-            </option>
-          </select> </span><br />
-
-        &nbsp; Or Input the New Dish Name:
-        <input type="text" class="addingTextBox" v-model="newDishName" placeholder="Input Here" /><br />
-
-        Step 3: Input the New Dish Price:
-        <input type="number" class="addingNumBox" step="0.5" v-model="newDishPrice"
-          placeholder="Input Here or Click the Button" min="0" />
-        <br />
-
-        <input type="button"
-          :disabled="newCanName.length==0||newDishName.length==0||parseFloat(newDishPrice)<0||newDishPrice.length==0"
-          class="textButton" value="Add Now" @click="addItem()" />
-      </div>
-    </div>
-
-    <div class="cart">
-      <div class="board">
-        <h1><strong>Your Shopping Cart </strong></h1>
-        <div>
+      <div class="menu">
+        <div class="board">
+          <h1>Today's Menu</h1>
           <table class="tb">
             <tr>
               <th>Index</th>
-              <th>id</th>
+              <th>ID</th>
               <th>Canteen Name</th>
               <th>Dish Name</th>
               <th>Dish Price</th>
-              <th>Quantity</th>
               <th>Action</th>
             </tr>
-            <tr v-for="(value, index) in cartList">
+            <tr v-for="(value, index) in searchedList">
+              <!-- <td>{{ index + 1 }}</td> -->
               <td>{{ index + 1 }}</td>
               <td>{{ value.id }}</td>
               <td>{{ value.canName}}</td>
               <td>{{ value.dishName}}</td>
-              <td>{{ value.dishPrice | formatCurrency}}</td>
+              <td>{{ value.dishPrice | formatCurrency }}</td>
               <td>
-                <input type="button"
-                  :class="{operandButton:operandButtonValid[index],InvalidOperandButton:operandButtonInvalid[index]}"
-                  value="-" @click="subCartQuant(index,value.id)" />
-                <!-- <input type="button" class="operandButton" value="- @click="subCartQuant(index)"> -->
-                &nbsp;{{ value.quantity}}&nbsp;
-                <!-- <input type="button" class="operandButton" value="+ @click="addCartQuant(index)"> -->
-                <input type="button" class="operandButton" value="+" @click="addCartQuant(index,value.id)" />
-              </td>
-
-              <td>
-                <input type="button" class="trashButton" @click.prevent="removeFromCart(index,value.id)" />
+                <input type="button" class="editButton" @click.prevent="editItem(index,value.id)" />
+                &nbsp;
+                <input type="button" class="trashButton" @click.prevent="deleteItem(value.id)" />
+                &nbsp;
+                <input type="button" class="cartButton" @click.prevent="addToCart(index,value.id)" />
               </td>
             </tr>
-            <tr v-show="cartList.length ===0">
-              <td colspan="7">Your shopping cart is empty.</td>
+            <tr v-show="menuList.length ===0">
+              <td colspan="6">No Dish Data</td>
             </tr>
           </table>
-          <p>
-            Total price of your shopping cart: {{ total | formatCurrency}}.
-          </p>
+          <input type="button" :disabled="menuList.length==0" class="textButton" value="Remove All"
+            @click="removeMenu()" />
         </div>
-        <input type="button" :disabled="cartList.length==0" class="textButton" value="Remove All"
-          @click="removeCart()" />
-        <input type="button" :disabled="cartList.length==0" class="textButton" value="Move All to Record"
-          @click="moveToRecord()" />
-      </div>
 
-      <div class="search">
-        <h1>Search & Filter Menu Here!</h1>
-        Canteen Name:
-        <input type="text" class="searchingTextBox" placeholder="Input Search Criteria" v-model="searchCanteen" />
-        <br />
-        Dish Name:
-        <input type="text" class="searchingTextBox" placeholder="Input Search Criteria" v-model="searchDish" />
-        <br />
-        Dish Price Range:
-        <input type="number" class="smallNumBox" step="0.5" v-model="searchDishPriceMin" placeholder="Input or Click"
-          min="0" />
-        -
-        <input type="number" class="smallNumBox" step="0.5" v-model="searchDishPriceMax" placeholder="Input or Click"
-          min="0" />
-        <br />
-        <input type="button" class="textButton" value="Remove Filter Criteria" @click="removeSearchFilter()" />
-      </div>
+        <div class="add">
+          <h1>Add Today's New Dish Here!</h1>
+          <label for="cars">Step 1: Select A Canteen:</label>
 
-      <div class="records">
-        <h1>Your Order Histroy</h1>
-        <div>
-          <table class="tb">
-            <tr>
-              <th>Date</th>
-              <th>Canteen Name</th>
-              <th>Dish Name</th>
-              <th>Dish Price</th>
-              <th>Quantity</th>
-              <th>Subtotal</th>
-              <th>Action</th>
-            </tr>
-            <tr v-for="(value, index) in recordList">
-              <td>{{ value.time }}</td>
-              <td>{{ value.canName}}</td>
-              <td>{{ value.dishName}}</td>
-              <td>{{ value.dishPrice | formatCurrency}}</td>
-              <td>{{ value.quantity}}</td>
-              <td>{{ value.subtotal | formatCurrency}}</td>
+          <span class="box">
+            <select v-model="newCanName">
+              <option disabled :value="null">Select A Canteen</option>
+              <option v-for="option in options" :value="option">
+                {{ option }}
+              </option>
+            </select></span>
+          <br />
+          <label for="cars">Step 2: Select An Existing Dish:</label>
+          <span class="box">
+            <select v-model="newDishName">
+              <option disabled :value="null">
+                Select An Existing/Existed Dish
+              </option>
+              <option v-for="option in dishNameList" :value="option">
+                {{ option }}
+              </option>
+            </select> </span><br />
 
-              <td>
-                <input type="button" class="trashButton" @click.prevent="removeFromRecordList(index)" />
-              </td>
-            </tr>
-            <tr v-show="recordList.length ===0">
-              <td colspan="7">Your record history is empty.</td>
-            </tr>
-          </table>
+          &nbsp; Or Input the New Dish Name:
+          <input type="text" class="addingTextBox" v-model="newDishName" placeholder="Input Here" /><br />
+
+          Step 3: Input the New Dish Price:
+          <input type="number" class="addingNumBox" step="0.5" v-model="newDishPrice"
+            placeholder="Input Here or Click the Button" min="0" />
+          <br />
+
+          <input type="button"
+            :disabled="newCanName.length==0||newDishName.length==0||parseFloat(newDishPrice)<0||newDishPrice.length==0"
+            class="textButton" value="Add Now" @click="addItem()" />
         </div>
-        <input type="button" class="textButton" :disabled="recordList.length==0" value="Clear Record"
-          @click="removeRecord()" />
       </div>
+
+      <div class="cart">
+        <div class="board">
+          <h1><strong>Your Shopping Cart </strong></h1>
+          <div>
+            <table class="tb">
+              <tr>
+                <th>Index</th>
+                <th>id</th>
+                <th>Canteen Name</th>
+                <th>Dish Name</th>
+                <th>Dish Price</th>
+                <th>Quantity</th>
+                <th>Action</th>
+              </tr>
+              <tr v-for="(value, index) in cartList">
+                <td>{{ index + 1 }}</td>
+                <td>{{ value.id }}</td>
+                <td>{{ value.canName}}</td>
+                <td>{{ value.dishName}}</td>
+                <td>{{ value.dishPrice | formatCurrency}}</td>
+                <td>
+                  <input type="button"
+                    :class="{operandButton:operandButtonValid[index],InvalidOperandButton:operandButtonInvalid[index]}"
+                    value="-" @click="subCartQuant(index,value.id)" />
+                  <!-- <input type="button" class="operandButton" value="- @click="subCartQuant(index)"> -->
+                  &nbsp;{{ value.quantity}}&nbsp;
+                  <!-- <input type="button" class="operandButton" value="+ @click="addCartQuant(index)"> -->
+                  <input type="button" class="operandButton" value="+" @click="addCartQuant(index,value.id)" />
+                </td>
+
+                <td>
+                  <input type="button" class="trashButton" @click.prevent="removeFromCart(index,value.id)" />
+                </td>
+              </tr>
+              <tr v-show="cartList.length ===0">
+                <td colspan="7">Your shopping cart is empty.</td>
+              </tr>
+            </table>
+            <p>
+              Total price of your shopping cart: {{ total | formatCurrency}}.
+            </p>
+          </div>
+          <input type="button" :disabled="cartList.length==0" class="textButton" value="Remove All"
+            @click="removeCart()" />
+          <input type="button" :disabled="cartList.length==0" class="textButton" value="Move All to Record"
+            @click="moveToRecord()" />
+        </div>
+
+        <div class="search">
+          <h1>Search & Filter Menu Here!</h1>
+          Canteen Name:
+          <input type="text" class="searchingTextBox" placeholder="Input Search Criteria" v-model="searchCanteen" />
+          <br />
+          Dish Name:
+          <input type="text" class="searchingTextBox" placeholder="Input Search Criteria" v-model="searchDish" />
+          <br />
+          Dish Price Range:
+          <input type="number" class="smallNumBox" step="0.5" v-model="searchDishPriceMin" placeholder="Input or Click"
+            min="0" />
+          -
+          <input type="number" class="smallNumBox" step="0.5" v-model="searchDishPriceMax" placeholder="Input or Click"
+            min="0" />
+          <br />
+          <input type="button" class="textButton" value="Remove Filter Criteria" @click="removeSearchFilter()" />
+        </div>
+
+        <div class="records">
+          <h1>Your Order Histroy</h1>
+          <div>
+            <table class="tb">
+              <tr>
+                <th>Date</th>
+                <th>Canteen Name</th>
+                <th>Dish Name</th>
+                <th>Dish Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+                <th>Action</th>
+              </tr>
+              <tr v-for="(value, index) in recordList">
+                <td>{{ value.time }}</td>
+                <td>{{ value.canName}}</td>
+                <td>{{ value.dishName}}</td>
+                <td>{{ value.dishPrice | formatCurrency}}</td>
+                <td>{{ value.quantity}}</td>
+                <td>{{ value.subtotal | formatCurrency}}</td>
+
+                <td>
+                  <input type="button" class="trashButton" @click.prevent="removeFromRecordList(index)" />
+                </td>
+              </tr>
+              <tr v-show="recordList.length ===0">
+                <td colspan="7">Your record history is empty.</td>
+              </tr>
+            </table>
+          </div>
+          <input type="button" class="textButton" :disabled="recordList.length==0" value="Clear Record"
+            @click="removeRecord()" />
+        </div>
+      </div>
+
+
+
     </div>
 
+    <!-- <script src="./main.js"></script> -->
 
-    
-  </div>
+    <script src="./script/vue.js"></script>
+    <script src="./script/axios.min.js"></script>
+    <script src="./script/vue-router.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+      integrity="sha384-uefMccjFJAIsv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+      crossorigin="anonymous"></script>
 
-  <!-- <script src="./main.js"></script> -->
+    <script>
 
-  <script src="./script/vue.js"></script>
-  <script src="./script/axios.min.js"></script>
-  <script src="./script/vue-router.js"></script>
-
-  <script>
-
-    var comA = {
-      template: `<div>this is AAAAA
+      var comA = {
+        template: `<div>this is AAAAA
         <input type="button"></div>`
-    }
-    var comB = {
-      template: `<div>this is BBBBB</div>`
-    }
-    var comC = {
-      template: `<div>this is CCCCC</div>`
-    }
-    var comD = {
-      template: `<div>this is DDDDD</div>`
-    }
-
-    var routes = [
-      {
-        path: '/aaa',
-        component: comA,
-      },
-      {
-        path: '/bbb',
-        component: comB,
-      }, {
-        path: '/ccc',
-        component: comC,
-      }, {
-        path: '/ddd',
-        component: comD,
       }
-    ]
-
-    var router = new VueRouter({
-      routes
-    })
-
-    Vue.filter("formatCurrency", (v) => {
-      if (parseFloat(v) <= 0) {
-        var revealNum = 0;
-      } else {
-        var revealNum = parseFloat(v).toFixed(2);
+      var comB = {
+        template: `<div>this is BBBBB</div>`
       }
-      return "$ " + revealNum;
-    });
+      var comC = {
+        template: `<div>this is CCCCC</div>`
+      }
+      var comD = {
+        template: `<div>this is DDDDD</div>`
+      }
 
-    var vm = new Vue({
-      el: "#menu",
-      router: router,
-      data: {
-        imgSRC: "images/CUHK.jpeg",
-        selected: "NA",
-        options: [
-          "Basic Medical Sciences Building Snack Bar",
-          "Benjamin Franklin Centre Coffee Corner",
-          "Benjamin Franklin Centre Staff Canteen",
-          "Benjamin Franklin Centre Student Canteen",
-          "Benjamin Franklin Centre Vegetarian Food Shop",
-          "Café 330",
-          "Canteen of CW Chu College",
-          "Canteen of S.H. Ho College",
-          "Connexion, S.H. Ho College Staff Common Room",
-          "Chung Chi College Staff Club",
-          "Chung Chi College Student Canteen",
-          "Lee Shau Kee Building Snack Bar",
-          "Lee Woo Sing College - Cafe Tolo",
-          "Lee Woo Sing College - The Green",
-          "Lee Woo Sing College - The Harmony",
-          "Lee Woo Sing College - WS Pavilion",
-          "Li Wai Chun Building Café",
-          "Li Wai Chun Building Halal Food Outlet",
-          "Morningside College Café",
-          "Morningside College Dining Hall",
-          "New Asia College Coffee Shop (Coffee Lover Café)",
-          "New Asia College Staff Canteen",
-          "New Asia College Student Canteen",
-          "New Asia College Yun Chi Hsien",
-          "Orchid Lodge",
-          "Pommerenke Student Centre Café (Paper&Coffee)",
-          "Postgraduate Hall 3 Café (Area 39)",
-          "S.H. Ho College Café",
-          "Staff Common Room Clubhouse",
-          "SeeYou@Shaw (with Café)",
-          "The Stage",
-          "United College Si Yuan Amenities Centre",
-          "United College Staff Canteen",
-          "United College Staff Common Room",
-          "United College Student Canteen",
-          "Women Cooperative Store",
-          "Wu Yee Sun College Staff Dining Room",
-          "Wu Yee Sun College Student Canteen",
-        ],
-        menuList: [],
-        dishNameList: [],
-        menuIDList: [],
-        newCanName: "",
-        newDishName: "",
-        newDishPrice: "",
-        total: 0,
-        searchCanteen: "",
-        searchDish: "",
-        searchDishPriceMin: 0,
-        searchDishPriceMax: 1000,
-        cartList: [],
-        cartQuantList: [],
-        cartIDList: [],
-        operandButtonValid: [],
-        operandButtonInvalid: [],
-        recordList: [],
-        recordIDList: [],
-        commentList: []
-      },
-      computed: {
-        searchedList() {
-          return this.menuList.filter((item) => {
-            return (
-              item.canName
-                .toUpperCase()
-                .includes(this.searchCanteen.toUpperCase()) &&
-              item.dishName
-                .toUpperCase()
-                .includes(this.searchDish.toUpperCase()) &&
-              item.dishPrice >= parseFloat(this.searchDishPriceMin) &&
-              item.dishPrice <= parseFloat(this.searchDishPriceMax)
-            );
-          });
+      var routes = [
+        {
+          path: '/aaa',
+          component: comA,
         },
-      },
-      mounted() {
-        this.getMenu();
-        this.getCart();
-        this.getRecord();
-        this.getComment();
-      },
-      methods: {
-        getComment(){
+        {
+          path: '/bbb',
+          component: comB,
+        }, {
+          path: '/ccc',
+          component: comC,
+        }, {
+          path: '/ddd',
+          component: comD,
+        }
+      ]
+
+      var router = new VueRouter({
+        routes
+      })
+
+      Vue.filter("formatCurrency", (v) => {
+        if (parseFloat(v) <= 0) {
+          var revealNum = 0;
+        } else {
+          var revealNum = parseFloat(v).toFixed(2);
+        }
+        return "$ " + revealNum;
+      });
+
+      var vm = new Vue({
+        el: "#menu",
+        router: router,
+        data: {
+          imgSRC: "images/CUHK.jpeg",
+          selected: "NA",
+          options: [
+            "Basic Medical Sciences Building Snack Bar",
+            "Benjamin Franklin Centre Coffee Corner",
+            "Benjamin Franklin Centre Staff Canteen",
+            "Benjamin Franklin Centre Student Canteen",
+            "Benjamin Franklin Centre Vegetarian Food Shop",
+            "Café 330",
+            "Canteen of CW Chu College",
+            "Canteen of S.H. Ho College",
+            "Connexion, S.H. Ho College Staff Common Room",
+            "Chung Chi College Staff Club",
+            "Chung Chi College Student Canteen",
+            "Lee Shau Kee Building Snack Bar",
+            "Lee Woo Sing College - Cafe Tolo",
+            "Lee Woo Sing College - The Green",
+            "Lee Woo Sing College - The Harmony",
+            "Lee Woo Sing College - WS Pavilion",
+            "Li Wai Chun Building Café",
+            "Li Wai Chun Building Halal Food Outlet",
+            "Morningside College Café",
+            "Morningside College Dining Hall",
+            "New Asia College Coffee Shop (Coffee Lover Café)",
+            "New Asia College Staff Canteen",
+            "New Asia College Student Canteen",
+            "New Asia College Yun Chi Hsien",
+            "Orchid Lodge",
+            "Pommerenke Student Centre Café (Paper&Coffee)",
+            "Postgraduate Hall 3 Café (Area 39)",
+            "S.H. Ho College Café",
+            "Staff Common Room Clubhouse",
+            "SeeYou@Shaw (with Café)",
+            "The Stage",
+            "United College Si Yuan Amenities Centre",
+            "United College Staff Canteen",
+            "United College Staff Common Room",
+            "United College Student Canteen",
+            "Women Cooperative Store",
+            "Wu Yee Sun College Staff Dining Room",
+            "Wu Yee Sun College Student Canteen",
+          ],
+          menuList: [],
+          dishNameList: [],
+          menuIDList: [],
+          newCanName: "",
+          newDishName: "",
+          newDishPrice: "",
+          total: 0,
+          searchCanteen: "",
+          searchDish: "",
+          searchDishPriceMin: 0,
+          searchDishPriceMax: 1000,
+          cartList: [],
+          cartQuantList: [],
+          cartIDList: [],
+          operandButtonValid: [],
+          operandButtonInvalid: [],
+          recordList: [],
+          recordIDList: [],
+          commentList: []
+        },
+        computed: {
+          searchedList() {
+            return this.menuList.filter((item) => {
+              return (
+                item.canName
+                  .toUpperCase()
+                  .includes(this.searchCanteen.toUpperCase()) &&
+                item.dishName
+                  .toUpperCase()
+                  .includes(this.searchDish.toUpperCase()) &&
+                item.dishPrice >= parseFloat(this.searchDishPriceMin) &&
+                item.dishPrice <= parseFloat(this.searchDishPriceMax)
+              );
+            });
+          },
+        },
+        mounted() {
+          this.getMenu();
+          this.getCart();
+          this.getRecord();
+          this.getComment();
+        },
+        methods: {
+          getComment() {
             axios.get("http://localhost:3000/forum").then((res) => {
-            const { status, data } = res;
-            if (status == 200) {
-              this.commentList = data;
-              this.commentIDList = data.map(e => e["id"]);
-              this.commentDishNameList = [...new Set(data.map(e => e["dishName"]))];
-            }
-          });},
-  
-        addComment() {
-          axios.post("http://localhost:3000/forum", {
-            canName: this.commentedCanName,
-            dishName: this.commentedDishName,
-            dishComment: this.dishComment,
-            numOfLike: 0,
-            date:new Date().toJSON().slice(0, 10).replace(/-/g, "/"),
-          }).then((res) => {
-            const { status, data } = res;
-            if (status === 201) {
-              this.getComment();
-            }
-          });
-          this.commentedCanName = "";
-          this.commentedDishName = "";
-          this.dishComment = "";
-        },
-        likeComment(Likes, id) {
-          axios.patch("http://localhost:3000/forum/" + id, {numOfLike:Likes + 1}).then((res) => {
-            const { status, data } = res;
-            if (status === 200) {
-              this.getComment();
-            }
-          });
-          
-        },
-
-        getMenu() {
-          axios.get("http://localhost:3000/list").then((res) => {
-            const { status, data } = res;
-            if (status == 200) {
-              this.menuList = data;
-              this.menuIDList = data.map(e => e["id"]);
-              this.dishNameList = [...new Set(data.map(e => e["dishName"]))];
-            }
-          });
-        },
-        getCart() {
-          axios.get("http://localhost:3000/cart").then((res) => {
-            const { status, data } = res;
-            if (status == 200) {
-              this.cartList = data;
-              this.cartQuantList = data.map(e => e["quantity"]);
-              this.cartIDList = data.map(e => e["id"]);
-              this.total = 0;
-              for (var j = 0; j < this.cartQuantList.length; j++) {
-                var item = this.cartQuantList[j]
-                if (parseInt(item) <= 1) {
-                  this.operandButtonValid.push(false);
-                  this.operandButtonInvalid.push(true);
-                }
-                else {
-                  this.operandButtonValid.push(true);
-                  this.operandButtonInvalid.push(false);
-                }
-                this.total += parseFloat(this.cartList[j].dishPrice) * parseInt(this.cartList[j].quantity);
+              const { status, data } = res;
+              if (status == 200) {
+                this.commentList = data;
+                this.commentIDList = data.map(e => e["id"]);
+                this.commentDishNameList = [...new Set(data.map(e => e["dishName"]))];
               }
-              console.log(this.total);
+            });
+          },
+
+          addComment() {
+            axios.post("http://localhost:3000/forum", {
+              canName: this.commentedCanName,
+              dishName: this.commentedDishName,
+              dishComment: this.dishComment,
+              numOfLike: 0,
+              date: new Date().toJSON().slice(0, 10).replace(/-/g, "/"),
+            }).then((res) => {
+              const { status, data } = res;
+              if (status === 201) {
+                this.getComment();
+              }
+            });
+            this.commentedCanName = "";
+            this.commentedDishName = "";
+            this.dishComment = "";
+          },
+          likeComment(Likes, id) {
+            axios.patch("http://localhost:3000/forum/" + id, { numOfLike: Likes + 1 }).then((res) => {
+              const { status, data } = res;
+              if (status === 200) {
+                this.getComment();
+              }
+            });
+
+          },
+
+          getMenu() {
+            axios.get("http://localhost:3000/list").then((res) => {
+              const { status, data } = res;
+              if (status == 200) {
+                this.menuList = data;
+                this.menuIDList = data.map(e => e["id"]);
+                this.dishNameList = [...new Set(data.map(e => e["dishName"]))];
+              }
+            });
+          },
+          getCart() {
+            axios.get("http://localhost:3000/cart").then((res) => {
+              const { status, data } = res;
+              if (status == 200) {
+                this.cartList = data;
+                this.cartQuantList = data.map(e => e["quantity"]);
+                this.cartIDList = data.map(e => e["id"]);
+                this.total = 0;
+                for (var j = 0; j < this.cartQuantList.length; j++) {
+                  var item = this.cartQuantList[j]
+                  if (parseInt(item) <= 1) {
+                    this.operandButtonValid.push(false);
+                    this.operandButtonInvalid.push(true);
+                  }
+                  else {
+                    this.operandButtonValid.push(true);
+                    this.operandButtonInvalid.push(false);
+                  }
+                  this.total += parseFloat(this.cartList[j].dishPrice) * parseInt(this.cartList[j].quantity);
+                }
+                console.log(this.total);
+              }
+            });
+          },
+          getRecord() {
+            axios.get("http://localhost:3000/record").then((res) => {
+              const { status, data } = res;
+              if (status == 200) {
+                this.recordList = data;
+                this.recordIDList = data.map(e => e["id"]);
+              }
+            });
+          },
+          removeMenu() {
+            if (confirm("Are you sure?")) {
+              console.log(this.menuIDList);
+              for (var j = 0; j < this.menuIDList.length; j++) {
+                var item = this.menuIDList[j]
+                axios.delete("http://localhost:3000/menuList/" + item).then((res) => {
+                  const { status, data } = res;
+                  if (status === 200) {
+                    this.getMenu();
+                  }
+                });
+              }
             }
-          });
-        },
-        getRecord() {
-          axios.get("http://localhost:3000/record").then((res) => {
-            const { status, data } = res;
-            if (status == 200) {
-              this.recordList = data;
-              this.recordIDList = data.map(e => e["id"]);
-            }
-          });
-        },
-        removeMenu() {
-          if (confirm("Are you sure?")) {
-            console.log(this.menuIDList);
-            for (var j = 0; j < this.menuIDList.length; j++) {
-              var item = this.menuIDList[j]
-              axios.delete("http://localhost:3000/menuList/" + item).then((res) => {
+          },
+          addItem() {
+            axios.post("http://localhost:3000/menuList", {
+              canName: this.newCanName,
+              dishName: this.newDishName,
+              dishPrice: this.newDishPrice,
+            }).then((res) => {
+              const { status, data } = res;
+              if (status === 201) {
+                this.getMenu();
+              }
+            });
+            this.newCanName = "";
+            this.newDishName = "";
+            this.newDishPrice = "";
+          },
+          deleteItem(id) {
+            if (confirm("Are you sure?")) {
+              axios.delete("http://localhost:3000/menuList/" + id).then((res) => {
                 const { status, data } = res;
                 if (status === 200) {
                   this.getMenu();
                 }
               });
             }
-          }
-        },
-        addItem() {
-          axios.post("http://localhost:3000/menuList", {
-            canName: this.newCanName,
-            dishName: this.newDishName,
-            dishPrice: this.newDishPrice,
-          }).then((res) => {
-            const { status, data } = res;
-            if (status === 201) {
-              this.getMenu();
+          },
+          editItem(index, id) {
+            var r1 = window.prompt("Edit the canteen name of this item:", "New canteen name");
+            var r2 = window.prompt("Edit the dish name of this item:", "New dish name");
+            var r3 = window.prompt("Edit the dish price of this item:", "New dish price");
+            if (r1 === null && r2 === null && r3 === null) {
+              return;
             }
-          });
-          this.newCanName = "";
-          this.newDishName = "";
-          this.newDishPrice = "";
-        },
-        deleteItem(id) {
-          if (confirm("Are you sure?")) {
-            axios.delete("http://localhost:3000/menuList/" + id).then((res) => {
-              const { status, data } = res;
-              if (status === 200) {
-                this.getMenu();
+            else {
+              if (r1 === null) {
+                r1 = this.searchedList[index].canName;
               }
-            });
-          }
-        },
-        editItem(index, id) {
-          var r1 = window.prompt("Edit the canteen name of this item:", "New canteen name");
-          var r2 = window.prompt("Edit the dish name of this item:", "New dish name");
-          var r3 = window.prompt("Edit the dish price of this item:", "New dish price");
-          if (r1 === null && r2 === null && r3 === null) {
-            return;
-          }
-          else {
-            if (r1 === null) {
-              r1 = this.searchedList[index].canName;
+              if (r2 === null) {
+                r2 = this.searchedList[index].dishName;
+              }
+              if (r3 === null) {
+                r3 = this.searchedList[index].dishPrice;
+              }
+              axios.put("http://localhost:3000/menuList/" + id, {
+                canName: r1,
+                dishName: r2,
+                dishPrice: r3,
+              }).then((res) => {
+                const { status, data } = res;
+                if (status === 200) {
+                  this.getMenu();
+                }
+              });
             }
-            if (r2 === null) {
-              r2 = this.searchedList[index].dishName;
-            }
-            if (r3 === null) {
-              r3 = this.searchedList[index].dishPrice;
-            }
-            axios.put("http://localhost:3000/menuList/" + id, {
-              canName: r1,
-              dishName: r2,
-              dishPrice: r3,
+            // this.dishNameList[index] = this.menuList[index].dishName;
+          },
+          addToCart(index, id) {
+            axios.post("http://localhost:3000/cart", {
+              canName: this.searchedList[index].canName,
+              dishName: this.searchedList[index].dishName,
+              dishPrice: this.searchedList[index].dishPrice,
+              quantity: 1,
             }).then((res) => {
               const { status, data } = res;
-              if (status === 200) {
-                this.getMenu();
+              if (status === 201) {
+                this.getCart();
               }
             });
-          }
-          // this.dishNameList[index] = this.menuList[index].dishName;
-        },
-        addToCart(index, id) {
-          axios.post("http://localhost:3000/cart", {
-            canName: this.searchedList[index].canName,
-            dishName: this.searchedList[index].dishName,
-            dishPrice: this.searchedList[index].dishPrice,
-            quantity: 1,
-          }).then((res) => {
-            const { status, data } = res;
-            if (status === 201) {
-              this.getCart();
+          },
+          subCartQuant(index, id) {
+            if (this.cartList[index].quantity > 1) {
+              if (this.cartList[index].quantity > 2) {
+                this.operandButtonValid[index] = true;
+                this.operandButtonInvalid[index] = false;
+              } else if (this.cartList[index].quantity <= 2) {
+                this.operandButtonValid[index] = false;
+                this.operandButtonInvalid[index] = true;
+              }
+              this.total -= parseFloat(this.cartList[index].dishPrice) * 1;
+              axios.put("http://localhost:3000/cart/" + id, {
+                canName: this.cartList[index].canName,
+                dishName: this.cartList[index].dishName,
+                dishPrice: this.cartList[index].dishPrice,
+                quantity: this.cartList[index].quantity - 1,
+                id: id
+              }).then((res) => {
+                const { status, data } = res;
+                if (status === 200) {
+                  this.getCart();
+                }
+              });
             }
-          });
-        },
-        subCartQuant(index, id) {
-          if (this.cartList[index].quantity > 1) {
-            if (this.cartList[index].quantity > 2) {
-              this.operandButtonValid[index] = true;
-              this.operandButtonInvalid[index] = false;
-            } else if (this.cartList[index].quantity <= 2) {
-              this.operandButtonValid[index] = false;
-              this.operandButtonInvalid[index] = true;
-            }
-            this.total -= parseFloat(this.cartList[index].dishPrice) * 1;
+          },
+          addCartQuant(index, id) {
+            this.total += parseFloat(this.cartList[index].dishPrice) * 1;
             axios.put("http://localhost:3000/cart/" + id, {
               canName: this.cartList[index].canName,
               dishName: this.cartList[index].dishName,
               dishPrice: this.cartList[index].dishPrice,
-              quantity: this.cartList[index].quantity - 1,
+              quantity: this.cartList[index].quantity + 1,
               id: id
             }).then((res) => {
               const { status, data } = res;
@@ -657,107 +805,91 @@
                 this.getCart();
               }
             });
-          }
-        },
-        addCartQuant(index, id) {
-          this.total += parseFloat(this.cartList[index].dishPrice) * 1;
-          axios.put("http://localhost:3000/cart/" + id, {
-            canName: this.cartList[index].canName,
-            dishName: this.cartList[index].dishName,
-            dishPrice: this.cartList[index].dishPrice,
-            quantity: this.cartList[index].quantity + 1,
-            id: id
-          }).then((res) => {
-            const { status, data } = res;
-            if (status === 200) {
-              this.getCart();
-            }
-          });
-          this.operandButtonValid[index] = true;
-          this.operandButtonInvalid[index] = false;
-        },
-        removeFromCart(index, id) {
-          if (confirm("Are you sure?")) {
-            axios.delete("http://localhost:3000/cart/" + id).then((res) => {
-              const { status, data } = res;
-              if (status === 200) {
-                this.getCart();
-              }
-            });
-            this.operandButtonValid.splice(index, 1);
-            this.operandButtonInvalid.splice(index, 1);
-          }
-        },
-        removeCart() {
-          if (confirm("Are you sure?")) {
-            for (var j = 0; j < this.cartIDList.length; j++) {
-              var item = this.cartIDList[j]
-              axios.delete("http://localhost:3000/cart/" + item).then((res) => {
+            this.operandButtonValid[index] = true;
+            this.operandButtonInvalid[index] = false;
+          },
+          removeFromCart(index, id) {
+            if (confirm("Are you sure?")) {
+              axios.delete("http://localhost:3000/cart/" + id).then((res) => {
                 const { status, data } = res;
                 if (status === 200) {
                   this.getCart();
                 }
               });
+              this.operandButtonValid.splice(index, 1);
+              this.operandButtonInvalid.splice(index, 1);
             }
-          }
-        },
-        moveToRecord() {
-          if (confirm("Are you sure?")) {
-            for (j = 0; j < this.cartList.length; j++) {
-              axios.post("http://localhost:3000/record", {
-                time: new Date().toJSON().slice(0, 10).replace(/-/g, "/"),
-                canName: this.cartList[j].canName,
-                dishName: this.cartList[j].dishName,
-                dishPrice: this.cartList[j].dishPrice,
-                subtotal: this.cartList[j].dishPrice * this.cartList[j].quantity,
-                quantity: this.cartList[j].quantity,
-              }).then((res) => {
-                const { status, data } = res;
-                if (status === 201) {
-                  console.log("Add to record success.")
-                }
-              });
-              var item = this.cartIDList[j]
-              axios.delete("http://localhost:3000/cart/" + item).then((res) => {
-                const { status, data } = res;
-                if (status === 200) {
-                  console.log("remove item from cart success.")
-                }
-              });
+          },
+          removeCart() {
+            if (confirm("Are you sure?")) {
+              for (var j = 0; j < this.cartIDList.length; j++) {
+                var item = this.cartIDList[j]
+                axios.delete("http://localhost:3000/cart/" + item).then((res) => {
+                  const { status, data } = res;
+                  if (status === 200) {
+                    this.getCart();
+                  }
+                });
+              }
             }
-            this.getCart();
-            this.getRecord();
-            this.total = 0;
-          }
-        },
-        removeSearchFilter() {
-          this.searchCanteen = "";
-          this.searchDish = "";
-          this.searchDishPriceMin = 0;
-          this.searchDishPriceMax = 1000;
-        },
-        removeFromRecordList(index) {
-          if (confirm("Are you sure?")) {
-            this.recordList.splice(index, 1);
-          }
-        },
-        removeRecord() {
-          if (confirm("Are you sure?")) {
-            console.log(this.recordIDList);
-            for (var j = 0; j < this.recordIDList.length; j++) {
-              var item = this.recordIDList[j]
-              axios.delete("http://localhost:3000/record/" + item).then((res) => {
-                const { status, data } = res;
-                if (status === 200) {
-                  this.getRecord();
-                }
-              });
+          },
+          moveToRecord() {
+            if (confirm("Are you sure?")) {
+              for (j = 0; j < this.cartList.length; j++) {
+                axios.post("http://localhost:3000/record", {
+                  time: new Date().toJSON().slice(0, 10).replace(/-/g, "/"),
+                  canName: this.cartList[j].canName,
+                  dishName: this.cartList[j].dishName,
+                  dishPrice: this.cartList[j].dishPrice,
+                  subtotal: this.cartList[j].dishPrice * this.cartList[j].quantity,
+                  quantity: this.cartList[j].quantity,
+                }).then((res) => {
+                  const { status, data } = res;
+                  if (status === 201) {
+                    console.log("Add to record success.")
+                  }
+                });
+                var item = this.cartIDList[j]
+                axios.delete("http://localhost:3000/cart/" + item).then((res) => {
+                  const { status, data } = res;
+                  if (status === 200) {
+                    console.log("remove item from cart success.")
+                  }
+                });
+              }
+              this.getCart();
+              this.getRecord();
+              this.total = 0;
             }
-          }
+          },
+          removeSearchFilter() {
+            this.searchCanteen = "";
+            this.searchDish = "";
+            this.searchDishPriceMin = 0;
+            this.searchDishPriceMax = 1000;
+          },
+          removeFromRecordList(index) {
+            if (confirm("Are you sure?")) {
+              this.recordList.splice(index, 1);
+            }
+          },
+          removeRecord() {
+            if (confirm("Are you sure?")) {
+              console.log(this.recordIDList);
+              for (var j = 0; j < this.recordIDList.length; j++) {
+                var item = this.recordIDList[j]
+                axios.delete("http://localhost:3000/record/" + item).then((res) => {
+                  const { status, data } = res;
+                  if (status === 200) {
+                    this.getRecord();
+                  }
+                });
+              }
+            }
+          },
         },
-      },
-    });
-  </script>
+      });
+    </script>
 </body>
 
 </html>

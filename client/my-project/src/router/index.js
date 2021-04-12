@@ -6,6 +6,8 @@ import canteenMenu from '@/components/canteenMenu'
 import cart from '@/components/cart'
 import record from '@/components/record'
 import forum from '@/components/forum'
+import gallery1 from '@/components/gallery1'
+import gallery2 from '@/components/gallery2'
 
 Vue.use(Router)
 
@@ -33,36 +35,19 @@ export default new Router({
       component: record
     },
     {
+      path: '/gallery1',
+      name: 'gallery1',
+      component: gallery1
+    },
+    {
+      path: '/gallery2',
+      name: 'gallery2',
+      component: gallery2
+    },
+    {
       path: '/forum',
       name: 'forum',
       component: forum
     }
   ]
 })
-
-// import canteenMenu from '../components/canteenMenu/canteenMenu.vue'
-// import cart from '../components/cart/cart.vue'
-// import record from '../components/record/record.vue'
-
-// var routes = [{
-//     name: 'canteenMenu',
-//     path: '/canteenMenu',
-//     component: canteenMenu
-// },
-// {
-//     name: 'cart',
-//     path: '/cart',
-//     component: cart
-// },
-// {
-//     name: 'record',
-//     path: '/record',
-//     component: record
-// },
-// ]
-
-// var router = new VueRouter({
-//     routes
-// })
-
-// export default router

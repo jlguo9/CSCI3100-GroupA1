@@ -197,8 +197,7 @@
       "canName": "Basic Medical Sciences Building Snack Bar",
       "dishName": "Three Dishes",
       "dishComment": "What a beautiful dish!",
-      "commentOnComment": [],
-      "numOfLike": 2,
+      "numOfLike": 0,
       "date": "2021/04/10",
       "id": 1
     },
@@ -206,7 +205,6 @@
       "canName": "Lee Woo Sing College - Cafe Tolo",
       "dishName": "Hot Pot",
       "dishComment": "dasda",
-      "commentOnComment": [],
       "numOfLike": 0,
       "date": "2021/04/11",
       "id": 2
@@ -215,28 +213,9 @@
       "canName": "Li Wai Chun Building Café",
       "dishName": "Three Dishes",
       "dishComment": "dsadasd",
-      "commentOnComment": [],
-      "numOfLike": 1,
+      "numOfLike": 0,
       "date": "2021/04/11",
       "id": 3
-    },
-    {
-      "canName": "Benjamin Franklin Centre Coffee Corner",
-      "dishName": "Siu Mei",
-      "dishComment": "Nice",
-      "commentOnComment": [],
-      "numOfLike": 0,
-      "date": "2021/04/11",
-      "id": 4
-    },
-    {
-      "canName": "",
-      "dishName": "",
-      "dishComment": "Nice",
-      "commentOnComment": [],
-      "numOfLike": 0,
-      "date": "2021/04/11",
-      "id": 5
     }
   ]
 }
