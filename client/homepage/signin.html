@@ -254,7 +254,7 @@ body {
             <div class="h5 font-weight-bold text-center mb-3">Sign in</div>
 
             <div class="form-group d-flex align-items-center">
-             <input autocomplete="off" type="email" class="form-control" placeholder="Email" v-model = "email">
+             <input autocomplete="off" type="username" class="form-control" placeholder="Username" v-model = "username">
             </div>
 
             <div class="form-group d-flex align-items-center">
@@ -274,7 +274,7 @@ body {
     var vm = new Vue({
         el:"#login",
         data:{
-            email:"",
+            username:"",
             password:"",
             token:""
         },
@@ -286,10 +286,17 @@ body {
                 this.token = localStorage.getItem('token')
             },
             signIn(){
-                this.token = this.email + this.password;
-                localStorage.setItem('token', this.token);
-                this.email = "";
-                this.password = "";
+            this.axios.post('http://localhost:3000/login', {
+                username:this.username,
+                password:this.password
+            }).then(res => {
+                const { status, data } = res
+                if (status === 200) {
+                    localStorage.setItem('token', this.token);
+                }
+            }),
+            this.email = "";
+            this.password = "";
             }
         },
     })
