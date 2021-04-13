@@ -29,9 +29,9 @@ router.post("/record/add", recordController.record_add);
 router.delete("/record/:id",recordController.record_delete);
 
 //content routes
+router.get("/content/index",contentController.content_get_all);
 router.get("/content/:id",contentController.content_get);
 router.delete("/content/:id",contentController.content_delete);
-router.get("/content/index",contentController.content_get_all);
 router.put("/content/:id",contentController.content_update);
 router.post("/content/publish",contentController.content_publish);
 

@@ -387,11 +387,11 @@ GET /api/content/index
     "name": "test",
     "detail": "test content",
     "ownID": "5b3510fe7a2bdd4aac29eb73",
-    "publishDate": "2021/4/9 10:00:01",
+    "publishDate": "2021/4/9 10:00:00",
     "likeNum": 10,
     "canteen": "UC can",
     "dish": "three dishes",
-    "rating": 4
+    "rating": 4,
    },
    "User": {
     "name": "Test user",

@@ -17,7 +17,7 @@ exports.menu_get = (req, res) => {
         })
         .catch(err => {
             console.log(err);
-        })
+        });
 }
 exports.menu_delete = (req, res) => {
     const id = req.params.id;
