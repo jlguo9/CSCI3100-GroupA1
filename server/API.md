@@ -17,7 +17,7 @@
 |     like_exist    |              已经对该对象点赞过了        |        点赞     |
 |   like_not_exist  |              不能取消没有的点赞          | 取消点赞     |
 |  no_this_content  |              点赞、取消点赞的对象不存在  | 点赞、取消点赞     |
-| user_content_id_not_matching |	更新的内容不是本用户发布的	 |     更新内容    |
+| user_content_id_not_matching |	更新或删除的内容不是本用户发布的	 |     更新内容、删除内容    |
 |  access_denied    |              用户无访问权限              |  修改菜单     |
 |  dish_not_exist    |              菜品不存在              |  删除菜品、修改菜品   |
 |  item_not_exist    |              条目不存在              |  删除购物车条目  |
@@ -281,7 +281,7 @@ GET /api/content/{contentID:string}
 | Data.name | string | 标题 |
 | Data.detail | string | 内容 |
 | Data.ownID | string | 发布者ID |
-| Data.publishDate | string | 发布时间 |
+| Data.timestamps | string | 发布时间 |
 | Data.likeNum | int | 点赞数 |
 | Data.canteen | string | 餐厅 |
 | Data.dish | string | 食物 |
@@ -299,7 +299,7 @@ GET /api/content/{contentID:string}
   "name": "test",
   "detail": "test content",
   "ownID": "5b3510fe7a2bdd4aac29eb73",
-  "publishDate": "2021/4/9 10:00:00",
+  "timestamps": //unix timestamp,
   "likeNum": 10,
   "canteen": "UC can",
   "dish": "three dishes",
@@ -390,7 +390,7 @@ GET /api/content/index
     "name": "test",
     "detail": "test content",
     "ownID": "5b3510fe7a2bdd4aac29eb73",
-    "publishDate": "2021/4/9 10:00:00",
+    "timestamps": //unix timestamp,
     "likeNum": 10,
     "canteen": "UC can",
     "dish": "three dishes",
@@ -407,7 +407,7 @@ GET /api/content/index
     "name": "announcement",
     "detail": "announcement detail",
     "ownID": "5b3510fe7a2bdd4aac29eb74",
-    "publishDate": "2021/4/9 10:00:00",
+    "timestamps": //unix timestamp,
     "likeNum": 1,
     "tag": []
    },
