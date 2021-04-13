@@ -31,7 +31,7 @@ exports.content_delete= (req,res) =>{
     }else {
         Content.findByIdAndDelete(id)
             .then(() => {
-                res.json({"State": "success", "Data": ""});
+                res.json({State: "success", Data: ""});
             })
             .catch(err => {
                 console.log(err);
@@ -45,7 +45,7 @@ exports.content_update= (req,res) =>{
     }else{
         Content.findByIdAndUpdate(id, req.body)
             .then( () => {
-                res.json({"State": "success","Data":""});
+                res.json({State: "success",Data:""});
             })
             .catch(err =>{
                 console.log(err);
@@ -58,12 +58,14 @@ exports.content_publish= (req,res) =>{
         name: req.body.name,
         detail: req.body.detail,
         ownID: req.userData.userID,
+        userName: req.userData.name,
         canteen: req.body.canteen,
-        dish: req.body.dish
+        dish: req.body.dish,
+        rating: req.body.rating
     });
     content.save()
         .then( () => {
-            res.json({"State": "success","Data":""});
+            res.json({State: "success",Data:""});
         })
         .catch(err => {
             console.log(err);
