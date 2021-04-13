@@ -16,7 +16,7 @@ const check_auth = require('./middleware/check_auth');
 //menu routes
 router.get("/menu/index", menuController.menu_get);
 router.post("/menu/add", check_auth,menuController.menu_add);
-router.delete("/menu/:id", check_auth,menuController.menu_delete);
+router.delete("/menu/:id", check_auth, menuController.menu_delete);
 router.put("/menu/:id", check_auth,menuController.menu_update);
 
 //shopping cart routes

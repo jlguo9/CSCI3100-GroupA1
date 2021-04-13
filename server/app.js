@@ -8,7 +8,15 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 //express app
 const app = express();
-
+app.all("*",function(req,res,next){
+  res.header("Access-Control-Allow-Origin","http://localhost:8080");
+  res.header("Access-Control-Allow-Headers","content-type");
+  res.header("Access-Control-Allow-Methods","DELETE,PUT,POST,GET,OPTIONS");
+  if (req.method.toLowerCase() === 'options')
+    res.send(200);
+  else
+    next();
+});
 
 //set the path to rootDir and projectDir
 const rootDir=path.resolve(__dirname);

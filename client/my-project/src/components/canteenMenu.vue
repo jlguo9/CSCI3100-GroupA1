@@ -234,7 +234,7 @@ export default {
   computed: {},
   methods: {
     getMenu () {
-      this.axios.get('http://localhost:3000/menuList').then(res => {
+      this.axios.get('http://localhost:3000/api/menu/index').then(res => {
         const { status, data } = res
         if (status === 200) {
           console.log('find')
@@ -250,7 +250,7 @@ export default {
     },
     deleteItem (index, id) {
       if (confirm('Are you sure?')) {
-        this.axios.delete('http://localhost:3000/menuList/' + id).then(res => {
+        this.axios.delete('http://localhost:3000/api/menu/' + id).then(res => {
           const { status } = res
           if (status === 200) {
             this.getMenu()
@@ -283,7 +283,7 @@ export default {
           r3 = this.menuList[index].price
         }
         this.axios
-          .put('http://localhost:3000/menuList/' + id, {
+          .put('http://localhost:3000/api/menu/' + id, {
             canteen: r1,
             name: r2,
             price: r3
@@ -297,7 +297,7 @@ export default {
       }
     },
     addToCart (index, id) {
-      this.axios.post('http://localhost:3000/cart', {
+      this.axios.post('http://localhost:3000/api/cart', {
         canteen: this.menuList[index].canteen,
         name: this.menuList[index].name,
         price: this.menuList[index].price,
@@ -317,7 +317,7 @@ export default {
           for (var j = 0; j < this.menuIDList.length; j++) {
             var item = this.menuIDList[j]
             this.axios
-              .delete('http://localhost:3000/menuList/' + item)
+              .delete('http://localhost:3000/api/menu/' + item)
               .then(res => {
                 const { status } = res
                 if (status === 200) {
@@ -345,7 +345,7 @@ export default {
         // window.alert('Please enter all infomation!')
       } else {
         this.axios
-          .post('http://localhost:3000/menuList', {
+          .post('http://localhost:3000/api/menu/add', {
             canteen: this.newCanName,
             name: this.newDishName,
             price: this.newDishPrice

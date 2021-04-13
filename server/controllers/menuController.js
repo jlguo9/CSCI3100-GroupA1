@@ -13,7 +13,7 @@ exports.menu_add = (req, res) => {
 exports.menu_get = (req, res) => {
     Menu.find()
         .then(Data =>{
-            res.json({"State": "success", Data});
+            res.status(200).json({"State": "success", Data});
         })
         .catch(err => {
             console.log(err);
@@ -23,7 +23,7 @@ exports.menu_delete = (req, res) => {
     const id = req.params.id;
     Menu.findByIdAndDelete(id)
         .then( () => {
-            res.json({"State": "success","Data":""});
+            res.status(200).json({"State": "success","Data":""});
         })
         .catch(err =>{
             console.log(err);
