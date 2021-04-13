@@ -10,7 +10,7 @@
     </h1>
     <br />
 
-    <div class="table-responsive">
+    <div class="table-responsive" v-if="recordList.length > 0">
       <table
         class="table table-striped table-hover"
         style="text-align: center"
@@ -50,6 +50,12 @@
         </tbody>
       </table>
     </div>
+
+    <div class="table-responsive" v-if="recordList.length === 0">
+      <h4>
+        Your record is empty now.
+      </h4>
+    </div>
   </div>
 </template>
 
@@ -80,12 +86,10 @@ export default {
       this.axios.get('http://localhost:3000/record').then(res => {
         const { status, data } = res
         if (status === 200) {
-          console.log('find')
           this.recordList = data
-                    $(document).ready(function () {
+          $(document).ready(function () {
             $('#mydatatable3').DataTable()
           })
-          console.log(this.recordList)
           this.recordIDList = data.map(e => e['id'])
         }
       })
@@ -102,7 +106,8 @@ export default {
     },
     clearRecord () {
       if (this.recordIDList.length === 0) {
-        window.alert('Your history record is already empty.')
+        this.$message.error('Your history record is already empty.')
+        // window.alert('Your history record is already empty.')
       } else {
         if (confirm('Are you sure?')) {
           for (var j = 0; j < this.recordIDList.length; j++) {
@@ -116,6 +121,11 @@ export default {
                 }
               })
           }
+          this.$message.success(
+            'Removing is done. Please manually refresh this page again.'
+          )
+          // window.alert("Removing is done. Please manually refresh this page again.")
+          this.getRecord()
         }
       }
     }

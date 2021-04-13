@@ -210,7 +210,8 @@ export default {
     },
     clearCart () {
       if (this.cartList.length === 0) {
-        window.alert('Your shopping cart is already empty.')
+        this.$message.error('Your shopping cart is already empty.')
+        // window.alert('Your shopping cart is already empty.')
       } else {
         if (confirm('Are you sure?')) {
           // console.log(this.menuIDList);
@@ -228,12 +229,17 @@ export default {
           // this.$forceUpdate()
           // window.alert('Delete is done!')
           // this.getEmpty()
+          this.$message.success(
+            'Removing is done. Please manually refresh this page again.'
+          )
+          //  window.alert("Removing is done. Please manually refresh this page again.")
         }
       }
     },
     transferToRecord () {
       if (this.cartIDList.length === 0) {
-        window.alert('Your shopping cart is already empty.')
+        this.$message.error('Your shopping cart is already empty.')
+        // window.alert('Your shopping cart is already empty.')
       } else {
         if (confirm('Are you sure?')) {
           var copyCartIDList = this.cartIDList
@@ -276,8 +282,14 @@ export default {
             //   this.getCart()
             // })
           }
-          this.getCart()
           this.total = 0
+          this.getCart()
+          this.$message.success(
+            'Transfering is done. Please manually refresh this page again.'
+          )
+          // window.alert(
+          //   'Transfering is done. Please manually refresh this page again.'
+          // )
         }
       }
     }

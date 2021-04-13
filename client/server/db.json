@@ -45,89 +45,21 @@
   ],
   "cart": [
     {
+      "canName": "United College Student Canteen",
+      "dishName": "Three Dishes",
+      "dishPrice": 27.3,
+      "quantity": 1,
+      "id": 4
+    },
+    {
       "canName": "Chung Chi College Student Canteen",
       "dishName": "Siu Mei",
       "dishPrice": "27.8",
       "quantity": 1,
-      "id": 1
-    },
-    {
-      "canName": "Café 330",
-      "dishName": "Chicken Pot",
-      "dishPrice": "666",
-      "quantity": 1,
-      "id": 2
-    },
-    {
-      "canName": "New Asia College Student Canteen",
-      "dishName": "Fish Bowl",
-      "dishPrice": "32.4",
-      "quantity": 2,
-      "id": 3
-    },
-    {
-      "canName": "Basic Medical Sciences Building Snack Bar",
-      "dishName": "Three Dishes",
-      "dishPrice": "25.5",
-      "quantity": 2,
-      "id": 4
+      "id": 5
     }
   ],
   "record": [
-    {
-      "time": "2021/04/07",
-      "canName": "Chung Chi College Student Canteen",
-      "dishName": "Siu Mei",
-      "dishPrice": 20.5,
-      "subtotal": 20.5,
-      "quantity": 1,
-      "id": 1
-    },
-    {
-      "time": "2021/04/07",
-      "canName": "Chung Chi College Student Canteen",
-      "dishName": "Siu Mei",
-      "dishPrice": 20.5,
-      "subtotal": 41,
-      "quantity": 2,
-      "id": 2
-    },
-    {
-      "time": "2021/04/07",
-      "canName": "United College Student Canteen",
-      "dishName": "Three Dishes",
-      "dishPrice": 27.3,
-      "subtotal": 54.6,
-      "quantity": 2,
-      "id": 5
-    },
-    {
-      "time": "2021/04/07",
-      "canName": "New Asia College Student Canteen",
-      "dishName": "Hot Pot",
-      "dishPrice": 60.4,
-      "subtotal": 60.4,
-      "quantity": 1,
-      "id": 6
-    },
-    {
-      "time": "2021/04/07",
-      "canName": "Chung Chi College Student Canteen",
-      "dishName": "Siu Mei",
-      "dishPrice": 20.5,
-      "subtotal": 20.5,
-      "quantity": 1,
-      "id": 7
-    },
-    {
-      "time": "2021/04/07",
-      "canName": "Chung Chi College Student Canteen",
-      "dishName": "Siu Mei",
-      "dishPrice": 20.5,
-      "subtotal": 41,
-      "quantity": 2,
-      "id": 9
-    },
     {
       "time": "2021/04/07",
       "canName": "Chung Chi College Student Canteen",
@@ -280,15 +212,6 @@
       "subtotal": 666,
       "quantity": 1,
       "id": 27
-    },
-    {
-      "time": "2021/04/12",
-      "canName": "New Asia College Student Canteen",
-      "dishName": "Fish Bowl",
-      "dishPrice": "32.4",
-      "subtotal": 162,
-      "quantity": 5,
-      "id": 28
     }
   ],
   "gallery1": [
@@ -354,7 +277,7 @@
       "dishName": "Hot Pot",
       "dishComment": "The .collapse class indicates a collapsible element (a <div> in our example); this is the content that will be shown or hidden with a click of a button.\n\nTo control (show/hide) the collapsible content, add the data-toggle=\"collapse\" attribute to an <a> or a <button> element. Then add the data-target=\"#id\" attribute to connect the button with the collapsible content (<div id=\"demo\">).",
       "author": "Daddy",
-      "numOfLike": 0,
+      "numOfLike": 2,
       "date": "2021/04/12",
       "id": 5
     },

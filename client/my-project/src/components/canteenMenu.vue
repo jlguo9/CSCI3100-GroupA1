@@ -3,14 +3,14 @@
     <h1 class="sub-header">
       Today's Menu
       <span style="float: right">
-        <a class="btn btn-danger" href="/#/canteenMenu" @click="clearMenu"
+        <a class="btn btn-danger" href="/#/canteenMenu" @click="clearMenu()"
           >Remove All</a
         >
       </span>
     </h1>
     <br />
 
-    <div class="table-responsive">
+    <div class="table-responsive" v-if="menuList.length > 0">
       <table
         class="table table-striped table-hover"
         style="text-align: center"
@@ -61,6 +61,12 @@
           </tr> -->
         </tbody>
       </table>
+    </div>
+
+    <div class="table-responsive" v-if="menuList.length === 0">
+      <h4>
+        Today's Menu has not been updated yet. Please wait for the new menu.
+      </h4>
     </div>
 
     <div class="line"></div>
@@ -303,7 +309,8 @@ export default {
     },
     clearMenu () {
       if (this.menuIDList.length === 0) {
-        window.alert('Menu is already empty.')
+        this.$message.error('Menu is already empty.')
+        // window.alert('Menu is already empty.')
       } else {
         if (confirm('Are you sure?')) {
           // console.log(this.menuIDList);
@@ -318,6 +325,13 @@ export default {
                 }
               })
           }
+          this.$message.success(
+            'Removing is done. Please manually refresh this page again.'
+          )
+          // window.alert(
+          //   'Removing is done. Please manually refresh this page again.'
+          // )
+          this.getMenu()
         }
       }
     },
@@ -327,7 +341,8 @@ export default {
         this.newDishName === '' ||
         this.newDishPrice === ''
       ) {
-        window.alert('Please enter all infomation!')
+        this.$message.error('Please enter all infomation!')
+        // window.alert('Please enter all infomation!')
       } else {
         this.axios
           .post('http://localhost:3000/menuList', {

@@ -74,9 +74,10 @@
           ><a><i class="fas fa-question"></i> FAQ</a>
         </router-link>
 
-        <router-link to="/contact" tag="li"
+        <router-link to="https://mailto:abc@example.com?subject = Feedback&body = Message" tag="li"
           ><a><i class="fas fa-paper-plane"></i> Contact</a>
         </router-link>
+        
       </li>
     </ul>
   </nav>

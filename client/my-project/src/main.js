@@ -5,17 +5,19 @@ import App from './App'
 import router from './router'
 import axios from 'axios'
 // import baguetteBox from 'baguettebox';
-import LightGallery from 'vue-light-gallery';
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+import LightGallery from 'vue-light-gallery'
+import ElementUI from 'element-ui'
+import MyHttpServer from '@/plugins/http.js'
+import 'element-ui/lib/theme-chalk/index.css'
 
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './assets/index.css'
 
 // library.add(faUserSecret)
 Vue.prototype.axios = axios
-Vue.use(LightGallery);
-Vue.use(ElementUI);
+Vue.use(LightGallery)
+Vue.use(ElementUI)
+Vue.use(MyHttpServer)
 
 Vue.config.productionTip = false
 
