@@ -390,7 +390,7 @@ GET /api/content/index
     "name": "test",
     "detail": "test content",
     "ownID": "5b3510fe7a2bdd4aac29eb73",
-    "timestamps": //unix timestamp,
+    "timestamps":, //unix timestamp
     "likeNum": 10,
     "canteen": "UC can",
     "dish": "three dishes",
@@ -407,7 +407,7 @@ GET /api/content/index
     "name": "announcement",
     "detail": "announcement detail",
     "ownID": "5b3510fe7a2bdd4aac29eb74",
-    "timestamps": //unix timestamp,
+    "timestamps":, //unix timestamp,
     "likeNum": 1,
     "tag": []
    },

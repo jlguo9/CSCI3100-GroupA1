@@ -14,7 +14,7 @@ exports.cart_add = (req,res) =>{
 exports.cart_get = (req,res) =>{
     Cart.find()
         .then(Data =>{
-            res.json({State: "success", Data:""});
+            res.json({State: "success", Data});
         })
         .catch(err => {
             console.log(err);
