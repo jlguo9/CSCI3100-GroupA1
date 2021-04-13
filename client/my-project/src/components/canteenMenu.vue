@@ -29,28 +29,28 @@
         <tbody>
           <tr v-for="(value, index) in menuList" :key="index">
             <td>{{ index + 1 }}</td>
-            <td>{{ value.id }}</td>
-            <td>{{ value.canName }}</td>
-            <td>{{ value.dishName }}</td>
-            <td>{{ value.dishPrice | formatCurrency }}</td>
+            <td>{{ value._id }}</td>
+            <td>{{ value.canteen }}</td>
+            <td>{{ value.name }}</td>
+            <td>{{ value.price | formatCurrency }}</td>
             <td>
               <span>
                 <a
                   href="#"
                   class="btn btn-success btn-sm"
-                  @click.prevent="editItem(index, value.id)"
+                  @click.prevent="editItem(index, value._id)"
                   >Edit</a
                 >&nbsp;&nbsp;
                 <a
                   class="btn btn-danger btn-sm"
                   href="javascript:window.confirm('Are you sure?')"
-                  @click.prevent="deleteItem(index, value.id)"
+                  @click.prevent="deleteItem(index, value._id)"
                   >Delete</a
                 >&nbsp;&nbsp;
                 <a
                   class="btn btn-purple btn-sm"
                   href="javascript:window.confirm('Are you sure?')"
-                  @click="addToCart(index, id)"
+                  @click="addToCart(index, value._id)"
                   >Add to My Cart</a
                 >
               </span>
@@ -238,13 +238,13 @@ export default {
         const { status, data } = res
         if (status === 200) {
           console.log('find')
-          this.menuList = data
+          this.menuList = data.Data
           $(document).ready(function () {
             $('#mydatatable1').DataTable()
           })
           console.log(this.menuList)
-          this.menuIDList = data.map(e => e['id'])
-          this.dishNameList = [...new Set(data.map(e => e['dishName']))]
+          this.menuIDList = data.Data.map(e => e['_id'])
+          this.dishNameList = [...new Set(data.Data.map(e => e['name']))]
         }
       })
     },
@@ -274,19 +274,19 @@ export default {
       if (r1 === null && r2 === null && r3 === null) {
       } else {
         if (r1 === null) {
-          r1 = this.menuList[index].canName
+          r1 = this.menuList[index].canteen
         }
         if (r2 === null) {
-          r2 = this.menuList[index].dishName
+          r2 = this.menuList[index].name
         }
         if (r3 === null) {
-          r3 = this.menuList[index].dishPrice
+          r3 = this.menuList[index].price
         }
         this.axios
           .put('http://localhost:3000/menuList/' + id, {
-            canName: r1,
-            dishName: r2,
-            dishPrice: r3
+            canteen: r1,
+            name: r2,
+            price: r3
           })
           .then(res => {
             const { status } = res
@@ -298,9 +298,9 @@ export default {
     },
     addToCart (index, id) {
       this.axios.post('http://localhost:3000/cart', {
-        canName: this.menuList[index].canName,
-        dishName: this.menuList[index].dishName,
-        dishPrice: this.menuList[index].dishPrice,
+        canteen: this.menuList[index].canteen,
+        name: this.menuList[index].name,
+        price: this.menuList[index].price,
         quantity: 1
       })
       // .then(res => {
@@ -346,9 +346,9 @@ export default {
       } else {
         this.axios
           .post('http://localhost:3000/menuList', {
-            canName: this.newCanName,
-            dishName: this.newDishName,
-            dishPrice: this.newDishPrice
+            canteen: this.newCanName,
+            name: this.newDishName,
+            price: this.newDishPrice
           })
           .then(res => {
             const { status, data } = res
