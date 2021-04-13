@@ -26,26 +26,41 @@ exports.content_get= (req,res) =>{
 }
 exports.content_delete= (req,res) =>{
     const id = req.params.id;
-    Content.findByIdAndDelete(id)
-        .then( () => {
-            res.json({"State": "success","Data":""});
-        })
-        .catch(err =>{
-            console.log(err);
-        });
+    if(req.userData.userID !== id){
+        res.status(401).json({State: "user_content_id_not_matching",Data:""});
+    }else {
+        Content.findByIdAndDelete(id)
+            .then(() => {
+                res.json({"State": "success", "Data": ""});
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
 }
 exports.content_update= (req,res) =>{
     const  id = req.params.id;
-    Content.findByIdAndUpdate(id, req.body)
-        .then( () => {
-            res.json({"State": "success","Data":""});
-        })
-        .catch(err =>{
-            console.log(err);
-        });
+    if(req.userData.userID !== id){
+        res.status(401).json({State: "user_content_id_not_matching",Data:""});
+    }else{
+        Content.findByIdAndUpdate(id, req.body)
+            .then( () => {
+                res.json({"State": "success","Data":""});
+            })
+            .catch(err =>{
+                console.log(err);
+            });
+    }
+
 }
 exports.content_publish= (req,res) =>{
-    const content = new Content(req.body);
+    const content = new Content({
+        name: req.body.name,
+        detail: req.body.detail,
+        ownID: req.userData.userID,
+        canteen: req.body.canteen,
+        dish: req.body.dish
+    });
     content.save()
         .then( () => {
             res.json({"State": "success","Data":""});

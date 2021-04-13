@@ -8,15 +8,11 @@ const contentSchema = new Schema({
     },
     detail: {
         type: String,
-        required: true
+        required: true// to do
     },
     ownID: {
         type: String,
-        required: true
-    },
-    publishDate: {
-        type: String,
-        required: true
+        required: true// to do
     },
     likeNum:{
         type: String,
@@ -36,7 +32,7 @@ const contentSchema = new Schema({
         required: false,
         default: 5
     }
-})
+},{timestamps: true})
 
 const Content = mongoose.model('Content', contentSchema);
 

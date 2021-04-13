@@ -5,28 +5,23 @@ const mongoose = require('mongoose');
 const router = require('./router');
 
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const http = require("http");
 const fs = require('fs');
 //express app
 const app = express();
 
-/*currently no use
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());*/
 
 //set the path to rootDir and projectDir
 const rootDir=path.resolve(__dirname);
 const projectDir=path.resolve(__dirname,'../','client');
 app.use(express.static(rootDir));
 app.use(express.static(projectDir));
+
 //middleware
+app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
 // the router
 app.use('/api',router);
 
@@ -56,10 +51,10 @@ db.once('open', function() {
   console.log("Successfully connected to " + db_url);
 });
 
-//set models
-const models = path.join(__dirname,"models");
+//set models (no use now)
+/*const models = path.join(__dirname,"models");
 fs.readdirSync(models)
     .filter(file => ~file.search(/^[^\.].*\.js$/))
-    .forEach(file => require(path.join(models, file)));
+    .forEach(file => require(path.join(models, file)));*/
 
 module.exports = app;
