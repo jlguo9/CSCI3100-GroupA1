@@ -14,6 +14,10 @@ const contentSchema = new Schema({
         type: String,
         required: true// to do
     },
+    userName: {
+        type: String,
+        required:true
+    },
     likeNum:{
         type: String,
         required: false,

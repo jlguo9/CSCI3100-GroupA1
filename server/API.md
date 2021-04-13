@@ -286,8 +286,7 @@ GET /api/content/{contentID:string}
 | Data.canteen | string | 餐厅 |
 | Data.dish | string | 食物 |
 | Data.rating | int[1,5] | 评分 |
-| User.name | string | 用户名 |
-| User.type | string | 用户类型 |
+| Data.userName | string | 用户名 |
 * 参数使用json形式解析
 
 ##### Example
@@ -299,15 +298,12 @@ GET /api/content/{contentID:string}
   "name": "test",
   "detail": "test content",
   "ownID": "5b3510fe7a2bdd4aac29eb73",
-  "timestamps": //unix timestamp,
+  "timestamps":, //unix timestamp,
   "likeNum": 10,
   "canteen": "UC can",
   "dish": "three dishes",
-  "rating": 4
- },
- "User": {
-  "name": "Test user",
-  "type": "user"
+  "rating": 4,
+  "userName": "Philip",
  }
 }
 ```
@@ -374,7 +370,6 @@ GET /api/content/index
 | Data        | array  | 内容信息数组  |
 | DataItem    | dictionary | 内容信息数组项 |
 | DataItem.Data | dictionary | 内容信息  |
-| DataItem.User | dictionary | 用户信息  |
 
 
 * 参数使用json形式解析
@@ -395,10 +390,7 @@ GET /api/content/index
     "canteen": "UC can",
     "dish": "three dishes",
     "rating": 4,
-   },
-   "User": {
-    "name": "Test user",
-    "type": "user"
+    "userName": "Test user",
    }
   },
   {
@@ -409,11 +401,8 @@ GET /api/content/index
     "ownID": "5b3510fe7a2bdd4aac29eb74",
     "timestamps":, //unix timestamp,
     "likeNum": 1,
-    "tag": []
-   },
-   "User": {
-    "name": "PhilipGUO",
-    "type": "admin"
+    "rating": 5,
+    "userName": "PhilipGUO",
    }
   }
  ]
