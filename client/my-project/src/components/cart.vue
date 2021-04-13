@@ -13,7 +13,7 @@
     </h1>
     <br />
 
-    <div class="table-responsive">
+    <div class="table-responsive" v-if="cartList.length > 0">
       <table
         class="table table-striped table-hover"
         style="text-align: center"
@@ -75,9 +75,15 @@
         </tbody>
       </table>
 
-      <h3>
+      <h4>
         Total price of your shopping cart is {{ total | formatCurrency }}.
-      </h3>
+      </h4>
+    </div>
+
+    <div class="table-responsive" v-if="cartList.length === 0">
+      <h4>
+        Your shopping cart is empty now.
+      </h4>
     </div>
   </div>
 </template>
@@ -108,6 +114,14 @@ export default {
   },
   computed: {},
   methods: {
+    // getEmpty () {
+    //   this.cartList = []
+    //   this.$forceUpdate()
+    //   $(document).ready(function () {
+    //         $('#mydatatable2').DataTable()
+    //       })
+    // },
+
     getCart () {
       this.axios.get('http://localhost:3000/cart').then(res => {
         const { status, data } = res
@@ -205,10 +219,15 @@ export default {
             this.axios
               .delete('http://localhost:3000/cart/' + item)
               .then(res => {
-                // const { status, data } = res
-                this.getCart()
+                const { status } = res
+                if (status === 200) {
+                  this.getCart()
+                }
               })
           }
+          // this.$forceUpdate()
+          // window.alert('Delete is done!')
+          // this.getEmpty()
         }
       }
     },

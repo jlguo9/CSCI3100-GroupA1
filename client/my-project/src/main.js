@@ -13,7 +13,6 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './assets/index.css'
 
 // library.add(faUserSecret)
-
 Vue.prototype.axios = axios
 Vue.use(LightGallery);
 Vue.use(ElementUI);

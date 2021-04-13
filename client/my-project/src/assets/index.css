@@ -342,7 +342,7 @@ a.article:hover {
 
 /* carousel */
 
-.carousel{
+.carousel {
   height: 70% !important;
   width: 70% !important;
   margin: 30px auto;
@@ -357,7 +357,6 @@ a.article:hover {
 .carousel-inner img {
   margin: auto;
 }
-
 
 #gallery1a body {
   background-color: #fff;
@@ -380,14 +379,11 @@ a.article:hover {
   color: #85878c;
 }
 
-
 /* Styles for the gallery */
 
-
-
-#forum body{
+#forum body {
   background-color: #eee;
-  font-family: "Fira Sans Condensed", sans-serif;
+  font-family: 'Fira Sans Condensed', sans-serif;
 }
 
 #forum .card {
@@ -398,67 +394,67 @@ a.article:hover {
 
 #forum .comment-text {
   font-size: 15px;
-  font-family: "PT Serif", serif;
+  font-family: 'PT Serif', serif;
 }
 
 #forum .fs-10 {
   font-size: 12px;
 }
 
- #forum .date {
-  font-size: 11px
+#forum .date {
+  font-size: 13px;
 }
 
-#forum .fs-12 {
+#forum .fs-15 {
   font-size: 15px;
-  font-family: "PT Serif", serif;
+  font-family: 'PT Serif', serif;
 }
 
 #forum .shadow-none {
-  box-shadow: none
+  box-shadow: none;
 }
 
-#forum  .name {
-  color: #007bff
+#forum .name {
+  color: #007bff;
+  font-size: 18px;
 }
 
-#forum  .cursor:hover {
-  color: blue
+#forum .cursor:hover {
+  color: blue;
 }
 
 #forum .cursor {
-  cursor: pointer
+  cursor: pointer;
 }
 
 #forum .textarea {
-  resize: none
+  resize: none;
 }
 
 #forum .fa-facebook {
-  color: #3b5999
+  color: #3b5999;
 }
 
 #forum .fa-twitter {
-  color: #55acee
+  color: #55acee;
 }
 
 #forum .fa-linkedin {
-  color: #0077B5
+  color: #0077b5;
 }
 
 #forum .fa-instagram {
-  color: #e4405f
+  color: #e4405f;
 }
 
 #forum .fa-dribbble {
-  color: #ea4c89
+  color: #ea4c89;
 }
 
 #forum .fa-pinterest {
-  color: #bd081c
+  color: #bd081c;
 }
 
 #forum .fa {
-  cursor: pointer
+  cursor: pointer;
 }
-

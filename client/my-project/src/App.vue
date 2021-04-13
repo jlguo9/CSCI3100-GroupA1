@@ -25,22 +25,25 @@
           >
             <i class="fas fa-align-justify"></i>
           </button>
-
           <div class="collapse navbar-collapse" id="navbarSupportedContent"> -->
           <div>
             <ul class="nav navbar-nav ml-auto" style="float:right">
-              <li class="nav-item">
-                <a class="nav-link" href="#" style="float:right">Login</a>
+              <li class="nav-item"> 
+               <router-link to="login" 
+                ><a class="nav-link" style="float:right">Login</a>
+              </router-link>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#" style="float:right">Register</a>
+              <li class="nav-item"> 
+               <router-link to="register" 
+                ><a class="nav-link" style="float:right">Register</a>
+              </router-link>
               </li>
             </ul>
           </div>
         </div>
       </nav>
 
-      <div class="container-fluid">
+      <div class="justify-content-center">
         <router-view></router-view>
       </div>
     </div>
@@ -106,6 +109,8 @@ import gallery11a from './components/gallery11a.vue'
 import gallery11b from './components/gallery11b.vue'
 import gallery11c from './components/gallery11c.vue'
 import forum from './components/forum.vue'
+import login from './components/login.vue'
+import register from './components/register.vue'
 
 export default {
   name: 'App',
@@ -165,7 +170,9 @@ export default {
     gallery11a: gallery11a,
     gallery11b: gallery11b,
     gallery11c: gallery11c,
-    forum: forum
+    forum: forum,
+    login: login,
+    register: register,
   }
 }
 </script>
