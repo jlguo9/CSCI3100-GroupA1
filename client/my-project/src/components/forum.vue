@@ -16,18 +16,18 @@
                     />
                     <div class="d-flex flex-column justify-content-start ml-2">
                       <span class="d-block font-weight-bold name">{{
-                        value.author
+                        value.userName
                       }}</span
-                      ><span class="date text-black-50">{{ value.date }}</span>
+                      ><span class="date text-black-50">{{ value.createdAt | dateFormat }}</span>
                     </div>
                   </div>
                   <div class="mt-2">
                     <h6 style="color:#750f6d">
-                      Comments on <u>{{ value.dishName }}</u> from
-                      <i>{{ value.canName }}:</i>
+                      Comments on <u>{{ value.dish }}</u> from
+                      <i>{{ value.canteen }}:</i>
                     </h6>
                     <p class="comment-text">
-                      {{ value.dishComment }}
+                      {{ value.detail }}
                     </p>
                   </div>
                 </div>
@@ -39,10 +39,10 @@
                   >
                     <div
                       class="like p-2 cursor"
-                      @click="likeComment(value.numOfLike, value.id, index)"
+                      @click="likeComment(value.likeNum, value._id, index)"
                     >
                       <i class="far fa-thumbs-up"></i
-                      ><span class="ml-1">Like {{ value.numOfLike }}</span>
+                      ><span class="ml-1">Like {{ value.likeNum }}</span>
                     </div>
                     <!-- this is the share icon  -->
                     <div
@@ -107,7 +107,7 @@
                 <label>Step 1: Select A Canteen:</label>
 
                 <span class="box" style="margin:10px">
-                  <select v-model="commentedCanName">
+                  <select v-model="commentedcanteen">
                     <option disabled :value="null">Select A Canteen</option>
                     <option
                       v-for="option in options"
@@ -121,12 +121,12 @@
                 <br />
                 <label>Step 2: Select An Existing Dish:</label>
                 <span class="box">
-                  <select v-model="commentedDishName">
+                  <select v-model="commenteddish">
                     <option disabled :value="null" style="margin:10px">
                       Select An Existing Dish
                     </option>
                     <option
-                      v-for="option in commentDishNameList"
+                      v-for="option in commentdishList"
                       :value="option"
                       :key="option"
                     >
@@ -139,7 +139,7 @@
                 <input
                   type="text"
                   class="addingTextBox"
-                  v-model="commentedDishName"
+                  v-model="commenteddish"
                   placeholder="Input Here"
                   style="margin:10px;width=300px"
                 /><br />
@@ -150,7 +150,7 @@
                     class="form-control"
                     rows="5"
                     id="newComment"
-                    v-model="dishComment"
+                    v-model="detail"
                     placeholder="Input Here"
                   ></textarea>
                 </div>
@@ -159,7 +159,7 @@
                   <input
                     type="button"
                     class="btn btn-sm btn-purple"
-                    value="Comment Now"
+                    value="Post Now"
                     style="margin-top:10px;float:center"
                     @click="addComment()"
                   />
@@ -178,11 +178,11 @@ export default {
   data () {
     return {
       commentList: [],
-      commentDishNameList: [],
-      commentedCanName: '',
-      commentedDishName: '',
-      dishComment: '',
-      username: 'Daddy',
+      commentdishList: [],
+      commentedcanteen: '',
+      commenteddish: '',
+      detail: '',
+      username: 'Daddy', // 明天加
       allowLiking: [],
       options: [
         'Basic Medical Sciences Building Snack Bar',
@@ -229,36 +229,56 @@ export default {
   mounted () {
     this.getComment()
   },
+  filters:{
+    dateFormat (dataStr) {
+      var time = new Date(dataStr);
+
+      function timeAdd0 (str) {
+        if (str < 10) {
+          str = '0' + str;
+        }
+        return str
+      }
+      var y = time.getFullYear();
+      var m = time.getMonth() + 1;
+      var d = time.getDate();
+      var h = time.getHours();
+      var mm = time.getMinutes();
+      var s = time.getSeconds();
+      return y + '-' + timeAdd0(m) + '-' + timeAdd0(d) + ' ' + timeAdd0(h) + ':' + timeAdd0(mm) + ':' + timeAdd0(s);
+    }
+  },
   methods: {
     getComment () {
-      this.axios.get('http://localhost:3000/forum').then(res => {
+      this.axios.get('http://localhost:3000/api/content/index').then(res => {
         const { status, data } = res
-        if (status == 200) {
-          this.commentList = data
-          this.commentIDList = data.map(e => e['id'])
-          this.commentDishNameList = [...new Set(data.map(e => e['dishName']))]
+        if (status === 200) {
+          this.commentList = data.Data
+          console.log(this.commentList[1].userName)
+          this.commentIDList = data.Data.map(e => e['_id'])
+          this.commentdishList = [...new Set(data.Data.map(e => e['dish']))]
           console.log(this.allowLiking.length)
           if (this.allowLiking.length < 1) {
-            this.allowLiking = Array(this.commentList.length).fill(1)
+            this.allowLiking = Array(this.commentList.length).fill(1) // to do
           }
         }
       })
     },
     addComment () {
       if (
-        this.commentedCanName === '' ||
-        this.commentedDishName === '' ||
-        this.dishComment === ''
+        this.commentedcanteen === '' ||
+        this.commenteddish === '' ||
+        this.detail === ''
       ) {
         window.alert('Please enter all information.')
       } else {
         this.axios
-          .post('http://localhost:3000/forum', {
-            canName: this.commentedCanName,
-            dishName: this.commentedDishName,
-            dishComment: this.dishComment,
-            author: this.username,
-            numOfLike: 0,
+          .post('http://localhost:3000/api/content/publish', {
+            canteen: this.commentedcanteen,
+            dish: this.commenteddish,
+            detail: this.detail,
+            userName: this.username,
+            likeNum: 0,
             date: new Date()
               .toJSON()
               .slice(0, 10)
@@ -271,15 +291,15 @@ export default {
               this.getComment()
             }
           })
-        this.commentedCanName = ''
-        this.commentedDishName = ''
-        this.dishComment = ''
+        this.commentedcanteen = ''
+        this.commenteddish = ''
+        this.detail = ''
       }
     },
     likeComment (Likes, id, index) {
       if (this.allowLiking[index] === 1) {
         this.axios
-          .patch('http://localhost:3000/forum/' + id, { numOfLike: Likes + 1 })
+          .put('http://localhost:3000/api/like' + id, { likeNum: Likes + 1 })
           .then(res => {
             const { status, data } = res
             if (status === 200) {

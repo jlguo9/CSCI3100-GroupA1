@@ -4,7 +4,7 @@ exports.cart_add = (req,res) =>{
     const cart = new Cart(req.body);
     cart.save()
         .then( () => {
-            res.json({State: "success","Data":""});
+            res.status(201).json({"State": "success","Data":""});
         })
         .catch(err => {
             console.log(err);
@@ -14,7 +14,7 @@ exports.cart_add = (req,res) =>{
 exports.cart_get = (req,res) =>{
     Cart.find()
         .then(Data =>{
-            res.json({State: "success", Data});
+            res.status(200).json({"State": "success", Data});
         })
         .catch(err => {
             console.log(err);
@@ -26,6 +26,16 @@ exports.cart_delete = (req,res) =>{
     Cart.findByIdAndDelete(id)
         .then( () => {
             res.json({State: "success",Data:""});
+        })
+        .catch(err =>{
+            console.log(err);
+        });
+}
+exports.cart_update = (req, res) => {
+    const id = req.params.id;
+    Cart.findByIdAndUpdate(id, req.body)
+        .then( () => {
+            res.json({"State": "success","Data":""});
         })
         .catch(err =>{
             console.log(err);

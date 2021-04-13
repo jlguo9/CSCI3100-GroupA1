@@ -19,7 +19,7 @@
         <thead style="background-color: #dda300">
           <tr>
             <th>Index</th>
-            <th>ID</th>
+<!--            <th>ID</th>-->
             <th>Canteen Name</th>
             <th>Dish Name</th>
             <th>Dish Price</th>
@@ -29,7 +29,7 @@
         <tbody>
           <tr v-for="(value, index) in menuList" :key="index">
             <td>{{ index + 1 }}</td>
-            <td>{{ value._id }}</td>
+<!--            <td>{{ value._id }}</td>-->
             <td>{{ value.canteen }}</td>
             <td>{{ value.name }}</td>
             <td>{{ value.price | formatCurrency }}</td>
@@ -296,8 +296,10 @@ export default {
           })
       }
     },
+
     addToCart (index, id) {
-      this.axios.post('http://localhost:3000/api/cart', {
+      this.axios.post('http://localhost:3000/api/cart/add', {
+        dishID: id,
         canteen: this.menuList[index].canteen,
         name: this.menuList[index].name,
         price: this.menuList[index].price,
@@ -307,6 +309,34 @@ export default {
       //   const { status, data } = res
       // })
     },
+    /*
+      addToCart (index, id) {
+      this.axios.get('http://localhost:3000/api/cart/index').then(res => {
+        const { status, data } = res
+        if (data.Data.dishID === id) {
+          if (
+            confirm(
+              'This dish has already been in your cart. Do you want one more quantity of it?'
+            )
+          ) {
+            this.axios.put('http://localhost:3000/api/cart/' + id, {
+              canteen: data.Data.canteen,
+              name: data.Data.name,
+              price: data.Data.price,
+              quantity: data.Data + 1
+            })
+          }
+        } else {
+          this.axios.post('http://localhost:3000/api/cart/add', {
+            canteen: this.menuList[index].canteen,
+            name: this.menuList[index].name,
+            price: this.menuList[index].price,
+            quantity: 1
+          })
+        }
+      })
+      location.reload()
+    }, */
     clearMenu () {
       if (this.menuIDList.length === 0) {
         this.$message.error('Menu is already empty.')
@@ -351,14 +381,18 @@ export default {
             price: this.newDishPrice
           })
           .then(res => {
-            const { status, data } = res
+            const { status } = res
             if (status === 201) {
+              this.$message.success(
+                'Adding is done.'
+              )
+              location.reload()
               this.getMenu()
+              this.newCanName = ''
+              this.newDishName = ''
+              this.newDishPrice = ''
             }
           })
-        this.newCanName = ''
-        this.newDishName = ''
-        this.newDishPrice = ''
       }
     }
   }

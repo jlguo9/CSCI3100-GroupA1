@@ -29,17 +29,17 @@
         </thead>
         <tbody>
           <tr v-for="(value, index) in recordList" :key="index">
-            <td>{{ value.time }}</td>
-            <td>{{ value.canName }}</td>
-            <td>{{ value.dishName }}</td>
-            <td>{{ value.dishPrice | formatCurrency }}</td>
+            <td>{{ value.createdAt }}</td>
+            <td>{{ value.canteen }}</td>
+            <td>{{ value.name }}</td>
+            <td>{{ value.price | formatCurrency }}</td>
             <td>{{ value.quantity }}</td>
             <td>{{ value.subtotal | formatCurrency }}</td>
             <td>
               <a
                 class="btn btn-danger btn-sm"
                 href="javascript:window.confirm('Are you sure?')"
-                @click.prevent="removeFromRecord(index, value.id)"
+                @click.prevent="removeFromRecord(index, value._id)"
                 >Delete</a
               >
             </td>
@@ -83,20 +83,20 @@ export default {
   },
   methods: {
     getRecord () {
-      this.axios.get('http://localhost:3000/record').then(res => {
+      this.axios.get('http://localhost:3000/api/record/index').then(res => {
         const { status, data } = res
         if (status === 200) {
-          this.recordList = data
+          this.recordList = data.Data
           $(document).ready(function () {
             $('#mydatatable3').DataTable()
           })
-          this.recordIDList = data.map(e => e['id'])
+          this.recordIDList = data.Data.map(e => e['_id'])
         }
       })
     },
     removeFromRecord (index, id) {
       if (confirm('Are you sure?')) {
-        this.axios.delete('http://localhost:3000/record/' + id).then(res => {
+        this.axios.delete('http://localhost:3000/api/record/' + id).then(res => {
           const { status } = res
           if (status === 200) {
             this.getRecord()
@@ -113,7 +113,7 @@ export default {
           for (var j = 0; j < this.recordIDList.length; j++) {
             var item = this.recordIDList[j]
             this.axios
-              .delete('http://localhost:3000/record/' + item)
+              .delete('http://localhost:3000/api/record/' + item)
               .then(res => {
                 const { status } = res
                 if (status === 200) {
@@ -121,6 +121,7 @@ export default {
                 }
               })
           }
+          location.reload()
           this.$message.success(
             'Removing is done. Please manually refresh this page again.'
           )

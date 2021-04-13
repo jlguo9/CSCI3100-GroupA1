@@ -4,7 +4,7 @@ exports.record_add = (req,res) =>{
     const record = new Record(req.body);
     record.save()
         .then( () => {
-            res.status(200).json({State: "success",Data:""});
+            res.status(201).json({"State": "success","Data":""});
         })
         .catch(err => {
             console.log(err);

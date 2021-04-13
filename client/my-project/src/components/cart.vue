@@ -22,7 +22,7 @@
         <thead style="background-color: #dda300">
           <tr>
             <th>Index</th>
-            <th>ID</th>
+<!--            <th>ID</th>-->
             <th>Canteen Name</th>
             <th>Dish Name</th>
             <th>Dish Price</th>
@@ -33,10 +33,10 @@
         <tbody>
           <tr v-for="(value, index) in cartList" :key="index">
             <td>{{ index + 1 }}</td>
-            <td>{{ value.id }}</td>
-            <td>{{ value.canName }}</td>
-            <td>{{ value.dishName }}</td>
-            <td>{{ value.dishPrice | formatCurrency }}</td>
+<!--            <td>{{ value._id }}</td>-->
+            <td>{{ value.canteen }}</td>
+            <td>{{ value.name }}</td>
+            <td>{{ value.price | formatCurrency }}</td>
             <td>
               <span>
                 <a
@@ -46,7 +46,7 @@
                     'btn btn-success btn-sm': value.quantity > 1
                   }"
                   role="button"
-                  @click="subCartQuant(index, value.id)"
+                  @click="subCartQuant(index, value._id)"
                   style="width: 30px; height: 30px; color: white"
                   >-</a
                 >
@@ -54,7 +54,7 @@
                 <a
                   href="#/cart"
                   class="btn btn-success btn-sm"
-                  @click="addCartQuant(index, value.id)"
+                  @click="addCartQuant(index, value._id)"
                   style="width: 30px; height: 30 px"
                   >+</a
                 >
@@ -64,7 +64,7 @@
               <a
                 class="btn btn-danger btn-sm"
                 href="javascript:window.confirm('Are you sure?')"
-                @click.prevent="removeFromCart(index, value.id)"
+                @click.prevent="removeFromCart(index, value._id)"
                 >Delete</a
               >
             </td>
@@ -123,42 +123,33 @@ export default {
     // },
 
     getCart () {
-      this.axios.get('http://localhost:3000/cart').then(res => {
+      this.axios.get('http://localhost:3000/api/cart/index').then(res => {
         const { status, data } = res
+        console.log(status)
         if (status === 200) {
-          this.cartList = data
+          this.cartList = data.Data
+          console.log(data)
           $(document).ready(function () {
             $('#mydatatable2').DataTable()
           })
-          this.cartQuantList = data.map(e => e['quantity'])
-          this.cartIDList = data.map(e => e['id'])
+          this.cartQuantList = data.Data.map(e => e['quantity'])
+          this.cartIDList = data.Data.map(e => e['_id'])
           this.total = 0
           for (var j = 0; j < this.cartQuantList.length; j++) {
             // var item = this.cartQuantList[j]
             this.total +=
-              parseFloat(this.cartList[j].dishPrice) *
+              parseFloat(this.cartList[j].price) *
               parseInt(this.cartList[j].quantity)
           }
-          console.log('now is doing get-cart')
-          console.log(this.total)
-          console.log(this.cartList)
-          console.log(this.cartIDList)
-          this.$forceUpdate()
-          console.log('refreshing is done')
-          console.log('cart is alreday read')
         }
       })
     },
     subCartQuant (index, id) {
       if (this.cartList[index].quantity > 1) {
-        this.total -= parseFloat(this.cartList[index].dishPrice) * 1
+        this.total -= parseFloat(this.cartList[index].price) * 1
         this.axios
-          .put('http://localhost:3000/cart/' + id, {
-            canName: this.cartList[index].canName,
-            dishName: this.cartList[index].dishName,
-            dishPrice: this.cartList[index].dishPrice,
+          .put('http://localhost:3000/api/cart/' + id, {
             quantity: this.cartList[index].quantity - 1,
-            id: id
           })
           .then(res => {
             const { status } = res
@@ -172,7 +163,7 @@ export default {
             'This will remove this item from your shopping cart.\nAre you sure?'
           )
         ) {
-          this.axios.delete('http://localhost:3000/cart/' + id).then(res => {
+          this.axios.delete('http://localhost:3000/api/cart/' + id).then(res => {
             const { status } = res
             if (status === 200) {
               this.getCart()
@@ -182,14 +173,10 @@ export default {
       }
     },
     addCartQuant (index, id) {
-      this.total += parseFloat(this.cartList[index].dishPrice) * 1
+      this.total += parseFloat(this.cartList[index].price) * 1
       this.axios
-        .put('http://localhost:3000/cart/' + id, {
-          canName: this.cartList[index].canName,
-          dishName: this.cartList[index].dishName,
-          dishPrice: this.cartList[index].dishPrice,
-          quantity: this.cartList[index].quantity + 1,
-          id: id
+        .put('http://localhost:3000/api/cart/' + id, {
+          quantity: this.cartList[index].quantity + 1
         })
         .then(res => {
           const { status } = res
@@ -200,7 +187,7 @@ export default {
     },
     removeFromCart (index, id) {
       if (confirm('Are you sure?')) {
-        this.axios.delete('http://localhost:3000/cart/' + id).then(res => {
+        this.axios.delete('http://localhost:3000/api/cart/' + id).then(res => {
           // const { status, data } = res
           if (status === 200) {
             this.getCart()
@@ -218,7 +205,7 @@ export default {
           for (var j = 0; j < this.cartIDList.length; j++) {
             var item = this.cartIDList[j]
             this.axios
-              .delete('http://localhost:3000/cart/' + item)
+              .delete('http://localhost:3000/api/cart/' + item)
               .then(res => {
                 const { status } = res
                 if (status === 200) {
@@ -229,8 +216,9 @@ export default {
           // this.$forceUpdate()
           // window.alert('Delete is done!')
           // this.getEmpty()
+          location.reload()
           this.$message.success(
-            'Removing is done. Please manually refresh this page again.'
+            'Removing is done.'
           )
           //  window.alert("Removing is done. Please manually refresh this page again.")
         }
@@ -247,17 +235,17 @@ export default {
             console.log('below is j')
             console.log(j)
             this.axios
-              .post('http://localhost:3000/record', {
+              .post('http://localhost:3000/api/record/add', {
                 time: new Date()
                   .toJSON()
                   .slice(0, 10)
                   .replace(/-/g, '/'),
-                canName: this.cartList[j].canName,
-                dishName: this.cartList[j].dishName,
-                dishPrice: this.cartList[j].dishPrice,
+                canteen: this.cartList[j].canteen,
+                name: this.cartList[j].name,
+                price: this.cartList[j].price,
                 subtotal:
-                  this.cartList[j].dishPrice * this.cartList[j].quantity,
-                quantity: this.cartList[j].quantity
+                  this.cartList[j].price * this.cartList[j].quantity,
+                quantity: this.cartList[j].quantity,
               })
               .then(res => {
                 console.log('post succeeds')
@@ -272,7 +260,7 @@ export default {
             console.log(item)
             console.log('now is deleting the above id')
             this.axios
-              .delete('http://localhost:3000/cart/' + item)
+              .delete('http://localhost:3000/api/cart/' + item)
               .then(res => {
                 console.log('delete succeeds')
                 this.getCart()

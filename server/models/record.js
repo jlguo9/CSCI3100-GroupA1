@@ -2,10 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const recordSchema = new Schema({
-    dishID: {
-        type: String,
-        required: true
-    },
     name: {
         type: String,
         required: true
@@ -18,7 +14,11 @@ const recordSchema = new Schema({
         type: String,
         required: true
     },
-    number: {
+    quantity: {
+        type: Number,
+        required: true
+    },
+    subtotal:{
         type: Number,
         required: true
     }
