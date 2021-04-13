@@ -14,6 +14,7 @@ import './assets/index.css'
 
 // library.add(faUserSecret)
 Vue.prototype.axios = axios
+
 Vue.use(LightGallery);
 Vue.use(ElementUI);
 

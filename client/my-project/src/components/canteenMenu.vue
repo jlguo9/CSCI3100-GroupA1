@@ -3,14 +3,14 @@
     <h1 class="sub-header">
       Today's Menu
       <span style="float: right">
-        <a class="btn btn-danger" href="/#/canteenMenu" @click="clearMenu"
+        <a class="btn btn-danger" href="/#/canteenMenu" @click="clearMenu()"
           >Remove All</a
         >
       </span>
     </h1>
     <br />
 
-    <div class="table-responsive">
+    <div class="table-responsive" v-if="menuList.length > 0">
       <table
         class="table table-striped table-hover"
         style="text-align: center"
@@ -29,28 +29,28 @@
         <tbody>
           <tr v-for="(value, index) in menuList" :key="index">
             <td>{{ index + 1 }}</td>
-            <td>{{ value.id }}</td>
-            <td>{{ value.canName }}</td>
-            <td>{{ value.dishName }}</td>
-            <td>{{ value.dishPrice | formatCurrency }}</td>
+            <td>{{ value._id }}</td>
+            <td>{{ value.canteen }}</td>
+            <td>{{ value.name }}</td>
+            <td>{{ value.price | formatCurrency }}</td>
             <td>
               <span>
                 <a
                   href="#"
                   class="btn btn-success btn-sm"
-                  @click.prevent="editItem(index, value.id)"
+                  @click.prevent="editItem(index, value._id)"
                   >Edit</a
                 >&nbsp;&nbsp;
                 <a
                   class="btn btn-danger btn-sm"
                   href="javascript:window.confirm('Are you sure?')"
-                  @click.prevent="deleteItem(index, value.id)"
+                  @click.prevent="deleteItem(index, value._id)"
                   >Delete</a
                 >&nbsp;&nbsp;
                 <a
                   class="btn btn-purple btn-sm"
                   href="javascript:window.confirm('Are you sure?')"
-                  @click="addToCart(index, id)"
+                  @click="addToCart(index, value._id)"
                   >Add to My Cart</a
                 >
               </span>
@@ -61,6 +61,12 @@
           </tr> -->
         </tbody>
       </table>
+    </div>
+
+    <div class="table-responsive" v-if="menuList.length === 0">
+      <h4>
+        Today's Menu has not been updated yet. Please wait for the new menu.
+      </h4>
     </div>
 
     <div class="line"></div>
@@ -228,23 +234,23 @@ export default {
   computed: {},
   methods: {
     getMenu () {
-      this.axios.get('http://localhost:3000/menuList').then(res => {
+      this.axios.get('http://localhost:3000/api/menu/index').then(res => {
         const { status, data } = res
         if (status === 200) {
           console.log('find')
-          this.menuList = data
+          this.menuList = data.Data
           $(document).ready(function () {
             $('#mydatatable1').DataTable()
           })
           console.log(this.menuList)
-          this.menuIDList = data.map(e => e['id'])
-          this.dishNameList = [...new Set(data.map(e => e['dishName']))]
+          this.menuIDList = data.Data.map(e => e['_id'])
+          this.dishNameList = [...new Set(data.Data.map(e => e['name']))]
         }
       })
     },
     deleteItem (index, id) {
       if (confirm('Are you sure?')) {
-        this.axios.delete('http://localhost:3000/menuList/' + id).then(res => {
+        this.axios.delete('http://localhost:3000/menu/' + id).then(res => {
           const { status } = res
           if (status === 200) {
             this.getMenu()
@@ -268,19 +274,19 @@ export default {
       if (r1 === null && r2 === null && r3 === null) {
       } else {
         if (r1 === null) {
-          r1 = this.menuList[index].canName
+          r1 = this.menuList[index].canteen
         }
         if (r2 === null) {
-          r2 = this.menuList[index].dishName
+          r2 = this.menuList[index].name
         }
         if (r3 === null) {
-          r3 = this.menuList[index].dishPrice
+          r3 = this.menuList[index].price
         }
         this.axios
-          .put('http://localhost:3000/menuList/' + id, {
-            canName: r1,
-            dishName: r2,
-            dishPrice: r3
+          .put('http://localhost:3000/menu/' + id, {
+            canteen: r1,
+            name: r2,
+            price: r3
           })
           .then(res => {
             const { status } = res
@@ -292,9 +298,9 @@ export default {
     },
     addToCart (index, id) {
       this.axios.post('http://localhost:3000/cart', {
-        canName: this.menuList[index].canName,
-        dishName: this.menuList[index].dishName,
-        dishPrice: this.menuList[index].dishPrice,
+        canteen: this.menuList[index].canteen,
+        name: this.menuList[index].name,
+        price: this.menuList[index].price,
         quantity: 1
       })
       // .then(res => {
@@ -303,14 +309,15 @@ export default {
     },
     clearMenu () {
       if (this.menuIDList.length === 0) {
-        window.alert('Menu is already empty.')
+        this.$message.error('Menu is already empty.')
+        // window.alert('Menu is already empty.')
       } else {
         if (confirm('Are you sure?')) {
           // console.log(this.menuIDList);
           for (var j = 0; j < this.menuIDList.length; j++) {
             var item = this.menuIDList[j]
             this.axios
-              .delete('http://localhost:3000/menuList/' + item)
+              .delete('http://localhost:3000/menu/' + item)
               .then(res => {
                 const { status } = res
                 if (status === 200) {
@@ -318,6 +325,13 @@ export default {
                 }
               })
           }
+          this.$message.success(
+            'Removing is done. Please manually refresh this page again.'
+          )
+          // window.alert(
+          //   'Removing is done. Please manually refresh this page again.'
+          // )
+          this.getMenu()
         }
       }
     },
@@ -327,13 +341,14 @@ export default {
         this.newDishName === '' ||
         this.newDishPrice === ''
       ) {
-        window.alert('Please enter all infomation!')
+        this.$message.error('Please enter all infomation!')
+        // window.alert('Please enter all infomation!')
       } else {
         this.axios
-          .post('http://localhost:3000/menuList', {
-            canName: this.newCanName,
-            dishName: this.newDishName,
-            dishPrice: this.newDishPrice
+          .post('http://localhost:3000/menu/add', {
+            canteen: this.newCanName,
+            name: this.newDishName,
+            price: this.newDishPrice
           })
           .then(res => {
             const { status, data } = res
