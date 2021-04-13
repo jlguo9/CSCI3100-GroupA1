@@ -27,7 +27,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(value, index) in searchedList" :key="index">
+          <tr v-for="(value, index) in menuList" :key="index">
             <td>{{ index + 1 }}</td>
             <td>{{ value.id }}</td>
             <td>{{ value.canName }}</td>
@@ -63,70 +63,94 @@
       </table>
     </div>
 
-    <!-- <div class="line"></div>
+    <div class="line"></div>
 
-    <div class="table-responsive" id="search">
-      <h2>
-        Search & Filter Menu Here!
-        <span style="float: right">
-          <a
-            class="btn btn-danger"
-            href="/#/canteenMenu"
-            @click="removeSearchFilter()"
-            >Remove Filter Criteria</a
-          >
-        </span>
-      </h2>
-      <br />
-      <table class="table table-striped">
-        <tbody>
-          <tr>
-            <td>Canteen Name Includes:</td>
-            <td>
-              <input
-                type="text"
-                class="searchingTextBox"
-                placeholder="Input Search Criteria"
-                v-model="searchCanteen"
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>Dish Name Includes:</td>
-            <td>
-              <input
-                type="text"
-                class="searchingTextBox"
-                placeholder="Input Search Criteria"
-                v-model="searchDish"
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>Dish Price Range:</td>
-            <td>
-              <input
-                type="number"
-                class="smallNumBox"
-                step="0.5"
-                v-model="searchDishPriceMin"
-                placeholder="Input or Click"
-                min="0"
-              />
-              -
-              <input
-                type="number"
-                class="smallNumBox"
-                step="0.5"
-                v-model="searchDishPriceMax"
-                placeholder="Input or Click"
-                min="0"
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div> -->
+    <div class="d-flex justify-content-center" v-if="admin === 0">
+      <button
+        class="btn btn-purple"
+        type="button"
+        data-toggle="collapse"
+        data-target="#collapseNewDish"
+        aria-expanded="false"
+        aria-controls="collapseNewDish"
+      >
+        Add New Dish!
+      </button>
+    </div>
+    <br />
+    <div class="container justify-content-center">
+      <div class="d-flex justify-content-center row">
+        <div class="col-md-8">
+          <div class="collapse " id="collapseNewDish">
+            <div class="card card-body">
+              <div class="add">
+                <h1>Add Today's New Dish Here!</h1>
+                <label>Step 1: Select A Canteen:</label>
+
+                <span class="box" style="margin:10px">
+                  <select v-model="newCanName">
+                    <option disabled :value="null">Select A Canteen</option>
+                    <option
+                      v-for="option in options"
+                      :value="option"
+                      :key="option"
+                    >
+                      {{ option }}
+                    </option>
+                  </select></span
+                >
+                <br />
+                <label>Step 2: Select An Existing Dish:</label>
+                <span class="box" style="margin:10px">
+                  <select v-model="newDishName">
+                    <option disabled :value="null">
+                      Select An Existing Dish
+                    </option>
+                    <option
+                      v-for="option in dishNameList"
+                      :value="option"
+                      :key="option"
+                    >
+                      {{ option }}
+                    </option>
+                  </select> </span
+                ><br />
+
+                &nbsp; Or Input the New Dish Name:
+                <input
+                  type="text"
+                  v-model="newDishName"
+                  placeholder="Input Here"
+                  style="margin:10px;width:300px"
+                /><br />
+
+                Step 3: Input the New Dish Price:
+                <input
+                  type="number"
+                  class="addingNumBox"
+                  step="0.5"
+                  v-model="newDishPrice"
+                  style="margin:10px;width:200px"
+                  placeholder="Input Here or Click the Button"
+                  min="0"
+                />
+
+                <br />
+                <div style="text-align:center">
+                  <input
+                    type="button"
+                    class="btn btn-sm btn-purple"
+                    value="Add New Dish Now"
+                    style="margin-top:10px"
+                    @click="addItem()"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -136,10 +160,55 @@ export default {
     return {
       menuList: [],
       menuIDList: [],
+      dishNameList: [],
       searchCanteen: '',
       searchDish: '',
       searchDishPriceMin: 0,
-      searchDishPriceMax: 1000
+      searchDishPriceMax: 1000,
+      newCanName: '',
+      newDishName: '',
+      newDishPrice: '',
+      admin: 0,
+      options: [
+        'Basic Medical Sciences Building Snack Bar',
+        'Benjamin Franklin Centre Coffee Corner',
+        'Benjamin Franklin Centre Staff Canteen',
+        'Benjamin Franklin Centre Student Canteen',
+        'Benjamin Franklin Centre Vegetarian Food Shop',
+        'Café 330',
+        'Canteen of CW Chu College',
+        'Canteen of S.H. Ho College',
+        'Connexion, S.H. Ho College Staff Common Room',
+        'Chung Chi College Staff Club',
+        'Chung Chi College Student Canteen',
+        'Lee Shau Kee Building Snack Bar',
+        'Lee Woo Sing College - Cafe Tolo',
+        'Lee Woo Sing College - The Green',
+        'Lee Woo Sing College - The Harmony',
+        'Lee Woo Sing College - WS Pavilion',
+        'Li Wai Chun Building Café',
+        'Li Wai Chun Building Halal Food Outlet',
+        'Morningside College Café',
+        'Morningside College Dining Hall',
+        'New Asia College Coffee Shop (Coffee Lover Café)',
+        'New Asia College Staff Canteen',
+        'New Asia College Student Canteen',
+        'New Asia College Yun Chi Hsien',
+        'Orchid Lodge',
+        'Pommerenke Student Centre Café (Paper&Coffee)',
+        'Postgraduate Hall 3 Café (Area 39)',
+        'S.H. Ho College Café',
+        'Staff Common Room Clubhouse',
+        'SeeYou@Shaw (with Café)',
+        'The Stage',
+        'United College Si Yuan Amenities Centre',
+        'United College Staff Canteen',
+        'United College Staff Common Room',
+        'United College Student Canteen',
+        'Women Cooperative Store',
+        'Wu Yee Sun College Staff Dining Room',
+        'Wu Yee Sun College Student Canteen'
+      ]
     }
   },
   mounted () {
@@ -156,20 +225,7 @@ export default {
       return '$ ' + revealNum
     }
   },
-  computed: {
-    searchedList () {
-      return this.menuList.filter(item => {
-        return (
-          item.canName
-            .toUpperCase()
-            .includes(this.searchCanteen.toUpperCase()) &&
-          item.dishName.toUpperCase().includes(this.searchDish.toUpperCase()) &&
-          item.dishPrice >= parseFloat(this.searchDishPriceMin) &&
-          item.dishPrice <= parseFloat(this.searchDishPriceMax)
-        )
-      })
-    }
-  },
+  computed: {},
   methods: {
     getMenu () {
       this.axios.get('http://localhost:3000/menuList').then(res => {
@@ -212,13 +268,13 @@ export default {
       if (r1 === null && r2 === null && r3 === null) {
       } else {
         if (r1 === null) {
-          r1 = this.searchedList[index].canName
+          r1 = this.menuList[index].canName
         }
         if (r2 === null) {
-          r2 = this.searchedList[index].dishName
+          r2 = this.menuList[index].dishName
         }
         if (r3 === null) {
-          r3 = this.searchedList[index].dishPrice
+          r3 = this.menuList[index].dishPrice
         }
         this.axios
           .put('http://localhost:3000/menuList/' + id, {
@@ -236,9 +292,9 @@ export default {
     },
     addToCart (index, id) {
       this.axios.post('http://localhost:3000/cart', {
-        canName: this.searchedList[index].canName,
-        dishName: this.searchedList[index].dishName,
-        dishPrice: this.searchedList[index].dishPrice,
+        canName: this.menuList[index].canName,
+        dishName: this.menuList[index].dishName,
+        dishPrice: this.menuList[index].dishPrice,
         quantity: 1
       })
       // .then(res => {
@@ -265,11 +321,30 @@ export default {
         }
       }
     },
-    removeSearchFilter () {
-      this.searchCanteen = ''
-      this.searchDish = ''
-      this.searchDishPriceMin = 0
-      this.searchDishPriceMax = 1000
+    addItem () {
+      if (
+        this.newCanName === '' ||
+        this.newDishName === '' ||
+        this.newDishPrice === ''
+      ) {
+        window.alert('Please enter all infomation!')
+      } else {
+        this.axios
+          .post('http://localhost:3000/menuList', {
+            canName: this.newCanName,
+            dishName: this.newDishName,
+            dishPrice: this.newDishPrice
+          })
+          .then(res => {
+            const { status, data } = res
+            if (status === 201) {
+              this.getMenu()
+            }
+          })
+        this.newCanName = ''
+        this.newDishName = ''
+        this.newDishPrice = ''
+      }
     }
   }
 }

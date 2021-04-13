@@ -56,6 +56,8 @@ import gallery11 from '@/components/gallery11'
 import gallery11a from '@/components/gallery11a'
 import gallery11b from '@/components/gallery11b'
 import gallery11c from '@/components/gallery11c'
+import login from '@/components/login'
+import register from '@/components/register'
 
 Vue.use(Router)
 
@@ -336,6 +338,16 @@ export default new Router({
       path: '/forum',
       name: 'forum',
       component: forum
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: login
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: register
     }
   ]
 })
