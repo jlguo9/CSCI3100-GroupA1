@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
     name: {
         type: String,
-        required:true
+        required:true,
+        unique:true
     },
     password: {
         type: String,
@@ -12,7 +13,9 @@ const userSchema = new Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
+        match: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     },
     type: {
         type: String,
@@ -22,6 +25,7 @@ const userSchema = new Schema({
     canteen: {
         type: String,
         required: false,
+        default: ""
     }
 })
 const User = mongoose.model("User",userSchema);

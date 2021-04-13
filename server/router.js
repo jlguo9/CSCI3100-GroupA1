@@ -1,13 +1,13 @@
-var userController = require('./controllers/userController');
-var likeController = require('./controllers/likeController');
-var menuController = require('./controllers/menuController');
-var contentController = require('./controllers/contentController');
-var recordController = require('./controllers/recordController');
-var cartController = require('./controllers/cartController');
+const userController = require('./controllers/userController');
+const likeController = require('./controllers/likeController');
+const menuController = require('./controllers/menuController');
+const contentController = require('./controllers/contentController');
+const recordController = require('./controllers/recordController');
+const cartController = require('./controllers/cartController');
 
-var express = require('express');
-var router=express.Router();
-var passport = require('passport');
+const express = require('express');
+const router=express.Router();
+
 
 //parse url sent by client and hand over to corresponding controllers
 //to do...
@@ -41,9 +41,9 @@ router.delete("/content/like/:id",likeController.cancel_like);
 
 //user routes
 router.post("/user/register",userController.register);
-router.post("/user/login",userController.login);
-router.post("/user/logout",userController.logout);
-router.put("/user/password",userController.change_password);
+router.get("/user/login",userController.login);
+router.get("/user/logout",userController.logout);
 router.get("/user/info/:id",userController.get_info);
+//router.put("/user/password",userController.change_password);
 
 module.exports = router;

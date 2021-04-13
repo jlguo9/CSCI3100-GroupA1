@@ -7,11 +7,11 @@
 |      success      |               表明成功返回               |     所有API      |
 |     name_null     |              空用户名                    |       注册       |
 |     email_null    |              空邮箱                     |        注册       |
-|     email_format_error    |      错误的邮箱格式              |       注册        |
+|     password_null    |              密码为空                     |        注册       |
 |    email_exist    |               邮箱已被使用               |       注册       |
 |  username_exist   |              用户名已被使用              |        注册       |
-| username_not_exist |               用户名不存在               |       登陆       |
-|  wrong_password   |                 密码错误                 |       登陆、更改密码    |
+|  auth_failed      |               用户名不存在或密码错误      |       登陆       |
+|  wrong_password   |                 密码错误                 |       登陆    |
 |     no_this_id    |              请求的id不存在              | 获取用户信息     |
 |     not_login     |                  未登录                  | 获取用户信息、点赞、取消点赞、发布文章、修改菜单、购物车操作  |
 |     like_exist    |              已经对该对象点赞过了        |        点赞     |
@@ -24,8 +24,8 @@
 |  record_not_exist    |              该纪录不存在              |  删除纪录  |
 |      bad_req      | 错误的请求信息，代表请求json文件格式有误 | 所有POST类型API  |
 
-- 注意：所有GET类型默认返回success状态，错误将在http状态码中体现
 
+- \[REMINDER\]: please set json headers to be content-type.
 ## User
 ### 用户注册
 
@@ -61,7 +61,7 @@ POST /api/user/register
 
 | 参数名 |  类型  | 描述 |                    参数                    |
 | :----: | :----: | :--: | :----------------------------------------: |
-| State  | string | 状态 | success,email_exist,username_exist,bad_req |
+| State  | string | 状态 | success,email_exist,username_exist,bad_req,etc. |
 |  Data  | string | 数据 |                    暂无                    |
 
 * 参数使用json形式解析
@@ -77,7 +77,7 @@ POST /api/user/register
 ### 用户登录
 
 ```
-POST /api/user/login
+GET /api/user/login
 ```
 
 #### Request
@@ -122,7 +122,7 @@ POST /api/user/login
 ### 退出登录
 
 ```
-POST /api/user/logout
+GET /api/user/logout
 ```
 
 #### Request
@@ -208,7 +208,7 @@ PUT /api/user/password
 GET /api/user/info/{userID:string}
 ```
 
-* userID string 用户id(user_id="self"时，获取自身信息)
+* userID string 用户id
 #### Request
 
 空
@@ -238,11 +238,14 @@ GET /api/user/info/{userID:string}
 ```json
 {
   "State":"success",
-  "ID": "5fbcb442f5beb22628d4b685",
+  "Data":{
+    "ID": "5fbcb442f5beb22628d4b685",
   "name": "PhilipGUO",
 	"email": "1155124399@link.cuhk.edu.hk",
 	"type" : "admin",
   "canteen": ""
+  }
+  
 }
 ```
 
@@ -789,14 +792,12 @@ GET /api/cart/index
       "number": "1"
   },
   {
-    "Data": {
       "ID": "asd22iasdkjn28",
       "dishID": "asasdasw221q1on",
       "name": "test2",
       "price": 28,
       "canteen": "NA can",
       "number": "2"
-    }
   }]
 }
 ```

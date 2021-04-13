@@ -1,9 +1,10 @@
-var createError = require('http-errors');
+const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const router = require('./router');
 
+const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const http = require("http");
@@ -22,7 +23,10 @@ const rootDir=path.resolve(__dirname);
 const projectDir=path.resolve(__dirname,'../','client');
 app.use(express.static(rootDir));
 app.use(express.static(projectDir));
-
+//middleware
+app.use(express.urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 // the router
 app.use('/api',router);
 
@@ -41,9 +45,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.json({code:500,msg:"error"});
 });*/
-
-//middleware
-app.use(express.urlencoded({extended: true}));
 
 //database setting
 const db_url = "mongodb://localhost:27017/foodification";
