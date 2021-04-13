@@ -17,6 +17,7 @@ import './assets/index.css'
 Vue.prototype.axios = axios
 Vue.use(LightGallery)
 Vue.use(ElementUI)
+Vue.use(MyHttpServer)
 
 Vue.config.productionTip = false
 
