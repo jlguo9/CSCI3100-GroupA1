@@ -384,6 +384,7 @@ export default {
               }
             })
             .then(res => {
+              this.$message.success('Unlike Successfully!')
               setTimeout(this.getComment, 300)
             })
         })
