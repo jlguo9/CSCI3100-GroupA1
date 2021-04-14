@@ -15,7 +15,7 @@ const contentSchema = new Schema({
         required:true
     },
     likeNum:{
-        type: String,
+        type: Number,
         required: false,
         default: 0
     },

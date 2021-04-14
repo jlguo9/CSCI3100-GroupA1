@@ -329,6 +329,7 @@ export default {
                 if (status === 200) {
                   console.log('delete succeeds')
                   this.getCart()
+                  // this.$forceUpdate
                 }
                 // console.log('delete succeeds')
                 // this.getCart()
