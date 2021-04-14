@@ -7,9 +7,26 @@ const cartController = require('./controllers/cartController');
 const galleryController = require('./controllers/galleryController');
 
 const express = require('express');
+const multer = require('multer');
 const router=express.Router();
 
 const check_auth = require('./middleware/check_auth');
+const path = require('path');
+//set storage engine
+const storage = multer.diskStorage({
+    destination: '../uploads',
+    filename: function(req, file, cb){
+        cb(null, file.fieldname + '-' + Date.now() +
+            path.extname(file.originalname));
+    }
+})
+//Init upload
+const upload = multer({
+    storage: storage,
+    limits: {
+        filesize: 1024 * 2014 * 100
+    }
+});
 
 //parse url sent by client and hand over to corresponding controllers
 //to do...
@@ -49,7 +66,7 @@ router.get("/user/info/:id",userController.get_info);
 //router.put("/user/password",userController.change_password);
 
 //gallery routes
-router.post("/gallery/add",galleryController.image_post);
-router.get("/gallery",galleryController.image_get);
+router.post("/gallery/add",upload.single('dishImage'), galleryController.image_post);
+router.get("/gallery/:canteen",galleryController.image_get);
 
 module.exports = router;

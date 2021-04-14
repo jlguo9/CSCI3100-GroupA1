@@ -1,35 +1,10 @@
 const Gallery = require('../models/gallery');
-const multer = require('multer');
-const path = require('path');
-//set storage engine
-const storage = multer.diskStorage({
-    destination: '../uploads',
-    filename: function(req, file, cb){
-        cb(null, file.fieldname + '-' + Date.now() +
-        path.extname(file.originalname));
-    }
-})
-//Init upload
-const upload = multer({
-    storage: storage,
-    limits: {
-        filesize: 1024 * 2014 * 100
-    },
-    fileFilter: function(req,file,cb){
+// const multer = require('multer');
 
-    }
-}).single('dishImage');
-
-exports.image_post = (req,res) => {
-    upload(req,res,(err) => {
-        if(err){
-            console.log(err);
-            res.status(500).json({State: "upload_failed",Data:""});
-        }
-        else{
+exports.image_post = (req,res,next) => {
             console.log(req.file);
             const image = new Gallery({
-                username: req.userData.name,
+                username: req.body.name,
                 dish: req.body.dish,
                 canteen: req.body.canteen,
                 Image: req.file.path
@@ -41,12 +16,10 @@ exports.image_post = (req,res) => {
                 .catch(err => {
                     console.log(err);
                 })
-        }
-    });
 }
 
 exports.image_get = (req,res) =>{
-    const canteenName = req.query.canteen;
+    const canteenName = req.params.canteen;
     Gallery.find({canteen: canteenName})
         .then(Data =>{
             res.status(200).json({State:"success", Data});
