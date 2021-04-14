@@ -64,7 +64,7 @@
             ><a>CW Chu College</a>
           </router-link>
           <router-link to="/gallery11" tag="li"><a>Others</a> </router-link>
-             <router-link to="/gallery12" tag="li"><a>Upload</a> </router-link>
+          <router-link to="/gallery12" tag="li"><a>Upload</a> </router-link>
         </ul>
 
         <router-link to="/forum" tag="li"
@@ -74,9 +74,14 @@
 
       <li>
         <a
-          href="https://github.com/jlguo9/CSCI3100-GroupA1/blob/main/README.md
-"
-          ><i class="fas fa-question"></i> FAQ</a
+          href="https://www.cuhk.edu.hk/english/campus/accommodation.html#canteen.info"
+          ><i class="fas fa-info-circle"></i> Info</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://github.com/jlguo9/CSCI3100-GroupA1/blob/main/README.md"
+          ><i class="fas fa-question-circle"></i> FAQ</a
         >
       </li>
       <li>

@@ -62,7 +62,7 @@ export default {
     //   }
     // },
     login () {
-      if (this.myToken != '' && this.myToken != null) {
+      if (this.myToken !== '' && this.myToken !== null) {
         this.$message.warning('You have already signed in!')
         window.location.assign('/#')
         setTimeout('window.location.reload()', 100)

@@ -9,11 +9,10 @@
 
     <div class="line"></div>
 
-
     <div class="container justify-content-center">
       <div class="d-flex justify-content-center row">
         <div class="col-md-8">
-          <div >
+          <div>
             <div class="card card-body">
               <div class="add">
                 <h1>Upload Your Own Picture of Dish here!</h1>
@@ -66,17 +65,22 @@
                   :file-list="fileList"
                   list-type="picture"
                 >
-                  <el-button size="small" type="primary" class="btn btn-purple"
+                  <br />
+                  <el-button
+                    size="small"
+                    type="primary"
+                    class="btn btn-purple"
+                    @click="uploadImg()"
                     >Click to Upload Picture</el-button
                   >
                   <div slot="tip" class="el-upload__tip">
                     只能上传jpg/png文件，且不超过500kb
                   </div>
                 </el-upload>
-                </div>
               </div>
             </div>
           </div>
+        </div>
       </div>
     </div>
   </div>
@@ -126,6 +130,56 @@ export default {
         'Wu Yee Sun College Staff Dining Room',
         'Wu Yee Sun College Student Canteen'
       ]
+    }
+  },
+  methods: {
+    onFileSelected (event) {
+      console.log(event)
+      this.selectedFile = event.target.files[0]
+    },
+    onUpload () {
+      const fd = new FormData()
+      fd.append('image', this.selectedFile, this.selectedFile.name)
+      this.axios.post('http://localhost:3000/gallery2', fd).then(res => {
+        console.log(res)
+      })
+    //   const formData = new FormData()
+    //   formData.append('bannerImg', this.promo.bannerImg)
+    //   formData.append('inAppImg', this.promo.inAppImg)
+    //   formData.append('inAppImg', this.promo)
+
+    //   // Add the serialized JSON data to the formData (not
+    //   // sure what your JSON object is called)
+    //   formData.append('data', JSON.stringify(this.data))
+
+    //   this.axios
+    //     .post('http://localhost:3000/uploadImg', formData)
+    //     .then(response => {
+    //       console.log('Submit Success')
+    //     })
+    //     .catch(e => {
+    //       console.log('Submit Fail')
+    //     })
+
+    //   let formData = new FormData()
+    //   formData.append('image', this.selectedFile) // 图片
+    //   let params = {
+    //     contentId: this.pictureId,
+    //     description: this.detailForm.desc
+    //   } // 其他数据
+    //   formData.append('contentId', params.contentId) // json格式上传
+    //   formData.append('description', params.description)
+
+    //   this.axios
+    //     .post('http://localhost:3000/uploadImg', formData) // 上传接口
+    //     .then(res => {
+    //       this.$Message.success('添加成功')
+    //       console.log('Submit Success')
+    //     })
+    //   .catch(err => {
+    //     this.$Message.error('添加失败')
+    //   })
+    // },
     }
   }
 }

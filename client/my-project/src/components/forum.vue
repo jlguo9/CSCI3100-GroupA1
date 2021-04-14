@@ -346,7 +346,7 @@ export default {
             }
           )
           .then(res => {
-            const { status, data } = res
+            const { status } = res
             if (status === 201) {
               this.$message.success('Successful Comment!')
               this.getComment()
