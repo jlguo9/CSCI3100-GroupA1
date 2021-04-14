@@ -13,7 +13,7 @@ exports.like_it = (req,res) => {
             else{
                 like.save()
                     .then(() =>{
-                        res.json({State: "success",Data:""});
+                        res.status(201).json({State: "success",Data:""});
                     })
                     .catch(err => {
                         console.log(err);

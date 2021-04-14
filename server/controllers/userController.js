@@ -4,13 +4,13 @@ const jwt = require("jsonwebtoken");
 const JWT_KEY = "secrete";
 exports.register = (req,res) => {
     if(req.body.name === ""){
-        return res.json({"State": "name_null", "Data": ""});
+        return res.status(500).json({"State": "name_null", "Data": ""});
     }
     else if(req.body.email === "") {
-        return res.json({"State": "email_null", "Data": ""});
+        return res.status(500).json({"State": "email_null", "Data": ""});
     }
     else if(req.body.password === "") {
-        return res.json({"State": "password_null", "Data": ""});
+        return res.status(500).json({"State": "password_null", "Data": ""});
     }
    else{
        //check whether username exists
@@ -41,10 +41,10 @@ exports.register = (req,res) => {
                                         })
                                         user.save()
                                             .then( () => {
-                                                res.json({State: "success",Data:""});
+                                                res.status(201).json({State: "success",Data:""});
                                             })
                                             .catch(err =>{
-                                                res.json({State: "bad_req",Data:err})
+                                                res.status(500).json({State: "bad_req",Data:err})
                                             })
                                     }
                                 });
@@ -102,7 +102,7 @@ exports.get_info = (req,res) => {
     const id = req.params.id;
     User.findById(id,"_id name email type canteen")
         .then(Data =>{
-            res.json({"State": "success", Data});
+            res.status(200).json({"State": "success", Data});
         })
         .catch(err => {
             console.log(err);

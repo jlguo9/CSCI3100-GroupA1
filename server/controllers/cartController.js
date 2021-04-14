@@ -25,7 +25,7 @@ exports.cart_delete = (req,res) =>{
     const id = req.params.id;
     Cart.findByIdAndDelete(id)
         .then( () => {
-            res.json({State: "success",Data:""});
+            res.status(200).json({State: "success",Data:""});
         })
         .catch(err =>{
             console.log(err);
@@ -35,7 +35,7 @@ exports.cart_update = (req, res) => {
     const id = req.params.id;
     Cart.findByIdAndUpdate(id, req.body)
         .then( () => {
-            res.json({"State": "success","Data":""});
+            res.status(200).json({"State": "success","Data":""});
         })
         .catch(err =>{
             console.log(err);

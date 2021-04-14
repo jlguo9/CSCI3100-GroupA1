@@ -45,7 +45,7 @@ exports.content_update= (req,res) =>{
     }else{
         Content.findByIdAndUpdate(id, req.body)
             .then( () => {
-                res.json({State: "success",Data:""});
+                res.status(200).json({State: "success",Data:""});
             })
             .catch(err =>{
                 console.log(err);

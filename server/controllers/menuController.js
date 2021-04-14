@@ -33,7 +33,7 @@ exports.menu_update = (req, res) => {
     const  id = req.params.id;
     Menu.findByIdAndUpdate(id, req.body)
         .then( () => {
-            res.json({"State": "success","Data":""});
+            res.status(200).json({"State": "success","Data":""});
         })
         .catch(err =>{
             console.log(err);
