@@ -37,7 +37,7 @@ router.put("/content/:id",contentController.content_update);//check_auth,
 router.post("/content/publish",contentController.content_publish);//check_auth,
 
 //like routes
-router.post("/content/like/:id",check_auth,likeController.like);
+router.post("/content/like/:id",check_auth,likeController.like_it);
 router.delete("/content/like/:id",check_auth,likeController.cancel_like);
 
 //user routes

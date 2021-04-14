@@ -64,7 +64,7 @@ exports.content_publish= (req,res) =>{
     });
     content.save()
         .then( () => {
-            res.json({State: "success",Data:""});
+            res.status(201).json({State: "success",Data:""});
         })
         .catch(err => {
             console.log(err);
