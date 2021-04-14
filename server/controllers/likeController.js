@@ -1,5 +1,5 @@
 const Like = require('../models/like');
-
+const Content =  require('../models/content');
 exports.like_it = (req, res) => {
     const like = new Like({
         contentID: req.body.contentID,
@@ -13,6 +13,11 @@ exports.like_it = (req, res) => {
             else {
                 like.save()
                     .then(() => {
+                        Content.findById(req.body.contentID, "likeNum")
+                            .then(likeNum => {
+                                Content.findByIdAndUpdate(req.body.contentID, {likeNum: likeNum+1})
+                                    .catch(err => {console.log(err)})
+                            }).catch(err => {console.log(err)})
                         res.status(201).json({ State: "success", Data: "" });
                     })
                     .catch(err => {
