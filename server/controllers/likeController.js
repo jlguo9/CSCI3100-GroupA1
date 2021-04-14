@@ -32,15 +32,15 @@ exports.like_it = (req, res) => {
 exports.cancel_like = (req, res) => {
     Like.find({ contentID: req.params.id, userID: req.userData.userID })
         .then(list => {
-            if (list.length >= 1) {
+            if (list.length < 1) {
                 return res.status(401).json({ State: "like_not_exist", Data: "" });
             }
             else {
                 Like.findOneAndDelete({ contentID: req.params.id, userID: req.userData.userID })
                     .then(() => {
-                        Content.findById(req.body.contentID, "likeNum")
+                        Content.findById(req.params.id, "likeNum")
                             .then(result => {
-                                Content.findByIdAndUpdate(req.body.contentID, {likeNum: result.likeNum-1})
+                                Content.findByIdAndUpdate(req.params.id, {likeNum: result.likeNum-1})
                                     .catch(err => {console.log(err)})
                             }).catch(err => {console.log(err)})
                         res.status(201).json({ State: "success", Data: "" });

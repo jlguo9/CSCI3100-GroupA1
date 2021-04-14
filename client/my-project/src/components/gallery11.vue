@@ -6,19 +6,15 @@
 
       <ul class="components">
         <li>
-          <router-link to="/gallery11a" tag="li"
-            ><a>The Stage</a>
-          </router-link>
+          <router-link to="/gallery11a" tag="li"><a>The Stage</a> </router-link>
         </li>
         <li>
           <router-link to="/gallery11b" tag="li"
             ><a>Postgraduate Hall 3 Café (Area 39)</a>
           </router-link>
         </li>
-                <li>
-          <router-link to="/gallery11b" tag="li"
-            ><a>Inno330</a>
-          </router-link>
+        <li>
+          <router-link to="/gallery11c" tag="li"><a>Inno330</a> </router-link>
         </li>
       </ul>
     </div>

@@ -161,6 +161,7 @@
                   <input
                     type="button"
                     value="Post Now"
+                    class="btn btn-purple"
                     style="margin-top:10px;float:center"
                     @click="addComment()"
                   />
@@ -311,9 +312,7 @@ export default {
               this.commentList = data.Data
               this.commentIDList = data.Data.map(e => e['_id'])
               this.commentdishList = [...new Set(data.Data.map(e => e['dish']))]
-              // if (this.allowLiking.length < 1) {
-              //   this.allowLiking = Array(this.commentList.length).fill(1) // to do
-              // }
+              console.log('get succsess')
             }
           })
       }
@@ -373,17 +372,23 @@ export default {
           }
         )
         .then(res => {
-          console.log('like success')
-          this.getComment()
-          console.log(0)
+          this.$message.success('Like Successfully!')
+          setTimeout(this.getComment, 300)
         })
         .catch(err => {
           console.log(err)
+          this.axios
+            .delete('http://localhost:3000/api/content/like/' + id, {
+              headers: {
+                Authorization: `token ${this.myToken}`
+              }
+            })
+            .then(res => {
+              this.$message.success('Unlike Successfully!')
+              setTimeout(this.getComment, 300)
+            })
         })
     }
-    // else {
-    //   this.$message.error('You have already liked this comment!')
-    // }
   }
 }
 </script>

@@ -56,6 +56,7 @@ import gallery11 from '@/components/gallery11'
 import gallery11a from '@/components/gallery11a'
 import gallery11b from '@/components/gallery11b'
 import gallery11c from '@/components/gallery11c'
+import gallery12 from '@/components/gallery12'
 import login from '@/components/login'
 import register from '@/components/register'
 
@@ -333,6 +334,11 @@ export default new Router({
       path: '/gallery11c',
       name: 'gallery11c',
       component: gallery11c
+    },
+    {
+      path: '/gallery12',
+      name: 'gallery12',
+      component: gallery12
     },
     {
       path: '/forum',

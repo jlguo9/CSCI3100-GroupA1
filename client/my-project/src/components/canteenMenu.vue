@@ -162,144 +162,144 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       menuList: [],
       menuIDList: [],
       dishNameList: [],
-      searchCanteen: "",
-      searchDish: "",
+      searchCanteen: '',
+      searchDish: '',
       searchDishPriceMin: 0,
       searchDishPriceMax: 1000,
-      newCanName: "",
-      newDishName: "",
-      newDishPrice: "",
+      newCanName: '',
+      newDishName: '',
+      newDishPrice: '',
       admin: 0,
-      myToken: "",
+      myToken: '',
       options: [
-        "Basic Medical Sciences Building Snack Bar",
-        "Benjamin Franklin Centre Coffee Corner",
-        "Benjamin Franklin Centre Staff Canteen",
-        "Benjamin Franklin Centre Student Canteen",
-        "Benjamin Franklin Centre Vegetarian Food Shop",
-        "Café 330",
-        "Canteen of CW Chu College",
-        "Canteen of S.H. Ho College",
-        "Connexion, S.H. Ho College Staff Common Room",
-        "Chung Chi College Staff Club",
-        "Chung Chi College Student Canteen",
-        "Lee Shau Kee Building Snack Bar",
-        "Lee Woo Sing College - Cafe Tolo",
-        "Lee Woo Sing College - The Green",
-        "Lee Woo Sing College - The Harmony",
-        "Lee Woo Sing College - WS Pavilion",
-        "Li Wai Chun Building Café",
-        "Li Wai Chun Building Halal Food Outlet",
-        "Morningside College Café",
-        "Morningside College Dining Hall",
-        "New Asia College Coffee Shop (Coffee Lover Café)",
-        "New Asia College Staff Canteen",
-        "New Asia College Student Canteen",
-        "New Asia College Yun Chi Hsien",
-        "Orchid Lodge",
-        "Pommerenke Student Centre Café (Paper&Coffee)",
-        "Postgraduate Hall 3 Café (Area 39)",
-        "S.H. Ho College Café",
-        "Staff Common Room Clubhouse",
-        "SeeYou@Shaw (with Café)",
-        "The Stage",
-        "United College Si Yuan Amenities Centre",
-        "United College Staff Canteen",
-        "United College Staff Common Room",
-        "United College Student Canteen",
-        "Women Cooperative Store",
-        "Wu Yee Sun College Staff Dining Room",
-        "Wu Yee Sun College Student Canteen"
+        'Basic Medical Sciences Building Snack Bar',
+        'Benjamin Franklin Centre Coffee Corner',
+        'Benjamin Franklin Centre Staff Canteen',
+        'Benjamin Franklin Centre Student Canteen',
+        'Benjamin Franklin Centre Vegetarian Food Shop',
+        'Café 330',
+        'Canteen of CW Chu College',
+        'Canteen of S.H. Ho College',
+        'Connexion, S.H. Ho College Staff Common Room',
+        'Chung Chi College Staff Club',
+        'Chung Chi College Student Canteen',
+        'Lee Shau Kee Building Snack Bar',
+        'Lee Woo Sing College - Cafe Tolo',
+        'Lee Woo Sing College - The Green',
+        'Lee Woo Sing College - The Harmony',
+        'Lee Woo Sing College - WS Pavilion',
+        'Li Wai Chun Building Café',
+        'Li Wai Chun Building Halal Food Outlet',
+        'Morningside College Café',
+        'Morningside College Dining Hall',
+        'New Asia College Coffee Shop (Coffee Lover Café)',
+        'New Asia College Staff Canteen',
+        'New Asia College Student Canteen',
+        'New Asia College Yun Chi Hsien',
+        'Orchid Lodge',
+        'Pommerenke Student Centre Café (Paper&Coffee)',
+        'Postgraduate Hall 3 Café (Area 39)',
+        'S.H. Ho College Café',
+        'Staff Common Room Clubhouse',
+        'SeeYou@Shaw (with Café)',
+        'The Stage',
+        'United College Si Yuan Amenities Centre',
+        'United College Staff Canteen',
+        'United College Staff Common Room',
+        'United College Student Canteen',
+        'Women Cooperative Store',
+        'Wu Yee Sun College Staff Dining Room',
+        'Wu Yee Sun College Student Canteen'
       ]
-    };
+    }
   },
-  mounted() {
-    this.myToken = localStorage.getItem("token");
-    console.log("mounted");
-    console.log(this.myToken);
-    this.getMenu();
+  mounted () {
+    this.myToken = localStorage.getItem('token')
+    console.log('mounted')
+    console.log(this.myToken)
+    this.getMenu()
   },
   filters: {
-    formatCurrency(v) {
-      var revealNum;
+    formatCurrency (v) {
+      var revealNum
       if (parseFloat(v) <= 0) {
-        revealNum = 0;
+        revealNum = 0
       } else {
-        revealNum = parseFloat(v).toFixed(2);
+        revealNum = parseFloat(v).toFixed(2)
       }
-      return "$ " + revealNum;
+      return '$ ' + revealNum
     }
   },
   computed: {},
   methods: {
-    getMenu() {
-      this.axios.get("http://localhost:3000/api/menu/index").then(res => {
-        const { status, data } = res;
+    getMenu () {
+      this.axios.get('http://localhost:3000/api/menu/index').then(res => {
+        const { status, data } = res
         if (status === 200) {
-          console.log("find");
-          this.menuList = data.Data;
-          $(document).ready(function() {
-            $("#mydatatable1").DataTable();
-          });
-          console.log(this.menuList);
-          this.menuIDList = data.Data.map(e => e["_id"]);
-          this.dishNameList = [...new Set(data.Data.map(e => e["name"]))];
+          console.log('find')
+          this.menuList = data.Data
+          $(document).ready(function () {
+            $('#mydatatable1').DataTable()
+          })
+          console.log(this.menuList)
+          this.menuIDList = data.Data.map(e => e['_id'])
+          this.dishNameList = [...new Set(data.Data.map(e => e['name']))]
         }
-      });
+      })
     },
-    deleteItem(index, id) {
-      if (confirm("Are you sure to delete this dish?")) {
+    deleteItem (index, id) {
+      if (confirm('Are you sure to delete this dish?')) {
         this.axios
-          .delete("http://localhost:3000/api/menu/" + id, {
+          .delete('http://localhost:3000/api/menu/' + id, {
             headers: {
               Authorization: `token ${this.myToken}`
             }
           })
           .then(res => {
-            const { status } = res;
+            const { status } = res
             if (status === 200) {
-              this.getMenu();
-              this.$message.success("Deleting is done.");
+              this.getMenu()
+              this.$message.success('Deleting is done.')
               if (this.menuList.length === 1) {
-                setTimeout("window.location.reload()", 500);
+                setTimeout('window.location.reload()', 500)
               }
             }
-          });
-        this.getMenu();
+          })
+        this.getMenu()
       }
     },
-    editItem(index, id) {
+    editItem (index, id) {
       var r1 = window.prompt(
-        "Edit the canteen name of this dish or click cancel to remain the previous one",
-        "New canteen name"
-      );
+        'Edit the canteen name of this dish or click cancel to remain the previous one',
+        'New canteen name'
+      )
       var r2 = window.prompt(
-        "Edit the dish name of this dish or click cancel to remain the previous one",
-        "New dish name"
-      );
+        'Edit the dish name of this dish or click cancel to remain the previous one',
+        'New dish name'
+      )
       var r3 = window.prompt(
-        "Edit the price of this dish or click cancel to remain the previous one",
-        "New dish price"
-      );
+        'Edit the price of this dish or click cancel to remain the previous one',
+        'New dish price'
+      )
       if (r1 === null && r2 === null && r3 === null) {
       } else {
         if (r1 === null) {
-          r1 = this.menuList[index].canteen;
+          r1 = this.menuList[index].canteen
         }
         if (r2 === null) {
-          r2 = this.menuList[index].name;
+          r2 = this.menuList[index].name
         }
         if (r3 === null) {
-          r3 = this.menuList[index].price;
+          r3 = this.menuList[index].price
         }
         this.axios
           .put(
-            "http://localhost:3000/api/menu/" + id,
+            'http://localhost:3000/api/menu/' + id,
             {
               canteen: r1,
               name: r2,
@@ -312,29 +312,34 @@ export default {
             }
           )
           .then(res => {
-            const { status } = res;
+            const { status } = res
             if (status === 200) {
-              this.getMenu();
+              this.getMenu()
             }
-          });
+          })
+          .catch(err => {
+            if (err.response.status === 403) {
+              this.$message.error('Only manager can use this function.')
+            }
+          })
       }
     },
 
-    addToCart(index, id) {
-      console.log(this.myToken);
+    addToCart (index, id) {
+      console.log(this.myToken)
       if (
-        this.myToken === "" ||
+        this.myToken === '' ||
         this.myToken === null ||
         this.myToken === undefined
       ) {
-        this.$message.error("Please login first!");
-        window.location.assign("/#login");
-        setTimeout("window.location.reload()", 100);
+        this.$message.error('Please login first!')
+        window.location.assign('/#login')
+        setTimeout('window.location.reload()', 100)
       }
-      if (confirm("Are you sure to add this dish to cart?")) {
+      if (confirm('Are you sure to add this dish to cart?')) {
         this.axios
           .post(
-            "http://localhost:3000/api/cart/add",
+            'http://localhost:3000/api/cart/add',
             {
               dishID: id,
               canteen: this.menuList[index].canteen,
@@ -349,11 +354,11 @@ export default {
             }
           )
           .then(res => {
-            const { status } = res;
+            const { status } = res
             if (status === 201) {
-              this.$message.success("Successfully added to cart.");
+              this.$message.success('Successfully added to cart.')
             }
-          });
+          })
       }
     },
     /*
@@ -384,49 +389,53 @@ export default {
       })
       location.reload()
     }, */
-    clearMenu() {
+    clearMenu () {
       if (this.menuIDList.length === 0) {
-        this.$message.error("Menu is already empty.");
+        this.$message.error('Menu is already empty.')
         // window.alert('Menu is already empty.')
       } else {
-        if (confirm("Are you sure?")) {
+        if (confirm('Are you sure?')) {
           // console.log(this.menuIDList);
           for (var j = 0; j < this.menuIDList.length; j++) {
-            var item = this.menuIDList[j];
+            var item = this.menuIDList[j]
             this.axios
-              .delete("http://localhost:3000/api/menu/" + item,
-            {
-              headers: {
-                Authorization: `token ${this.myToken}`
-              }
-            })
-              .then(res => {
-                const { status } = res;
-                console.log(status);
-                if (status === 200) {
-                  this.getMenu();
+              .delete('http://localhost:3000/api/menu/' + item, {
+                headers: {
+                  Authorization: `token ${this.myToken}`
                 }
-              });
+              })
+              .then(res => {
+                const { status } = res
+                console.log(status)
+                if (status === 200) {
+                  this.getMenu()
+                  this.$message.success(
+                    'Removing is done. Please wait few seconds for this page to refresh.'
+                  )
+                  setTimeout('window.location.reload()', 3000)
+                }
+              })
+              .catch(err => {
+                if (err.response.status === 403) {
+                  this.$message.error('Only manager can use this function.')
+                }
+              })
           }
           //
-          this.$message.success(
-            "Removing is done. Please wait few seconds for this page to refresh."
-          );
         }
-        setTimeout("window.location.reload()", 3000);
       }
     },
-    addItem() {
+    addItem () {
       if (
-        this.newCanName === "" ||
-        this.newDishName === "" ||
-        this.newDishPrice === ""
+        this.newCanName === '' ||
+        this.newDishName === '' ||
+        this.newDishPrice === ''
       ) {
-        this.$message.error("Please enter all infomation!");
+        this.$message.error('Please enter all infomation!')
       } else {
         this.axios
           .post(
-            "http://localhost:3000/api/menu/add",
+            'http://localhost:3000/api/menu/add',
             {
               canteen: this.newCanName,
               name: this.newDishName,
@@ -439,20 +448,25 @@ export default {
             }
           )
           .then(res => {
-            const { status } = res;
-            console.log(status);
+            const { status } = res
+            console.log(status)
             if (status === 201) {
-              this.newCanName = "";
-              this.newDishName = "";
-              this.newDishPrice = "";
-              this.$message.success("Adding is done.");
-              this.getMenu();
+              this.newCanName = ''
+              this.newDishName = ''
+              this.newDishPrice = ''
+              this.$message.success('Adding is done.')
+              this.getMenu()
             }
-          });
+          })
+          .catch(err => {
+            if (err.response.status === 403) {
+              this.$message.error('Only manager can use this function.')
+            }
+          })
       }
     }
   }
-};
+}
 </script>
 
 <style></style>

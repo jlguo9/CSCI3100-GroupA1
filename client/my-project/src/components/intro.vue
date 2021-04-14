@@ -1,8 +1,6 @@
 <template>
   <div id="intro" class="container-fluid">
-    
-            
-    <h1> Welcome to Foodification!</h1>
+    <h1>Welcome to Foodification!</h1>
 
     <div
       id="carouselExampleIndicators"
@@ -17,6 +15,7 @@
         ></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
       </ol>
       <div class="carousel-inner">
         <div class="carousel-item active img-responsive">
@@ -40,6 +39,13 @@
             alt="Third slide"
           />
         </div>
+        <div class="carousel-item">
+          <img
+            class="d-block w-100"
+            src="../assets/images/coast.jpg"
+            alt="Fourth slide"
+          />
+        </div>
       </div>
       <a
         class="carousel-control-prev"
@@ -61,7 +67,6 @@
       </a>
     </div>
 
-            
     <h2>Overview</h2>
 
     <p>
@@ -106,7 +111,7 @@
     <div class="line"></div>
 
     <h2>Team Member</h2>
-    <p>GUO Jialiang 1155124399
+    <p>GUO Jialiang 1155124399</p>
     <p>LI Zechen 1155124542</p>
     <p>LI Keqi 1155107825</p>
     <p>YAO Sicong1155107856</p>
@@ -127,8 +132,7 @@
 </template>
 
 <script>
-export default {
-}
+export default {}
 </script>
 
 <style></style>
