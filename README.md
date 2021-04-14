@@ -16,12 +16,6 @@ Developed in HTML, CSS, JavaScript
 
 Framework: Vue.js
 
-> Current Progres (Up to Mar.19, 2021): 
-
-> @vue-cli started; 
-
-> Seleted core functions of the homepage (static page) built using Vue and stored in the folder "/client/homepage"
-
 ## Backend
 
 Developed in JavaScript with Node.js
@@ -30,12 +24,21 @@ Database: MongoDB
 
 Framework: Express
 
-> Current Progres (Up to Mar.19, 2021): 
+## How to start
 
-> Initialized backend with Express framework;
+Firstly, run backend server by executing following commands in terminal under server/:
 
-> MongoDB connected (with Mongoose);
+    $ npm install
+    $ nodemon
+  
+If you don't have nodemon on your machine, you may use the following command instead:
 
-> Paths(to static resources, models, controllers, etc.) setted;
+    $ npm start
+  
+Then run frontend in another terminal under client/my-project
 
-> Router created (APIs need to be implemented later).
+    $npm install
+    $npm npm run dev
+
+Finally visit localhost:8080 in browser:)
+
