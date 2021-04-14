@@ -29,7 +29,7 @@
         </thead>
         <tbody>
           <tr v-for="(value, index) in recordList" :key="index">
-            <td>{{ value.createdAt }}</td>
+            <td>{{ value.createdAt | dateFormat }}</td>
             <td>{{ value.canteen }}</td>
             <td>{{ value.name }}</td>
             <td>{{ value.price | formatCurrency }}</td>
@@ -79,8 +79,37 @@ export default {
         revealNum = parseFloat(v).toFixed(2)
       }
       return '$ ' + revealNum
+    },
+    dateFormat (dataStr) {
+      var time = new Date(dataStr)
+      function timeAdd0 (str) {
+        if (str < 10) {
+          str = '0' + str
+        }
+        return str
+      }
+      var y = time.getFullYear()
+      var m = time.getMonth() + 1
+      var d = time.getDate()
+      var h = time.getHours()
+      var mm = time.getMinutes()
+      var s = time.getSeconds()
+      return (
+        y +
+        '-' +
+        timeAdd0(m) +
+        '-' +
+        timeAdd0(d) +
+        ' ' +
+        timeAdd0(h) +
+        ':' +
+        timeAdd0(mm) +
+        ':' +
+        timeAdd0(s)
+      )
     }
   },
+
   methods: {
     getRecord () {
       this.axios.get('http://localhost:3000/api/record/index').then(res => {
@@ -96,12 +125,20 @@ export default {
     },
     removeFromRecord (index, id) {
       if (confirm('Are you sure?')) {
-        this.axios.delete('http://localhost:3000/api/record/' + id).then(res => {
-          const { status } = res
-          if (status === 200) {
-            this.getRecord()
-          }
-        })
+        this.axios
+          .delete('http://localhost:3000/api/record/' + id)
+          .then(res => {
+            const { status } = res
+            if (status === 200) {
+              this.getRecord()
+              console.log(this.recordList.length)
+              if (this.recordList.length === 1) {
+                setTimeout('window.location.reload()', 3000)
+              }
+              this.$message.success('Deleting is done.')
+            }
+          })
+        this.getRecord()
       }
     },
     clearRecord () {
@@ -121,9 +158,9 @@ export default {
                 }
               })
           }
-          location.reload()
+          setTimeout('window.location.reload()', 3000)
           this.$message.success(
-            'Removing is done. Please manually refresh this page again.'
+            'Removing is done. Please wait few seconds for this page to refresh.'
           )
           // window.alert("Removing is done. Please manually refresh this page again.")
           this.getRecord()

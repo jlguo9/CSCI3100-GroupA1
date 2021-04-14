@@ -19,7 +19,7 @@
         <thead style="background-color: #dda300">
           <tr>
             <th>Index</th>
-<!--            <th>ID</th>-->
+            <!--            <th>ID</th>-->
             <th>Canteen Name</th>
             <th>Dish Name</th>
             <th>Dish Price</th>
@@ -29,7 +29,7 @@
         <tbody>
           <tr v-for="(value, index) in menuList" :key="index">
             <td>{{ index + 1 }}</td>
-<!--            <td>{{ value._id }}</td>-->
+            <!--            <td>{{ value._id }}</td>-->
             <td>{{ value.canteen }}</td>
             <td>{{ value.name }}</td>
             <td>{{ value.price | formatCurrency }}</td>
@@ -43,13 +43,13 @@
                 >&nbsp;&nbsp;
                 <a
                   class="btn btn-danger btn-sm"
-                  href="javascript:window.confirm('Are you sure?')"
+                  href="#"
                   @click.prevent="deleteItem(index, value._id)"
                   >Delete</a
                 >&nbsp;&nbsp;
                 <a
                   class="btn btn-purple btn-sm"
-                  href="javascript:window.confirm('Are you sure?')"
+                  href="#"
                   @click="addToCart(index, value._id)"
                   >Add to My Cart</a
                 >
@@ -249,13 +249,18 @@ export default {
       })
     },
     deleteItem (index, id) {
-      if (confirm('Are you sure?')) {
+      if (confirm('Are you sure to delete this dish?')) {
         this.axios.delete('http://localhost:3000/api/menu/' + id).then(res => {
           const { status } = res
           if (status === 200) {
             this.getMenu()
+            this.$message.success('Deleting is done.')
+            if (this.menuList.length === 1) {
+              setTimeout('window.location.reload()', 500)
+            }
           }
         })
+        this.getMenu()
       }
     },
     editItem (index, id) {
@@ -298,16 +303,22 @@ export default {
     },
 
     addToCart (index, id) {
-      this.axios.post('http://localhost:3000/api/cart/add', {
-        dishID: id,
-        canteen: this.menuList[index].canteen,
-        name: this.menuList[index].name,
-        price: this.menuList[index].price,
-        quantity: 1
-      })
-      // .then(res => {
-      //   const { status, data } = res
-      // })
+      if (confirm('Are you sure to add this dish to cart?')) {
+        this.axios
+          .post('http://localhost:3000/api/cart/add', {
+            dishID: id,
+            canteen: this.menuList[index].canteen,
+            name: this.menuList[index].name,
+            price: this.menuList[index].price,
+            quantity: 1
+          })
+          .then(res => {
+            const { status } = res
+            if (status === 201) {
+              this.$message.success('Successfully added to cart.')
+            }
+          })
+      }
     },
     /*
       addToCart (index, id) {
@@ -350,19 +361,18 @@ export default {
               .delete('http://localhost:3000/api/menu/' + item)
               .then(res => {
                 const { status } = res
+                console.log(status)
                 if (status === 200) {
                   this.getMenu()
                 }
               })
           }
+          //
           this.$message.success(
-            'Removing is done. Please manually refresh this page again.'
+            'Removing is done. Please wait few seconds for this page to refresh.'
           )
-          // window.alert(
-          //   'Removing is done. Please manually refresh this page again.'
-          // )
-          this.getMenu()
         }
+        setTimeout('window.location.reload()', 3000)
       }
     },
     addItem () {
@@ -372,7 +382,6 @@ export default {
         this.newDishPrice === ''
       ) {
         this.$message.error('Please enter all infomation!')
-        // window.alert('Please enter all infomation!')
       } else {
         this.axios
           .post('http://localhost:3000/api/menu/add', {
@@ -382,15 +391,13 @@ export default {
           })
           .then(res => {
             const { status } = res
+            console.log(status)
             if (status === 201) {
-              this.$message.success(
-                'Adding is done.'
-              )
-              location.reload()
-              this.getMenu()
               this.newCanName = ''
               this.newDishName = ''
               this.newDishPrice = ''
+              this.$message.success('Adding is done.')
+              this.getMenu()
             }
           })
       }

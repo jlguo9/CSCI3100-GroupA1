@@ -6,7 +6,7 @@
         <a class="btn btn-danger" href="/#/cart" @click="clearCart()"
           >Remove All</a
         >&nbsp;
-        <a class="btn btn-purple" href="/#" @click="transferToRecord()"
+        <a class="btn btn-purple" href="/#/cart" @click="transferToRecord()"
           >Transfer All to Record</a
         >
       </span>
@@ -22,7 +22,7 @@
         <thead style="background-color: #dda300">
           <tr>
             <th>Index</th>
-<!--            <th>ID</th>-->
+            <!--            <th>ID</th>-->
             <th>Canteen Name</th>
             <th>Dish Name</th>
             <th>Dish Price</th>
@@ -33,7 +33,7 @@
         <tbody>
           <tr v-for="(value, index) in cartList" :key="index">
             <td>{{ index + 1 }}</td>
-<!--            <td>{{ value._id }}</td>-->
+            <!--            <td>{{ value._id }}</td>-->
             <td>{{ value.canteen }}</td>
             <td>{{ value.name }}</td>
             <td>{{ value.price | formatCurrency }}</td>
@@ -149,7 +149,7 @@ export default {
         this.total -= parseFloat(this.cartList[index].price) * 1
         this.axios
           .put('http://localhost:3000/api/cart/' + id, {
-            quantity: this.cartList[index].quantity - 1,
+            quantity: this.cartList[index].quantity - 1
           })
           .then(res => {
             const { status } = res
@@ -160,15 +160,23 @@ export default {
       } else {
         if (
           confirm(
-            'This will remove this item from your shopping cart.\nAre you sure?'
+            'This action will remove this item from your shopping cart.\nAre you sure?'
           )
         ) {
-          this.axios.delete('http://localhost:3000/api/cart/' + id).then(res => {
-            const { status } = res
-            if (status === 200) {
-              this.getCart()
-            }
-          })
+          this.axios
+            .delete('http://localhost:3000/api/cart/' + id)
+            .then(res => {
+              const { status } = res
+              console.log(status)
+              if (status === 200) {
+                this.getCart()
+                 this.$message.success('Deleting is done.')
+                if (this.cartList.length === 1) {
+                  setTimeout('window.location.reload()', 3000)
+                }
+              }
+            })
+          this.getCart()
         }
       }
     },
@@ -188,20 +196,26 @@ export default {
     removeFromCart (index, id) {
       if (confirm('Are you sure?')) {
         this.axios.delete('http://localhost:3000/api/cart/' + id).then(res => {
-          // const { status, data } = res
+          const { status } = res
+          console.log(status)
           if (status === 200) {
+            console.log('shit')
             this.getCart()
+            console.log(this.cartList.length)
+            if (this.cartList.length === 1) {
+              location.reload()
+            }
           }
         })
+        this.$message.success('Deleting is done.')
+        this.getCart()
       }
     },
     clearCart () {
       if (this.cartList.length === 0) {
         this.$message.error('Your shopping cart is already empty.')
-        // window.alert('Your shopping cart is already empty.')
       } else {
         if (confirm('Are you sure?')) {
-          // console.log(this.menuIDList);
           for (var j = 0; j < this.cartIDList.length; j++) {
             var item = this.cartIDList[j]
             this.axios
@@ -216,10 +230,11 @@ export default {
           // this.$forceUpdate()
           // window.alert('Delete is done!')
           // this.getEmpty()
-          location.reload()
           this.$message.success(
-            'Removing is done.'
+            'Removing is done. Please wait few seconds for this page to refresh.'
           )
+          setTimeout('window.location.reload()', 5000)
+          
           //  window.alert("Removing is done. Please manually refresh this page again.")
         }
       }
@@ -227,7 +242,6 @@ export default {
     transferToRecord () {
       if (this.cartIDList.length === 0) {
         this.$message.error('Your shopping cart is already empty.')
-        // window.alert('Your shopping cart is already empty.')
       } else {
         if (confirm('Are you sure?')) {
           var copyCartIDList = this.cartIDList
@@ -243,9 +257,8 @@ export default {
                 canteen: this.cartList[j].canteen,
                 name: this.cartList[j].name,
                 price: this.cartList[j].price,
-                subtotal:
-                  this.cartList[j].price * this.cartList[j].quantity,
-                quantity: this.cartList[j].quantity,
+                subtotal: this.cartList[j].price * this.cartList[j].quantity,
+                quantity: this.cartList[j].quantity
               })
               .then(res => {
                 console.log('post succeeds')
@@ -262,22 +275,21 @@ export default {
             this.axios
               .delete('http://localhost:3000/api/cart/' + item)
               .then(res => {
-                console.log('delete succeeds')
-                this.getCart()
+                const { status } = res
+                if (status === 200) {
+                  console.log('delete succeeds')
+                  this.getCart()
+                }
+                // console.log('delete succeeds')
+                // this.getCart()
               })
-            // .catch(function (error) {
-            //   console.log('delete fails')
-            //   this.getCart()
-            // })
           }
           this.total = 0
           this.getCart()
           this.$message.success(
-            'Transfering is done. Please manually refresh this page again.'
+            'Transfering is done. Please wait few seconds for this page to refresh.'
           )
-          // window.alert(
-          //   'Transfering is done. Please manually refresh this page again.'
-          // )
+          setTimeout('window.location.reload()', 5000)
         }
       }
     }
