@@ -13,16 +13,17 @@
 
     </div>
     <light-gallery
-      :images="images"
+      :images="imageList"
       :index="index"
       :disable-scroll="true"
       @close="index = null"
     ></light-gallery>
+
     <div class="container-fluid" style="padding:0px; margin:0px">
       <ul style="list-style:none; display:inline;float:center">
         <div class="container-fluid" style="padding:0px; margin:0px">
           <li
-            v-for="(image, imageIndex) in fileList"
+            v-for="(image, imageIndex) in list"
             :key="imageIndex"
             class="thumb"
             @click="index = imageIndex"
@@ -34,18 +35,17 @@
     vertical-align: middle;
     text-align: center;"
               >
-                <img :src="image.url" style="width:300px" class="thumbnail" />
+                <img :src="image.Image" style="width:300px" class="thumbnail" />
               </div>
               <h4 style="text-align:center;margin:10px 0px">
-                Dish: {{ image.title }}
+                Dish: {{ image.dish }}
               </h4>
-              <p style="text-align:center">Author: {{ image.author }}</p>
+              <p style="text-align:center">Author: {{ image.username }}</p>
             </div>
           </li>
         </div>
       </ul>
     </div>
-    <img :src="myUrl" style="width:300px" class="thumbnail" />
 
   </div>
 </template>
@@ -116,6 +116,7 @@ export default {
       ],
       items: '',
       index: null,
+      list: [],
       imageList: [],
       imageURLList: [],
       imageIDList: [],
@@ -128,21 +129,19 @@ export default {
     this.getImage()
   },
   methods: {
-    // handleRemove (file, fileList) {
-    //   console.log(file, fileList)
-    // },
-    // handlePreview (file) {
-    //   console.log(file)
-    // }
     getImage () {
       this.axios
         .get('http://localhost:3000/api/gallery/' + 'Shaw Can')
         .then(res => {
           const { status, data } = res
-          this.imageList = data.Data
-          console.log(this.imageList)
-          console.log(this.imageList[0].Image)
-          this.myUrl = 'http://localhost:3000/api/gallery/'+this.imageList[0].Image
+          this.list = data.Data
+          this.imageList = data.Data.map(e => e['Image'])
+          for(var j=0; j<this.list.length;j++){
+            this.list[j].Image = 'http://localhost:3000/api/gallery/'+this.imageList[j]
+            this.imageList[j] =  this.list[j].Image
+          }
+          console.log(this.list)
+          // this.myUrl = 'http://localhost:3000/api/gallery/'+this.imageList[0]
         })
     }
   }
