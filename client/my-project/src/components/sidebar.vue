@@ -64,6 +64,7 @@
             ><a>CW Chu College</a>
           </router-link>
           <router-link to="/gallery11" tag="li"><a>Others</a> </router-link>
+             <router-link to="/gallery12" tag="li"><a>Upload</a> </router-link>
         </ul>
 
         <router-link to="/forum" tag="li"

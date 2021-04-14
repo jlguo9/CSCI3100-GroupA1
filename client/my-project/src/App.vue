@@ -119,6 +119,7 @@ import gallery11 from './components/gallery11.vue'
 import gallery11a from './components/gallery11a.vue'
 import gallery11b from './components/gallery11b.vue'
 import gallery11c from './components/gallery11c.vue'
+import gallery12 from './components/gallery12.vue'
 import forum from './components/forum.vue'
 import login from './components/login.vue'
 import register from './components/register.vue'
@@ -204,6 +205,7 @@ export default {
     gallery11a: gallery11a,
     gallery11b: gallery11b,
     gallery11c: gallery11c,
+    gallery12: gallery12,
     forum: forum,
     login: login,
     register: register
