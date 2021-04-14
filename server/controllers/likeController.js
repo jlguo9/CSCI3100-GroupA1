@@ -38,7 +38,12 @@ exports.cancel_like = (req, res) => {
             else {
                 Like.findOneAndDelete({ contentID: req.params.id, userID: req.userData.userID })
                     .then(() => {
-                        return res.status(200).json({ State: "success", Data: "" });
+                        Content.findById(req.body.contentID, "likeNum")
+                            .then(result => {
+                                Content.findByIdAndUpdate(req.body.contentID, {likeNum: result.likeNum-1})
+                                    .catch(err => {console.log(err)})
+                            }).catch(err => {console.log(err)})
+                        res.status(201).json({ State: "success", Data: "" });
                     })
                     .catch(err => {
                         console.log(err);
