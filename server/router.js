@@ -47,4 +47,6 @@ router.get("/user/logout",userController.logout);
 router.get("/user/info/:id",userController.get_info);
 //router.put("/user/password",userController.change_password);
 
+//gallery routes
+
 module.exports = router;

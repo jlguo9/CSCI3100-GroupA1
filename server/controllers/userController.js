@@ -6,9 +6,6 @@ exports.register = (req,res) => {
     if(req.body.name === ""){
         return res.status(500).json({"State": "name_null", "Data": ""});
     }
-    /*else if(req.body.email === "") {
-        return res.status(500).json({"State": "email_null", "Data": ""});
-    }*/
     else if(req.body.password === "") {
         return res.status(500).json({"State": "password_null", "Data": ""});
     }
@@ -89,7 +86,7 @@ exports.logout = (req,res) => {
 }*/
 exports.get_info = (req,res) => {
     const id = req.params.id;
-    User.findById(id,"_id name email type canteen")
+    User.findById(id,"_id name type canteen")
         .then(Data =>{
             res.status(200).json({"State": "success", Data});
         })
