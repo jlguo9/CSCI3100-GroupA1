@@ -110,12 +110,17 @@
 
     <div class="line"></div>
 
-    <h2>Team Member</h2>
-    <p>GUO Jialiang 1155124399</p>
-    <p>LI Zechen 1155124542</p>
-    <p>LI Keqi 1155107825</p>
-    <p>YAO Sicong1155107856</p>
-    <p>HU Fangxin 1155107872</p>
+    <h2>Team Member (in Alphabetical Order)</h2>
+    <h5>
+<ul style="line-height:150%">
+    <li >GUO Jialiang 1155124399</li>
+    <li>HU Fangxin 1155107872</li>
+    <li>LI Keqi 1155107825</li>
+    <li>LI Zechen 1155124542</li>
+    <li>YAO Sicong 1155107856</li>
+    </ul>
+    </h5>
+
     <!-- <div class="line"></div> -->
 
     <!-- <h3>Lorem Ipsum Dolor</h3>

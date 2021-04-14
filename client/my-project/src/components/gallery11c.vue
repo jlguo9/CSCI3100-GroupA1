@@ -10,6 +10,7 @@
         </router-link>
       </h1>
       <h2>Inno330</h2>
+
     </div>
     <light-gallery
       :images="images"
@@ -21,7 +22,7 @@
       <ul style="list-style:none; display:inline;float:center">
         <div class="container-fluid" style="padding:0px; margin:0px">
           <li
-            v-for="(image, imageIndex) in images"
+            v-for="(image, imageIndex) in fileList"
             :key="imageIndex"
             class="thumb"
             @click="index = imageIndex"
@@ -44,6 +45,8 @@
         </div>
       </ul>
     </div>
+    <img :src="myUrl" style="width:300px" class="thumbnail" />
+
   </div>
 </template>
 
@@ -53,12 +56,14 @@ export default {
     return {
       fileList: [
         {
-          name: 'food.jpeg',
+          title: 'cake',
+          author: 'Tony',
           url:
             'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
         },
         {
-          name: 'food2.jpeg',
+          title: 'pizza',
+          author: 'Mike',
           url:
             'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
         }
@@ -115,15 +120,30 @@ export default {
       imageURLList: [],
       imageIDList: [],
       imageTitleList: [],
+      myUrl: '',
       requrl: require('@/assets/images/rails.jpg')
     }
   },
+  mounted(){
+    this.getImage()
+  },
   methods: {
-    handleRemove (file, fileList) {
-      console.log(file, fileList)
-    },
-    handlePreview (file) {
-      console.log(file)
+    // handleRemove (file, fileList) {
+    //   console.log(file, fileList)
+    // },
+    // handlePreview (file) {
+    //   console.log(file)
+    // }
+    getImage () {
+      this.axios
+        .get('http://localhost:3000/api/gallery/' + 'Shaw Can')
+        .then(res => {
+          const { status, data } = res
+          this.imageList = data.Data
+          console.log(this.imageList)
+          console.log(this.imageList[0].Image)
+          this.myUrl = 'http://localhost:3000/api/gallery/'+this.imageList[0].Image
+        })
     }
   }
 
