@@ -20,7 +20,7 @@ app.all("*",function(req,res,next){
 });
 
 //set the path to static resources
-app.use('/api/uploads',express.static('uploads'));
+app.use('/api/gallery/uploads',express.static('uploads'));
 
 //middleware
 app.use(express.json());

@@ -136,13 +136,13 @@ export default {
     // }
     getImage () {
       this.axios
-        .get('http://localhost:3000/api/gallery/' + 'Shaw')
+        .get('http://localhost:3000/api/gallery/' + 'Shaw Can')
         .then(res => {
           const { status, data } = res
           this.imageList = data.Data
           console.log(this.imageList)
-          console.log(this.imageList[1].Image)
-          this.myUrl = 'http://localhost:3000/api/gallery/'+this.imageList[1].Image
+          console.log(this.imageList[0].Image)
+          this.myUrl = 'http://localhost:3000/api/gallery/'+this.imageList[0].Image
         })
     }
   }
