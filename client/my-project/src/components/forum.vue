@@ -10,7 +10,7 @@
                   <div class="d-flex flex-row user-info">
                     <img
                       class="rounded-circle"
-                      src="https://i.imgur.com/RpzrMR2.jpg"
+                      :src="userimages[value.userName % 9].url"
                       width="50px"
                       height="50px"
                     />
@@ -160,7 +160,6 @@
                 <div style="text-align:center">
                   <input
                     type="button"
-                    class="btn btn-sm btn-purple"
                     value="Post Now"
                     style="margin-top:10px;float:center"
                     @click="addComment()"
@@ -184,8 +183,8 @@ export default {
       commentedcanteen: '',
       commenteddish: '',
       detail: '',
-      username: 'Daddy', // 明天加
-      allowLiking: [],
+      // username: '', // 明天加
+      myToken: '',
       options: [
         'Basic Medical Sciences Building Snack Bar',
         'Benjamin Franklin Centre Coffee Corner',
@@ -225,10 +224,36 @@ export default {
         'Women Cooperative Store',
         'Wu Yee Sun College Staff Dining Room',
         'Wu Yee Sun College Student Canteen'
+      ],
+      userimages: [
+        {
+          url: require('@/assets/images/tunnel.jpg')
+        },
+        {
+          url: require('@/assets/images/park.jpg')
+        },
+        {
+          url: require('@/assets/images/sky.jpg')
+        },
+        {
+          url: require('@/assets/images/rails.jpg')
+        },
+        {
+          url: require('@/assets/images/rocks.jpg')
+        },
+        {
+          url: require('@/assets/images/bridge.jpg')
+        },
+        {
+          url: require('@/assets/images/traffic.jpg')
+        }
       ]
     }
   },
   mounted () {
+    this.myToken = localStorage.getItem('token')
+    console.log('mounted')
+    console.log(this.myToken)
     this.getComment()
   },
   filters: {
@@ -263,19 +288,35 @@ export default {
   },
   methods: {
     getComment () {
-      this.axios.get('http://localhost:3000/api/content/index').then(res => {
-        const { status, data } = res
-        if (status === 200) {
-          this.commentList = data.Data
-          console.log(this.commentList[1].userName)
-          this.commentIDList = data.Data.map(e => e['_id'])
-          this.commentdishList = [...new Set(data.Data.map(e => e['dish']))]
-          console.log(this.allowLiking.length)
-          if (this.allowLiking.length < 1) {
-            this.allowLiking = Array(this.commentList.length).fill(1) // to do
-          }
-        }
-      })
+      console.log('token now is ')
+      console.log(this.myToken)
+      if (
+        this.myToken === '' ||
+        this.myToken === null ||
+        this.myToken === undefined
+      ) {
+        window.location.assign('/#login')
+        setTimeout('window.location.reload()', 500)
+        this.$message.error('Please login first!')
+      } else {
+        this.axios
+          .get('http://localhost:3000/api/content/index', {
+            headers: {
+              Authorization: `token ${this.myToken}`
+            }
+          })
+          .then(res => {
+            const { status, data } = res
+            if (status === 200) {
+              this.commentList = data.Data
+              this.commentIDList = data.Data.map(e => e['_id'])
+              this.commentdishList = [...new Set(data.Data.map(e => e['dish']))]
+              // if (this.allowLiking.length < 1) {
+              //   this.allowLiking = Array(this.commentList.length).fill(1) // to do
+              // }
+            }
+          })
+      }
     },
     addComment () {
       if (
@@ -283,24 +324,32 @@ export default {
         this.commenteddish === '' ||
         this.detail === ''
       ) {
-        window.alert('Please enter all information.')
+        this.$message.error('Please enter all information.')
       } else {
         this.axios
-          .post('http://localhost:3000/api/content/publish', {
-            canteen: this.commentedcanteen,
-            dish: this.commenteddish,
-            detail: this.detail,
-            userName: this.username,
-            likeNum: 0,
-            date: new Date()
-              .toJSON()
-              .slice(0, 10)
-              .replace(/-/g, '/')
-          })
+          .post(
+            'http://localhost:3000/api/content/publish',
+            {
+              canteen: this.commentedcanteen,
+              dish: this.commenteddish,
+              detail: this.detail,
+              userName: this.myToken,
+              likeNum: 0,
+              date: new Date()
+                .toJSON()
+                .slice(0, 10)
+                .replace(/-/g, '/')
+            },
+            {
+              headers: {
+                Authorization: `Basic ${this.myToken}`
+              }
+            }
+          )
           .then(res => {
             const { status, data } = res
             if (status === 201) {
-              window.alert('Successful Comment!')
+              this.$message.success('Successful Comment!')
               this.getComment()
             }
           })
@@ -310,20 +359,31 @@ export default {
       }
     },
     likeComment (Likes, id, index) {
-      if (this.allowLiking[index] === 1) {
-        this.axios
-          .put('http://localhost:3000/api/like' + id, { likeNum: Likes + 1 })
-          .then(res => {
-            const { status, data } = res
-            if (status === 200) {
-              this.getComment()
-              this.allowLiking[index] = 0
+      console.log('like success')
+      this.axios
+        .post(
+          'http://localhost:3000/api/content/like',
+          {
+            contentID: id
+          },
+          {
+            headers: {
+              Authorization: `Basic ${this.myToken}`
             }
-          })
-      } else {
-        window.alert('You have already liked this comment!')
-      }
+          }
+        )
+        .then(res => {
+          console.log('like success')
+          this.getComment()
+          console.log(0)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
+    // else {
+    //   this.$message.error('You have already liked this comment!')
+    // }
   }
 }
 </script>
