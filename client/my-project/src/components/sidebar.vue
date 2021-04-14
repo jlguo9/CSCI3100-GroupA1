@@ -73,11 +73,13 @@
         <router-link to="/faq" tag="li"
           ><a><i class="fas fa-question"></i> FAQ</a>
         </router-link>
+      </li>
 
-        <router-link to="https://mailto:abc@example.com?subject = Feedback&body = Message" tag="li"
-          ><a><i class="fas fa-paper-plane"></i> Contact</a>
-        </router-link>
-        
+      <li>
+        <a
+          href="mailto:1155107856@link.cuhk.edu.hk?subject = Feedback&body = Message"
+          ><i class="fas fa-paper-plane"></i> Contact</a
+        >
       </li>
     </ul>
   </nav>

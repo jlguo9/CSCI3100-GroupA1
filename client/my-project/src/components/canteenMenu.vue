@@ -265,15 +265,15 @@ export default {
     },
     editItem (index, id) {
       var r1 = window.prompt(
-        'Edit the canteen name of this item:',
+        'Edit the canteen name of this dish or click cancel to remain the previous one',
         'New canteen name'
       )
       var r2 = window.prompt(
-        'Edit the dish name of this item:',
+        'Edit the dish name of this dish or click cancel to remain the previous one',
         'New dish name'
       )
       var r3 = window.prompt(
-        'Edit the dish price of this item:',
+        'Edit the price of this dish or click cancel to remain the previous one',
         'New dish price'
       )
       if (r1 === null && r2 === null && r3 === null) {
