@@ -19,7 +19,7 @@
                 <label>Step 1: Select A Canteen:</label>
 
                 <span class="box" style="margin:10px">
-                  <select v-model="commentedcanteen">
+                  <select v-model="canteen">
                     <option disabled :value="null">Select A Canteen</option>
                     <option
                       v-for="option in options"
@@ -31,52 +31,19 @@
                   </select></span
                 >
                 <br />
-                <label>Step 2: Select An Existing Dish:</label>
-                <span class="box">
-                  <select v-model="commenteddish">
-                    <option disabled :value="null" style="margin:10px">
-                      Select An Existing Dish
-                    </option>
-                    <option
-                      v-for="option in commentdishList"
-                      :value="option"
-                      :key="option"
-                    >
-                      {{ option }}
-                    </option>
-                  </select> </span
-                ><br />
-
-                &nbsp; Or Input the New Dish Name:
+                <label>Step 2: Input the New Dish Name:</label>
                 <input
                   type="text"
                   class="addingTextBox"
-                  v-model="commenteddish"
+                  v-model="dish"
                   placeholder="Input Here"
                   style="margin:10px;width=300px"
                 /><br />
 
-                <el-upload
-                  style="text-align:center"
-                  class="upload-demo"
-                  action="https://jsonplaceholder.typicode.com/posts/"
-                  :on-preview="handlePreview"
-                  :on-remove="handleRemove"
-                  :file-list="fileList"
-                  list-type="picture"
-                >
-                  <br />
-                  <el-button
-                    size="small"
-                    type="primary"
-                    class="btn btn-purple"
-                    @click="uploadImg()"
-                    >Click to Upload Picture</el-button
-                  >
-                  <div slot="tip" class="el-upload__tip">
-                    只能上传jpg/png文件，且不超过500kb
-                  </div>
-                </el-upload>
+                <input type="file" @change="onFileSelected" />
+                <button @click="onUpload" class="btn btn-purple">
+                  Upload Now
+                </button>
               </div>
             </div>
           </div>
@@ -129,7 +96,25 @@ export default {
         'Women Cooperative Store',
         'Wu Yee Sun College Staff Dining Room',
         'Wu Yee Sun College Student Canteen'
-      ]
+      ],
+      canteen: '',
+      dish: '',
+      selectedFile: null,
+      myToken: ''
+    }
+  },
+  mounted () {
+    this.myToken = localStorage.getItem('token')
+    console.log('mounted')
+    console.log(this.myToken)
+    if (
+      this.myToken === '' ||
+      this.myToken === null ||
+      this.myToken === undefined
+    ) {
+      window.location.assign('/#login')
+      setTimeout('window.location.reload()', 500)
+      this.$message.error('Please login first!')
     }
   },
   methods: {
@@ -139,47 +124,38 @@ export default {
     },
     onUpload () {
       const fd = new FormData()
-      fd.append('image', this.selectedFile, this.selectedFile.name)
-      this.axios.post('http://localhost:3000/gallery2', fd).then(res => {
-        console.log(res)
-      })
-    //   const formData = new FormData()
-    //   formData.append('bannerImg', this.promo.bannerImg)
-    //   formData.append('inAppImg', this.promo.inAppImg)
-    //   formData.append('inAppImg', this.promo)
-
-    //   // Add the serialized JSON data to the formData (not
-    //   // sure what your JSON object is called)
-    //   formData.append('data', JSON.stringify(this.data))
-
-    //   this.axios
-    //     .post('http://localhost:3000/uploadImg', formData)
-    //     .then(response => {
-    //       console.log('Submit Success')
-    //     })
-    //     .catch(e => {
-    //       console.log('Submit Fail')
-    //     })
-
-    //   let formData = new FormData()
-    //   formData.append('image', this.selectedFile) // 图片
-    //   let params = {
-    //     contentId: this.pictureId,
-    //     description: this.detailForm.desc
-    //   } // 其他数据
-    //   formData.append('contentId', params.contentId) // json格式上传
-    //   formData.append('description', params.description)
-
-    //   this.axios
-    //     .post('http://localhost:3000/uploadImg', formData) // 上传接口
-    //     .then(res => {
-    //       this.$Message.success('添加成功')
-    //       console.log('Submit Success')
-    //     })
-    //   .catch(err => {
-    //     this.$Message.error('添加失败')
-    //   })
-    // },
+      console.log(this.selectedFile)
+      if (
+        this.selectedFile === null ||
+        this.canteen === '' ||
+        this.dish === ''
+      ) {
+        this.$message.error('Please enter all infomation!')
+      } else {
+        fd.append('dishImage', this.selectedFile)
+        fd.append('canteen', this.canteen)
+        fd.append('dish', this.dish)
+        // fd.append('name', 'laozi')
+        console.log(fd.get('dishImage'))
+        this.axios
+          .post(
+            'http://localhost:3000/api/gallery/add',
+            fd, //, canteen: this.canteen, dish: this.dish, name: 'laozi'
+            {
+              headers: {
+                Authorization: `Basic ${this.myToken}`,
+                'Content-Type': `multipart/form-data; boundary=${fd._boundary}`
+              }
+            }
+          )
+          .then(res => {
+            console.log(res)
+            this.$message.success("Successful Upload!")
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
     }
   }
 }

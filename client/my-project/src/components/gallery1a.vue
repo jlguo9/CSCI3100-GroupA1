@@ -11,17 +11,19 @@
       </h1>
       <h2>Basic Medical Sciences Building Snack Bar</h2>
     </div>
+
     <light-gallery
-      :images="images"
+      :images="imageList"
       :index="index"
       :disable-scroll="true"
       @close="index = null"
     ></light-gallery>
+
     <div class="container-fluid" style="padding:0px; margin:0px">
       <ul style="list-style:none; display:inline;float:center">
         <div class="container-fluid" style="padding:0px; margin:0px">
           <li
-            v-for="(image, imageIndex) in images"
+            v-for="(image, imageIndex) in list"
             :key="imageIndex"
             class="thumb"
             @click="index = imageIndex"
@@ -33,12 +35,12 @@
     vertical-align: middle;
     text-align: center;"
               >
-                <img :src="image.url" style="width:300px" class="thumbnail" />
+                <img :src="image.Image" style="width:300px" class="thumbnail" />
               </div>
               <h4 style="text-align:center;margin:10px 0px">
-                Dish: {{ image.title }}
+                Dish: {{ image.dish }}
               </h4>
-              <p style="text-align:center">Author: {{ image.author }}</p>
+              <p style="text-align:center">Author: {{ image.username }}</p>
             </div>
           </li>
         </div>
@@ -194,11 +196,34 @@ export default {
       ],
       items: '',
       index: null,
+      list: [],
       imageList: [],
       imageURLList: [],
       imageIDList: [],
       imageTitleList: [],
+      myUrl: '',
       requrl: require('@/assets/images/rails.jpg')
+    }
+  },
+  mounted () {
+    this.getImage()
+  },
+  methods: {
+    getImage () {
+      this.axios
+        .get('http://localhost:3000/api/gallery/' + 'Medcan')
+        .then(res => {
+          const { status, data } = res
+          this.list = data.Data
+          this.imageList = data.Data.map(e => e['Image'])
+          for (var j = 0; j < this.list.length; j++) {
+            this.list[j].Image =
+              'http://localhost:3000/api/gallery/' + this.imageList[j]
+            this.imageList[j] = this.list[j].Image
+          }
+          console.log(this.list)
+          // this.myUrl = 'http://localhost:3000/api/gallery/'+this.imageList[0]
+        })
     }
   }
 
