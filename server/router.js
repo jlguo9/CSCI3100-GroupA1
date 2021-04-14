@@ -50,5 +50,6 @@ router.get("/user/info/:id",userController.get_info);
 
 //gallery routes
 router.post("/gallery/add",galleryController.image_post);
+router.get("/gallery",galleryController.image_get);
 
 module.exports = router;

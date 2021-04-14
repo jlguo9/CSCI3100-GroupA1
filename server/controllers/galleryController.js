@@ -29,7 +29,7 @@ exports.image_post = (req,res) => {
         else{
             console.log(req.file);
             const image = new Gallery({
-                username: req.body.name,
+                username: req.userData.name,
                 dish: req.body.dish,
                 canteen: req.body.canteen,
                 Image: req.file.path
@@ -43,4 +43,12 @@ exports.image_post = (req,res) => {
                 })
         }
     });
+}
+
+exports.image_get = (req,res) =>{
+    const canteenName = req.query.canteen;
+    Gallery.find({canteen: canteenName})
+        .then(Data =>{
+            res.status(200).json({State:"success", Data});
+        })
 }
