@@ -50,7 +50,7 @@ app.use(function(err, req, res, next) {
 });*/
 
 //database setting
-const db_url = "mongodb://localhost:27017/foodification";
+const db_url = "mongodb+srv://CSCI3100A1:csci3100a1@cluster0.6knyz.mongodb.net/foodification?retryWrites=true&w=majority";
 mongoose.connect(db_url, {useUnifiedTopology: true, useNewUrlParser: true});
 
 const db = mongoose.connection;
