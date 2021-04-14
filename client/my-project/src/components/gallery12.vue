@@ -135,7 +135,6 @@ export default {
         fd.append('dishImage', this.selectedFile)
         fd.append('canteen', this.canteen)
         fd.append('dish', this.dish)
-        // fd.append('name', 'laozi')
         console.log(fd.get('dishImage'))
         this.axios
           .post(
@@ -150,11 +149,12 @@ export default {
           )
           .then(res => {
             console.log(res)
-            this.$message.success("Successful Upload!")
+            this.$message.success('Successful Upload!')
             setTimeout('window.location.reload()', 300)
           })
           .catch(err => {
             console.log(err)
+            this.$message.error('Only image types are supported!')
           })
       }
     }

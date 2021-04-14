@@ -20,26 +20,14 @@ const storage = multer.diskStorage({
             path.extname(file.originalname));
     }
 })
-//file filter
-const fileFilter = (req, file, cb) => {
-    if(file.mimeType === 'image/jpeg' || file.mimeType === 'image/png' ||
-    file.mimeType === 'image/bmp' || file.mimeType === 'image/gif'){
-        cb(null,true);
-    }else{
-        cb(null,false);
-    }
-}
+
 //Init upload
 const upload = multer({
     storage: storage,
     limits: {
         filesize: 1024 * 2014 * 100
-    },
-    fileFilter: fileFilter
+    }
 });
-
-//parse url sent by client and hand over to corresponding controllers
-//to do...
 
 //menu routes
 router.get("/menu/index", menuController.menu_get);
