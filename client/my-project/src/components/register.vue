@@ -34,11 +34,22 @@ export default {
       formData: {
         username: '',
         password: ''
-      }
+      },
+      myToken: ''
     }
+  },
+  mounted () {
+    this.myToken = localStorage.getItem('token')
+    console.log('mounted')
+    console.log(this.myToken)
   },
   methods: {
     register () {
+      if (this.myToken != '' && this.myToken != null) {
+        this.$message.warning('You have already signed in!')
+        window.location.assign('/#')
+        setTimeout('window.location.reload()', 100)
+      }
       if (this.formData.username === '' || this.formData.password === '') {
         this.$message.error('Please enter all information!')
       } else {

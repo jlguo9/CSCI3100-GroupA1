@@ -28,15 +28,26 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent"> -->
           <div>
             <ul class="nav navbar-nav ml-auto" style="float:right">
-              <li class="nav-item"> 
-               <router-link to="login" 
-                ><a class="nav-link" style="float:right">Login</a>
-              </router-link>
+              <li class="nav-item" v-if="myToken === '' || myToken === null">
+                <router-link to="login"
+                  ><a class="nav-link" style="float:right">Login</a>
+                </router-link>
               </li>
-              <li class="nav-item"> 
-               <router-link to="register" 
-                ><a class="nav-link" style="float:right">Register</a>
-              </router-link>
+              <li class="nav-item">
+                <router-link
+                  to="register"
+                  v-if="myToken === '' || myToken === null"
+                  ><a class="nav-link" style="float:right">Register</a>
+                </router-link>
+              </li>
+              <li>
+                <a
+                  class="nav-link"
+                  v-if="myToken != '' && myToken != null"
+                  style="float:right"
+                  @click="exit()"
+                  >Exit</a
+                >
               </li>
             </ul>
           </div>
@@ -113,6 +124,26 @@ import login from './components/login.vue'
 import register from './components/register.vue'
 
 export default {
+  data () {
+    return {
+      myToken: ''
+    }
+  },
+  mounted () {
+    this.myToken = localStorage.getItem('token')
+    console.log('mounted')
+    console.log(this.myToken)
+  },
+  methods: {
+    exit () {
+      localStorage.removeItem('token')
+      this.myToken = ''
+      this.$message.success('You have successfully log out.')
+      setTimeout('window.location.reload()', 500)
+      console.log('clear')
+      console.log(localStorage.getItem('token'))
+    }
+  },
   name: 'App',
   components: {
     sidebar: sidebar,
@@ -172,7 +203,7 @@ export default {
     gallery11c: gallery11c,
     forum: forum,
     login: login,
-    register: register,
+    register: register
   }
 }
 </script>

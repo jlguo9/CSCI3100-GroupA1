@@ -33,28 +33,40 @@ export default {
       labelPosition: 'right',
       formData: {
         username: '',
-        password: ''
-      },
-      token: ''
+        password: '',
+        token: '',
+        myToken: ''
+      }
     }
   },
+  mounted () {
+    this.myToken = localStorage.getItem('token')
+    console.log('mounted')
+    console.log(this.myToken)
+  },
+
   methods: {
-    async handleLogin () {
-      const res = await this.$http.post('login', this.formdata)
-      const {
-        data,
-        meta: { msg, status }
-      } = res
-      if (status === 200) {
-        console.log('token:' + data.token)
-        localStorage.setItem('token', data.token)
-        this.$router.push({ name: 'home' })
-        this.$message.success(msg)
-      } else {
-        this.$message.error(msg)
-      }
-    },
+    // async handleLogin () {
+    //   const res = await this.$http.post('login', this.formdata)
+    //   const {
+    //     data,
+    //     meta: { msg, status }
+    //   } = res
+    //   if (status === 200) {
+    //     console.log('token:' + data.token)
+    //     localStorage.setItem('token', data.token)
+    //     this.$router.push({ name: 'home' })
+    //     this.$message.success(msg)
+    //   } else {
+    //     this.$message.error(msg)
+    //   }
+    // },
     login () {
+      if (this.myToken != '' && this.myToken != null) {
+        this.$message.warning('You have already signed in!')
+        window.location.assign('/#')
+        setTimeout('window.location.reload()', 100)
+      }
       if (this.formData.username === '' || this.formData.password === '') {
         this.$message.error('Please enter all information!')
       } else {
@@ -73,7 +85,10 @@ export default {
               this.$message.success(
                 'Login succeeded! Now redirecting to the home page.'
               )
-              window.location.assign('/#home')
+              localStorage.setItem('token', this.token)
+              // console.log(localStorage.getItem('token'))
+              // console.log('bye')
+              window.location.assign('/#')
               setTimeout('window.location.reload()', 100)
             }
           })
