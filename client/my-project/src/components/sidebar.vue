@@ -69,12 +69,15 @@
         <router-link to="/forum" tag="li"
           ><a><i class="fas fa-comments"></i> Forum</a>
         </router-link>
-
-        <router-link to="/faq" tag="li"
-          ><a><i class="fas fa-question"></i> FAQ</a>
-        </router-link>
       </li>
 
+      <li>
+        <a
+          href="https://github.com/jlguo9/CSCI3100-GroupA1/blob/main/README.md
+"
+          ><i class="fas fa-question"></i> FAQ</a
+        >
+      </li>
       <li>
         <a
           href="mailto:1155107856@link.cuhk.edu.hk?subject = Feedback&body = Message"

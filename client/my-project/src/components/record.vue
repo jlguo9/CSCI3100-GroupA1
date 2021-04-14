@@ -64,10 +64,14 @@ export default {
   data () {
     return {
       recordList: [],
-      recordIDList: []
+      recordIDList: [],
+      myToken: ''
     }
   },
   mounted () {
+    this.myToken = localStorage.getItem('token')
+    console.log('mounted')
+    console.log(this.myToken)
     this.getRecord()
   },
   filters: {
@@ -112,21 +116,43 @@ export default {
 
   methods: {
     getRecord () {
-      this.axios.get('http://localhost:3000/api/record/index').then(res => {
-        const { status, data } = res
-        if (status === 200) {
-          this.recordList = data.Data
-          $(document).ready(function () {
-            $('#mydatatable3').DataTable()
+      console.log('token now is ')
+      console.log(this.myToken)
+      if (
+        this.myToken === '' ||
+        this.myToken === null ||
+        this.myToken === undefined
+      ) {
+        window.location.assign('/#login')
+        setTimeout('window.location.reload()', 500)
+        this.$message.error('Please login first!')
+      } else {
+        this.axios
+          .get('http://localhost:3000/api/record/index', {
+            headers: {
+              Authorization: `token ${this.myToken}`
+            }
           })
-          this.recordIDList = data.Data.map(e => e['_id'])
-        }
-      })
+          .then(res => {
+            const { status, data } = res
+            if (status === 200) {
+              this.recordList = data.Data
+              $(document).ready(function () {
+                $('#mydatatable3').DataTable()
+              })
+              this.recordIDList = data.Data.map(e => e['_id'])
+            }
+          })
+      }
     },
     removeFromRecord (index, id) {
       if (confirm('Are you sure?')) {
         this.axios
-          .delete('http://localhost:3000/api/record/' + id)
+          .delete('http://localhost:3000/api/record/' + id, {
+            headers: {
+              Authorization: `token ${this.myToken}`
+            }
+          })
           .then(res => {
             const { status } = res
             if (status === 200) {
@@ -150,7 +176,11 @@ export default {
           for (var j = 0; j < this.recordIDList.length; j++) {
             var item = this.recordIDList[j]
             this.axios
-              .delete('http://localhost:3000/api/record/' + item)
+              .delete('http://localhost:3000/api/record/' + item, {
+                headers: {
+                  Authorization: `token ${this.myToken}`
+                }
+              })
               .then(res => {
                 const { status } = res
                 if (status === 200) {

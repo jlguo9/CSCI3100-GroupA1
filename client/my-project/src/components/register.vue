@@ -11,7 +11,7 @@
         <el-form-item label="User Name">
           <el-input v-model="formData.username"></el-input>
         </el-form-item>
-        <el-form-item label="Password">
+        <el-form-item label="Password (No less than 6 characters)">
           <el-input v-model="formData.password"></el-input>
         </el-form-item>
         <button
@@ -52,6 +52,10 @@ export default {
       }
       if (this.formData.username === '' || this.formData.password === '') {
         this.$message.error('Please enter all information!')
+      } else if (this.formData.password.length < 6) {
+        this.$message.error(
+          'Please enter a password of more than 6 characters!'
+        )
       } else {
         this.axios
           .post('http://localhost:3000/api/user/register', {

@@ -138,8 +138,11 @@ export default {
     exit () {
       localStorage.removeItem('token')
       this.myToken = ''
-      this.$message.success('You have successfully log out.')
-      setTimeout('window.location.reload()', 500)
+      this.$message.success(
+        'You have successfully log out. Now redirecting to the home page'
+      )
+      window.location.assign('/#')
+      setTimeout('window.location.reload()', 1000)
       console.log('clear')
       console.log(localStorage.getItem('token'))
     }

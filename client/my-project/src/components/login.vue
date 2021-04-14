@@ -83,7 +83,7 @@ export default {
               this.token = data.Data
               console.log(this.token)
               this.$message.success(
-                'Login succeeded! Now redirecting to the home page.'
+                'Successufully login! Now redirecting to the home page.'
               )
               localStorage.setItem('token', this.token)
               // console.log(localStorage.getItem('token'))

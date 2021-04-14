@@ -175,6 +175,7 @@ export default {
       newDishName: '',
       newDishPrice: '',
       admin: 0,
+      myToken: '',
       options: [
         'Basic Medical Sciences Building Snack Bar',
         'Benjamin Franklin Centre Coffee Corner',
@@ -218,6 +219,9 @@ export default {
     }
   },
   mounted () {
+    this.myToken = localStorage.getItem('token')
+    console.log('mounted')
+    console.log(this.myToken)
     this.getMenu()
   },
   filters: {
@@ -303,21 +307,34 @@ export default {
     },
 
     addToCart (index, id) {
+      console.log(this.myToken)
+      if (
+        this.myToken === '' ||
+        this.myToken === null ||
+        this.myToken === undefined
+      ) {
+        this.$message.error('Please login first!')
+        window.location.assign('/#login')
+        setTimeout('window.location.reload()', 100)
+      }
       if (confirm('Are you sure to add this dish to cart?')) {
         this.axios
-          .post('http://localhost:3000/api/cart/add', {
-            dishID: id,
-            canteen: this.menuList[index].canteen,
-            name: this.menuList[index].name,
-            price: this.menuList[index].price,
-            quantity: 1,
-          },{
-            headers:{
-              'Authorization': `Basic ${this.myToken}`
+          .post(
+            'http://localhost:3000/api/cart/add',
+            {
+              dishID: id,
+              canteen: this.menuList[index].canteen,
+              name: this.menuList[index].name,
+              price: this.menuList[index].price,
+              quantity: 1
+            },
+            {
+              headers: {
+                Authorization: `Basic ${this.myToken}`
+              }
             }
-          })
+          )
           .then(res => {
-            this.$message.success('fuck')
             const { status } = res
             if (status === 201) {
               this.$message.success('Successfully added to cart.')

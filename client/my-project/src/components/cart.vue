@@ -81,9 +81,7 @@
     </div>
 
     <div class="table-responsive" v-if="cartList.length === 0">
-      <h4>
-        Your shopping cart is empty now.
-      </h4>
+      <h4>Your shopping cart is empty now.</h4>
     </div>
   </div>
 </template>
@@ -95,10 +93,14 @@ export default {
       cartList: [],
       cartQuantList: [],
       cartIDList: [],
-      total: 0
+      total: 0,
+      myToken: ''
     }
   },
   mounted () {
+    this.myToken = localStorage.getItem('token')
+    console.log('mounted')
+    console.log(this.myToken)
     this.getCart()
   },
   filters: {
@@ -114,43 +116,61 @@ export default {
   },
   computed: {},
   methods: {
-    // getEmpty () {
-    //   this.cartList = []
-    //   this.$forceUpdate()
-    //   $(document).ready(function () {
-    //         $('#mydatatable2').DataTable()
-    //       })
-    // },
-
     getCart () {
-      this.axios.get('http://localhost:3000/api/cart/index').then(res => {
-        const { status, data } = res
-        console.log(status)
-        if (status === 200) {
-          this.cartList = data.Data
-          console.log(data)
-          $(document).ready(function () {
-            $('#mydatatable2').DataTable()
+      console.log('token now is ')
+      console.log(this.myToken)
+      if (
+        this.myToken === '' ||
+        this.myToken === null ||
+        this.myToken === undefined
+      ) {
+        window.location.assign('/#login')
+        setTimeout('window.location.reload()', 500)
+        this.$message.error('Please login first!')
+      } else {
+        this.axios
+          .get('http://localhost:3000/api/cart/index', {
+            headers: {
+              Authorization: `token ${this.myToken}`
+            }
           })
-          this.cartQuantList = data.Data.map(e => e['quantity'])
-          this.cartIDList = data.Data.map(e => e['_id'])
-          this.total = 0
-          for (var j = 0; j < this.cartQuantList.length; j++) {
-            // var item = this.cartQuantList[j]
-            this.total +=
-              parseFloat(this.cartList[j].price) *
-              parseInt(this.cartList[j].quantity)
-          }
-        }
-      })
+          .then(res => {
+            const { status, data } = res
+            console.log(status)
+            if (status === 200) {
+              this.cartList = data.Data
+              console.log(data)
+              $(document).ready(function () {
+                $('#mydatatable2').DataTable()
+              })
+              this.cartQuantList = data.Data.map(e => e['quantity'])
+              this.cartIDList = data.Data.map(e => e['_id'])
+              this.total = 0
+              for (var j = 0; j < this.cartQuantList.length; j++) {
+                // var item = this.cartQuantList[j]
+                this.total +=
+                  parseFloat(this.cartList[j].price) *
+                  parseInt(this.cartList[j].quantity)
+              }
+            }
+          })
+      }
     },
     subCartQuant (index, id) {
       if (this.cartList[index].quantity > 1) {
         this.total -= parseFloat(this.cartList[index].price) * 1
         this.axios
-          .put('http://localhost:3000/api/cart/' + id, {
-            quantity: this.cartList[index].quantity - 1
-          })
+          .put(
+            'http://localhost:3000/api/cart/' + id,
+            {
+              quantity: this.cartList[index].quantity - 1
+            },
+            {
+              headers: {
+                Authorization: `token ${this.myToken}`
+              }
+            }
+          )
           .then(res => {
             const { status } = res
             if (status === 200) {
@@ -164,7 +184,11 @@ export default {
           )
         ) {
           this.axios
-            .delete('http://localhost:3000/api/cart/' + id)
+            .delete('http://localhost:3000/api/cart/' + id, {
+              headers: {
+                Authorization: `token ${this.myToken}`
+              }
+            })
             .then(res => {
               const { status } = res
               console.log(status)
@@ -183,9 +207,17 @@ export default {
     addCartQuant (index, id) {
       this.total += parseFloat(this.cartList[index].price) * 1
       this.axios
-        .put('http://localhost:3000/api/cart/' + id, {
-          quantity: this.cartList[index].quantity + 1
-        })
+        .put(
+          'http://localhost:3000/api/cart/' + id,
+          {
+            quantity: this.cartList[index].quantity + 1
+          },
+          {
+            headers: {
+              Authorization: `token ${this.myToken}`
+            }
+          }
+        )
         .then(res => {
           const { status } = res
           if (status === 200) {
@@ -195,18 +227,24 @@ export default {
     },
     removeFromCart (index, id) {
       if (confirm('Are you sure?')) {
-        this.axios.delete('http://localhost:3000/api/cart/' + id).then(res => {
-          const { status } = res
-          console.log(status)
-          if (status === 200) {
-            console.log('shit')
-            this.getCart()
-            console.log(this.cartList.length)
-            if (this.cartList.length === 1) {
-              location.reload()
+        this.axios
+          .delete('http://localhost:3000/api/cart/' + id, {
+            headers: {
+              Authorization: `token ${this.myToken}`
             }
-          }
-        })
+          })
+          .then(res => {
+            const { status } = res
+            console.log(status)
+            if (status === 200) {
+              console.log('shit')
+              this.getCart()
+              console.log(this.cartList.length)
+              if (this.cartList.length === 1) {
+                location.reload()
+              }
+            }
+          })
         this.$message.success('Deleting is done.')
         this.getCart()
       }
@@ -219,7 +257,11 @@ export default {
           for (var j = 0; j < this.cartIDList.length; j++) {
             var item = this.cartIDList[j]
             this.axios
-              .delete('http://localhost:3000/api/cart/' + item)
+              .delete('http://localhost:3000/api/cart/' + item, {
+                headers: {
+                  Authorization: `token ${this.myToken}`
+                }
+              })
               .then(res => {
                 const { status } = res
                 if (status === 200) {
@@ -249,31 +291,39 @@ export default {
             console.log('below is j')
             console.log(j)
             this.axios
-              .post('http://localhost:3000/api/record/add', {
-                time: new Date()
-                  .toJSON()
-                  .slice(0, 10)
-                  .replace(/-/g, '/'),
-                canteen: this.cartList[j].canteen,
-                name: this.cartList[j].name,
-                price: this.cartList[j].price,
-                subtotal: this.cartList[j].price * this.cartList[j].quantity,
-                quantity: this.cartList[j].quantity
-              })
+              .post(
+                'http://localhost:3000/api/record/add',
+                {
+                  time: new Date()
+                    .toJSON()
+                    .slice(0, 10)
+                    .replace(/-/g, '/'),
+                  canteen: this.cartList[j].canteen,
+                  name: this.cartList[j].name,
+                  price: this.cartList[j].price,
+                  subtotal: this.cartList[j].price * this.cartList[j].quantity,
+                  quantity: this.cartList[j].quantity
+                },
+                {
+                  headers: {
+                    Authorization: `Basic ${this.myToken}`
+                  }
+                }
+              )
               .then(res => {
                 console.log('post succeeds')
                 this.getCart()
               })
-            // .catch(function (error) {
-            //   console.log('post fails')
-            //   this.getCart()
-            // })
             var item = copyCartIDList[j]
             console.log('below is id')
             console.log(item)
             console.log('now is deleting the above id')
             this.axios
-              .delete('http://localhost:3000/api/cart/' + item)
+              .delete('http://localhost:3000/api/cart/' + item, {
+                headers: {
+                  Authorization: `token ${this.myToken}`
+                }
+              })
               .then(res => {
                 const { status } = res
                 if (status === 200) {
