@@ -66,7 +66,7 @@ router.get("/user/info/:id",userController.get_info);
 //router.put("/user/password",userController.change_password);
 
 //gallery routes
-router.post("/gallery/add",upload.single('dishImage'), galleryController.image_post);
+router.post("/gallery/add",upload.single('dishImage'),check_auth, galleryController.image_post);
 router.get("/gallery/:canteen",galleryController.image_get);
 
 module.exports = router;
