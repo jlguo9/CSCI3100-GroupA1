@@ -6,9 +6,9 @@ exports.register = (req,res) => {
     if(req.body.name === ""){
         return res.status(500).json({"State": "name_null", "Data": ""});
     }
-    else if(req.body.email === "") {
+    /*else if(req.body.email === "") {
         return res.status(500).json({"State": "email_null", "Data": ""});
-    }
+    }*/
     else if(req.body.password === "") {
         return res.status(500).json({"State": "password_null", "Data": ""});
     }
@@ -21,35 +21,24 @@ exports.register = (req,res) => {
                     return res.status(409).json({Status:"username_exist",Data:""});
                 }
                 else{
-                    //check whether email exists
-                    User.find({email: req.body.email})
-                        .exec()
-                        .then(users =>{
-                            if(users.length>=1){
-                                return res.status(409).json({Status:"email_exist",Data:""});
-                            }
-                            else{
-                                bcrypt.hash(req.body.password, 10, (err, hash)=>{
-                                    if(err){
-                                        return res.status(500).json({State:"bad_req",Data:""});
-                                    }
-                                    else {
-                                        const user = new User({
-                                            name: req.body.name,
-                                            email: req.body.email,
-                                            password: hash
-                                        })
-                                        user.save()
-                                            .then( () => {
-                                                res.status(201).json({State: "success",Data:""});
-                                            })
-                                            .catch(err =>{
-                                                res.status(500).json({State: "bad_req",Data:err})
-                                            })
-                                    }
-                                });
-                            }
-                        })
+                    bcrypt.hash(req.body.password, 10, (err, hash)=>{
+                        if(err){
+                            return res.status(500).json({State:"bad_req",Data:""});
+                        }
+                        else {
+                            const user = new User({
+                                name: req.body.name,
+                                password: hash
+                            })
+                            user.save()
+                                .then( () => {
+                                    res.status(201).json({State: "success",Data:""});
+                                })
+                                .catch(err =>{
+                                    res.status(500).json({State: "bad_req",Data:err})
+                                })
+                        }
+                    });
                 }
             })
             .catch(err => {
