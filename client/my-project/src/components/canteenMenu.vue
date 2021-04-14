@@ -310,9 +310,14 @@ export default {
             canteen: this.menuList[index].canteen,
             name: this.menuList[index].name,
             price: this.menuList[index].price,
-            quantity: 1
+            quantity: 1,
+          },{
+            headers:{
+              'Authorization': `Basic ${this.myToken}`
+            }
           })
           .then(res => {
+            this.$message.success('fuck')
             const { status } = res
             if (status === 201) {
               this.$message.success('Successfully added to cart.')
