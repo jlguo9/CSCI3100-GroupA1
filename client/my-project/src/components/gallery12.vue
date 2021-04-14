@@ -151,6 +151,7 @@ export default {
           .then(res => {
             console.log(res)
             this.$message.success("Successful Upload!")
+            setTimeout('window.location.reload()', 300)
           })
           .catch(err => {
             console.log(err)

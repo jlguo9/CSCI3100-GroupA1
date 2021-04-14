@@ -65,7 +65,7 @@ export default {
   methods: {
     getImage () {
       this.axios
-        .get('http://localhost:3000/api/gallery/' + 'Inno 330')
+        .get('http://localhost:3000/api/gallery/' + 'Inno330')
         .then(res => {
           const { status, data } = res
           this.list = data.Data

@@ -44,154 +44,20 @@
           ><a>Women Cooperative Store</a>
         </router-link>
       </li>
-
     </ul>
   </div>
 </template>
 
 <script>
 export default {
-  data () {
+  data() {
     return {
-      images: [
-        {
-          title: 'Three Dishes',
-          author: 'ABC',
-          url: require('@/assets/images/tunnel.jpg')
-        },
-        {
-          title: 'Pic 2',
-          author: 'ABC',
-          url: require('@/assets/images/park.jpg')
-        },
-        {
-          title: 'Pic 4',
-          author: 'ABC',
-          url: require('@/assets/images/sky.jpg')
-        },
-        {
-          title: 'Pic 5',
-          author: 'ABC',
-          url: require('@/assets/images/rails.jpg')
-        },
-        {
-          title: 'Pic 6',
-          url: require('@/assets/images/rocks.jpg')
-        },
-        {
-          title: 'Pic 7',
-          author: 'ABC',
-          url: require('@/assets/images/traffic.jpg')
-        },
-        {
-          title: 'Pic 8',
-          author: 'ABC',
-          url: require('@/assets/images/bridge.jpg')
-        },
-        {
-          title: 'Frog soak on water',
-          author: 'ABC',
-          url: require('@/assets/images/coast.jpg')
-        },
-        {
-          title: 'Frog soak on water',
-          author: 'ABC',
-          url: require('@/assets/images/canteen-2.jpeg')
-        }
-      ],
-      items: '',
+      items: "",
       index: null,
-      imageList: [],
-      imageURLList: [],
-      imageIDList: [],
-      imageTitleList: [],
-      requrl: require('@/assets/images/rails.jpg')
-    }
+      imageList: []
+    };
   }
-
-  // mounted () {
-  //   this.getImages()
-  // },
-  // methods: {
-  //   onFileSelected (event) {
-  //     console.log(event)
-  //     this.selectedFile = event.target.files[0]
-  //   },
-  //   onUpload () {
-  //     const fd = new FormData()
-  //     fd.append('image', this.selectedFile, this.selectedFile.name)
-  //     this.axios.post('http://localhost:3000/gallery2', fd).then(res => {
-  //       console.log(res)
-  //     })
-
-  //     const formData = new FormData()
-  //     Add images to form data
-  //     formData.append('bannerImg', this.promo.bannerImg)
-  //     formData.append('inAppImg', this.promo.inAppImg)
-  //     formData.append('inAppImg', this.promo)
-
-  //     // Add the serialized JSON data to the formData (not
-  //     // sure what your JSON object is called)
-  //     formData.append('data', JSON.stringify(this.data))
-
-  //     Submit the form data
-  //     this.axios
-  //       .post('http://localhost:3000/uploadImg', formData)
-  //       .then(response => {
-  //         console.log('Submit Success')
-  //       })
-  //       .catch(e => {
-  //         console.log('Submit Fail')
-  //       })
-
-  //     let formData = new FormData()
-  //     formData.append('image', this.selectedFile) // 图片
-  //     let params = {
-  //       contentId: this.pictureId,
-  //       description: this.detailForm.desc
-  //     } // 其他数据
-  //     formData.append('contentId', params.contentId) // json格式上传
-  //     formData.append('description', params.description)
-
-  //     this.axios
-  //       .post('http://localhost:3000/uploadImg', formData) // 上传接口
-  //       .then(res => {
-  //         this.$Message.success('添加成功')
-  //         console.log('Submit Success')
-  //       })
-  //     .catch(err => {
-  //       this.$Message.error('添加失败')
-  //     })
-  //   },
-  //   getImages () {
-  //     this.axios.get('http://localhost:3000/gallery1').then(res => {
-  //       const { status, data } = res
-  //       if (status === 200) {
-  //         console.log(data)
-  //         this.imageList = data
-  //         this.imageURLList = data.map(e => e['url'])
-  //         // this.requrl[0] = require(this.imageURLList[0]);
-  //         this.imageIDList = data.map(e => e['id'])
-  //         this.imageTitleList = data.map(e => e['title'])
-  //         console.log('now is doing get-cart')
-  //         console.log(this.imageURLList)
-  //         console.log(this.imageIDList)
-  //         console.log(this.imageTitleList)
-  //         this.$forceUpdate()
-  //         console.log('refreshing is done')
-  //       }
-  //     })
-  //   },
-  //   getUploadedImages () {
-  //     this.axios.get('http://localhost:3000/uploadImg').then(res => {
-  //       const { status, data } = res
-  //       if (status === 200) {
-  //         console.log(data)
-  //       }
-  //     })
-  //   }
-  // }
-}
+};
 </script>
 
 <style>
@@ -215,4 +81,5 @@ export default {
 /* 被选择的链接 */
 #gallery1 ul li a:active {
   color: red;
-}</style>
+}
+</style>

@@ -15,12 +15,12 @@
             ><a>United College Staff Common Room</a>
           </router-link>
         </li>
-                <li>
+        <li>
           <router-link to="/gallery5c" tag="li"
             ><a>United College Student Canteen</a>
           </router-link>
         </li>
-                <li>
+        <li>
           <router-link to="/gallery5d" tag="li"
             ><a>United College Si Yuan Amenities Centre</a>
           </router-link>
@@ -33,20 +33,7 @@
 <script>
 export default {
   data () {
-    return {
-      fileList: [
-        {
-          name: 'food.jpeg',
-          url:
-            'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-        },
-        {
-          name: 'food2.jpeg',
-          url:
-            'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-        }
-      ]
-    }
+    return {}
   },
   methods: {}
 }
