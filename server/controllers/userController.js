@@ -46,14 +46,16 @@ exports.register = (req,res) => {
 }
 
 exports.login = (req,res) => {
-    User.find({name: req.body.name})
+    User.find({name: req.query.name})
         .exec()
         .then(users => {
+            console.log(users)
+            console.log(req.query.name)
             if(users.length<1){
                 return res.status(401).json({State:"auth_failed",Data:""});
             }
             else{
-                bcrypt.compare(req.body.password,users[0].password,(err,result)=>{
+                bcrypt.compare(req.query.password,users[0].password,(err,result)=>{
                     if(err){
                         return res.status(500).json({State:"auth_failed",Data:""});
                     }

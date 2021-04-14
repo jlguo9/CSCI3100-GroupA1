@@ -14,7 +14,13 @@
         <el-form-item label="Password">
           <el-input v-model="formData.password"></el-input>
         </el-form-item>
-        <button class="btn btn-purple" style="width: 100%">Login</button>
+        <button
+          class="btn btn-purple"
+          style="width: 100%"
+          @click.prevent="login()"
+        >
+          Login
+        </button>
       </el-form>
     </div>
   </div>
@@ -28,7 +34,8 @@ export default {
       formData: {
         username: '',
         password: ''
-      }
+      },
+      token: ''
     }
   },
   methods: {
@@ -45,6 +52,44 @@ export default {
         this.$message.success(msg)
       } else {
         this.$message.error(msg)
+      }
+    },
+    login () {
+      if (this.formData.username === '' || this.formData.password === '') {
+        this.$message.error('Please enter all information!')
+      } else {
+        this.axios
+          .get(
+            'http://localhost:3000/api/user/login?name=' +
+              this.formData.username +
+              '&password=' +
+              this.formData.password
+          )
+          .then(res => {
+            const { status, data } = res
+            if (status === 200) {
+              this.token = data.Data
+              console.log(this.token)
+              this.$message.success(
+                'Login succeeded! Now redirecting to the home page.'
+              )
+              window.location.assign('/#home')
+              setTimeout('window.location.reload()', 100)
+            }
+          })
+          .catch(err => {
+            console.log(err)
+            this.$message.error(
+              'Wrong username or password! Please enter again.'
+            )
+          })
+        // this.axios.get('http://localhost:3000/api/user/login').then(res => {
+        //   const { status, data } = res
+        //   if (status === 200) {
+        //     this.token = data.Data
+        //     console.log(this.token)
+        //   }
+        // })
       }
     }
   }

@@ -39,28 +39,27 @@ export default {
   },
   methods: {
     register () {
-      console.log('here')
       if (this.formData.username === '' || this.formData.password === '') {
         this.$message.error('Please enter all information!')
       } else {
-        console.log(this.formData.username)
         this.axios
           .post('http://localhost:3000/api/user/register', {
             name: this.formData.username,
             password: this.formData.password
           })
           .then(res => {
-            this.$message.success('Register succeeded!')
-            window.location.replace('/#login') 
+            this.$message.success(
+              'Register succeeded! Now redirecting to the login page.'
+            )
+            window.location.assign('/#login')
+            setTimeout('window.location.reload()', 100)
           })
           .catch(err => {
             if (err.response.status === 409) {
-              console.log(409)
               this.$message.error(
                 'Same Username Already exists! Please use another one.'
               )
             } else {
-              console.log(500)
               this.$message.error('Server connection error!')
             }
           })
