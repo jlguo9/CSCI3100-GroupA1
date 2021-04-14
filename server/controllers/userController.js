@@ -6,9 +6,6 @@ exports.register = (req,res) => {
     if(req.body.name === ""){
         return res.status(500).json({"State": "name_null", "Data": ""});
     }
-    /*else if(req.body.email === "") {
-        return res.status(500).json({"State": "email_null", "Data": ""});
-    }*/
     else if(req.body.password === "") {
         return res.status(500).json({"State": "password_null", "Data": ""});
     }
@@ -18,7 +15,7 @@ exports.register = (req,res) => {
             .exec()
             .then(users =>{
                 if(users.length>=1){
-                    return res.status(409).json({Status:"username_exist",Data:""});
+                     res.status(409).json({Status:"username_exist",Data:""});
                 }
                 else{
                     bcrypt.hash(req.body.password, 10, (err, hash)=>{
@@ -35,6 +32,7 @@ exports.register = (req,res) => {
                                     res.status(201).json({State: "success",Data:""});
                                 })
                                 .catch(err =>{
+                                    console.log(err)
                                     res.status(500).json({State: "bad_req",Data:err})
                                 })
                         }
@@ -89,7 +87,7 @@ exports.logout = (req,res) => {
 }*/
 exports.get_info = (req,res) => {
     const id = req.params.id;
-    User.findById(id,"_id name email type canteen")
+    User.findById(id,"_id name type canteen")
         .then(Data =>{
             res.status(200).json({"State": "success", Data});
         })

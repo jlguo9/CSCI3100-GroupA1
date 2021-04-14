@@ -18,7 +18,9 @@
                       <span class="d-block font-weight-bold name">{{
                         value.userName
                       }}</span
-                      ><span class="date text-black-50">{{ value.createdAt | dateFormat }}</span>
+                      ><span class="date text-black-50">{{
+                        value.createdAt | dateFormat
+                      }}</span>
                     </div>
                   </div>
                   <div class="mt-2">
@@ -229,23 +231,34 @@ export default {
   mounted () {
     this.getComment()
   },
-  filters:{
+  filters: {
     dateFormat (dataStr) {
-      var time = new Date(dataStr);
-
+      var time = new Date(dataStr)
       function timeAdd0 (str) {
         if (str < 10) {
-          str = '0' + str;
+          str = '0' + str
         }
         return str
       }
-      var y = time.getFullYear();
-      var m = time.getMonth() + 1;
-      var d = time.getDate();
-      var h = time.getHours();
-      var mm = time.getMinutes();
-      var s = time.getSeconds();
-      return y + '-' + timeAdd0(m) + '-' + timeAdd0(d) + ' ' + timeAdd0(h) + ':' + timeAdd0(mm) + ':' + timeAdd0(s);
+      var y = time.getFullYear()
+      var m = time.getMonth() + 1
+      var d = time.getDate()
+      var h = time.getHours()
+      var mm = time.getMinutes()
+      var s = time.getSeconds()
+      return (
+        y +
+        '-' +
+        timeAdd0(m) +
+        '-' +
+        timeAdd0(d) +
+        ' ' +
+        timeAdd0(h) +
+        ':' +
+        timeAdd0(mm) +
+        ':' +
+        timeAdd0(s)
+      )
     }
   },
   methods: {
