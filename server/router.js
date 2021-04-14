@@ -4,6 +4,7 @@ const menuController = require('./controllers/menuController');
 const contentController = require('./controllers/contentController');
 const recordController = require('./controllers/recordController');
 const cartController = require('./controllers/cartController');
+const galleryController = require('./controllers/galleryController');
 
 const express = require('express');
 const router=express.Router();
@@ -48,5 +49,6 @@ router.get("/user/info/:id",userController.get_info);
 //router.put("/user/password",userController.change_password);
 
 //gallery routes
+router.post("/gallery/add",galleryController.image_post);
 
 module.exports = router;

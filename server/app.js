@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 //express app
 const app = express();
+
 app.all("*",function(req,res,next){
   res.header("Access-Control-Allow-Origin","http://localhost:8080");
   res.header("Access-Control-Allow-Headers","*");
@@ -18,11 +19,8 @@ app.all("*",function(req,res,next){
     next();
 });
 
-//set the path to rootDir and projectDir
-const rootDir=path.resolve(__dirname);
-const projectDir=path.resolve(__dirname,'../','client');
-app.use(express.static(rootDir));
-app.use(express.static(projectDir));
+//set the path to static resources
+app.use('/uploads',express.static('uploads'));
 
 //middleware
 app.use(express.json());
