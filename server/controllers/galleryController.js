@@ -4,7 +4,7 @@ const Gallery = require('../models/gallery');
 exports.image_post = (req,res,next) => {
             console.log(req.file);
             const image = new Gallery({
-                username: req.body.name,
+                username: req.userData.name,
                 dish: req.body.dish,
                 canteen: req.body.canteen,
                 Image: req.file.path
