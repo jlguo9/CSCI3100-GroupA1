@@ -15,7 +15,7 @@ exports.register = (req,res) => {
             .exec()
             .then(users =>{
                 if(users.length>=1){
-                    return res.status(409).json({Status:"username_exist",Data:""});
+                     res.status(409).json({Status:"username_exist",Data:""});
                 }
                 else{
                     bcrypt.hash(req.body.password, 10, (err, hash)=>{
@@ -32,6 +32,7 @@ exports.register = (req,res) => {
                                     res.status(201).json({State: "success",Data:""});
                                 })
                                 .catch(err =>{
+                                    console.log(err)
                                     res.status(500).json({State: "bad_req",Data:err})
                                 })
                         }
@@ -45,14 +46,16 @@ exports.register = (req,res) => {
 }
 
 exports.login = (req,res) => {
-    User.find({name: req.body.name})
+    User.find({name: req.query.name})
         .exec()
         .then(users => {
+            console.log(users)
+            console.log(req.query.name)
             if(users.length<1){
                 return res.status(401).json({State:"auth_failed",Data:""});
             }
             else{
-                bcrypt.compare(req.body.password,users[0].password,(err,result)=>{
+                bcrypt.compare(req.query.password,users[0].password,(err,result)=>{
                     if(err){
                         return res.status(500).json({State:"auth_failed",Data:""});
                     }

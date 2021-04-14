@@ -14,7 +14,13 @@
         <el-form-item label="Password">
           <el-input v-model="formData.password"></el-input>
         </el-form-item>
-        <button class="btn btn-purple" style="width: 100%">Login</button>
+        <button
+          class="btn btn-purple"
+          style="width: 100%"
+          @click.prevent="login()"
+        >
+          Login
+        </button>
       </el-form>
     </div>
   </div>
@@ -27,24 +33,78 @@ export default {
       labelPosition: 'right',
       formData: {
         username: '',
-        password: ''
+        password: '',
+        token: '',
+        myToken: ''
       }
     }
   },
-  method: {
-    async handleLogin () {
-      const res = await this.$http.post('login', this.formdata)
-      const {
-        data,
-        meta: { msg, status }
-      } = res
-      if (status === 200) {
-        console.log('token:' + data.token)
-        localStorage.setItem('token', data.token)
-        this.$router.push({ name: 'home' })
-        this.$message.success(msg)
+  mounted () {
+    this.myToken = localStorage.getItem('token')
+    console.log('mounted')
+    console.log(this.myToken)
+  },
+
+  methods: {
+    // async handleLogin () {
+    //   const res = await this.$http.post('login', this.formdata)
+    //   const {
+    //     data,
+    //     meta: { msg, status }
+    //   } = res
+    //   if (status === 200) {
+    //     console.log('token:' + data.token)
+    //     localStorage.setItem('token', data.token)
+    //     this.$router.push({ name: 'home' })
+    //     this.$message.success(msg)
+    //   } else {
+    //     this.$message.error(msg)
+    //   }
+    // },
+    login () {
+      if (this.myToken != '' && this.myToken != null) {
+        this.$message.warning('You have already signed in!')
+        window.location.assign('/#')
+        setTimeout('window.location.reload()', 100)
+      }
+      if (this.formData.username === '' || this.formData.password === '') {
+        this.$message.error('Please enter all information!')
       } else {
-        this.$message.error(msg)
+        this.axios
+          .get(
+            'http://localhost:3000/api/user/login?name=' +
+              this.formData.username +
+              '&password=' +
+              this.formData.password
+          )
+          .then(res => {
+            const { status, data } = res
+            if (status === 200) {
+              this.token = data.Data
+              console.log(this.token)
+              this.$message.success(
+                'Login succeeded! Now redirecting to the home page.'
+              )
+              localStorage.setItem('token', this.token)
+              // console.log(localStorage.getItem('token'))
+              // console.log('bye')
+              window.location.assign('/#')
+              setTimeout('window.location.reload()', 100)
+            }
+          })
+          .catch(err => {
+            console.log(err)
+            this.$message.error(
+              'Wrong username or password! Please enter again.'
+            )
+          })
+        // this.axios.get('http://localhost:3000/api/user/login').then(res => {
+        //   const { status, data } = res
+        //   if (status === 200) {
+        //     this.token = data.Data
+        //     console.log(this.token)
+        //   }
+        // })
       }
     }
   }

@@ -170,7 +170,7 @@ export default {
               console.log(status)
               if (status === 200) {
                 this.getCart()
-                 this.$message.success('Deleting is done.')
+                this.$message.success('Deleting is done.')
                 if (this.cartList.length === 1) {
                   setTimeout('window.location.reload()', 3000)
                 }
@@ -234,7 +234,7 @@ export default {
             'Removing is done. Please wait few seconds for this page to refresh.'
           )
           setTimeout('window.location.reload()', 5000)
-          
+
           //  window.alert("Removing is done. Please manually refresh this page again.")
         }
       }

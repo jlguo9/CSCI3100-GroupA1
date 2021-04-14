@@ -111,7 +111,6 @@
     <p>LI Keqi 1155107825</p>
     <p>YAO Sicong1155107856</p>
     <p>HU Fangxin 1155107872</p>
-
     <!-- <div class="line"></div> -->
 
     <!-- <h3>Lorem Ipsum Dolor</h3>
@@ -128,7 +127,8 @@
 </template>
 
 <script>
-export default {}
+export default {
+}
 </script>
 
 <style></style>
