@@ -10,8 +10,8 @@
         </router-link>
       </h1>
       <h2>Inno330</h2>
-
     </div>
+
     <light-gallery
       :images="imageList"
       :index="index"
@@ -131,7 +131,7 @@ export default {
   methods: {
     getImage () {
       this.axios
-        .get('http://localhost:3000/api/gallery/' + 'Shaw Can')
+        .get('http://localhost:3000/api/gallery/' + 'Inno 330')
         .then(res => {
           const { status, data } = res
           this.list = data.Data

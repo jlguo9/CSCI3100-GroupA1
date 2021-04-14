@@ -205,20 +205,21 @@ export default {
       requrl: require('@/assets/images/rails.jpg')
     }
   },
-  mounted(){
+  mounted () {
     this.getImage()
   },
   methods: {
     getImage () {
       this.axios
-        .get('http://localhost:3000/api/gallery/' + 'Shaw Can')
+        .get('http://localhost:3000/api/gallery/' + 'Medcan')
         .then(res => {
           const { status, data } = res
           this.list = data.Data
           this.imageList = data.Data.map(e => e['Image'])
-          for(var j=0; j<this.list.length;j++){
-            this.list[j].Image = 'http://localhost:3000/api/gallery/'+this.imageList[j]
-            this.imageList[j] =  this.list[j].Image
+          for (var j = 0; j < this.list.length; j++) {
+            this.list[j].Image =
+              'http://localhost:3000/api/gallery/' + this.imageList[j]
+            this.imageList[j] = this.list[j].Image
           }
           console.log(this.list)
           // this.myUrl = 'http://localhost:3000/api/gallery/'+this.imageList[0]
