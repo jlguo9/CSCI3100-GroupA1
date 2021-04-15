@@ -10,7 +10,7 @@
                   <div class="d-flex flex-row user-info">
                     <img
                       class="rounded-circle"
-                      :src="userimages[value.userName % 9].url"
+                      :src="userimages[value.rndID].url"
                       width="50px"
                       height="50px"
                     />
@@ -61,22 +61,6 @@
                     </div>
                   </div>
                 </div>
-                <!-- this is the transfer section -->
-                <!-- <div
-                  id="collapse-2"
-                  class="bg-light p-2 collapse"
-                  data-parent="#myGroup"
-                >
-                  <div class="d-flex flex-row align-items-start">
-<i class="fab fa-facebook border p-3 rounded mr-1"></i
-                    >
-                    <i class="fab fa-twitter border p-3 rounded mr-1"></i
-                    ><i class="fab fa-linkedin border p-3 rounded mr-1"></i
-                    ><i class="fab fa-instagram border p-3 rounded mr-1"></i
-                    ><i class="fab fa-dribbble border p-3 rounded mr-1"></i>
-                    <i class="fab fa-pinterest border p-3 rounded mr-1"></i>
-                  </div>
-                </div> -->
               </div>
             </div>
           </div>
@@ -184,7 +168,6 @@ export default {
       commentedcanteen: '',
       commenteddish: '',
       detail: '',
-      // username: '', // 明天加
       myToken: '',
       options: [
         'Basic Medical Sciences Building Snack Bar',
@@ -310,6 +293,10 @@ export default {
             const { status, data } = res
             if (status === 200) {
               this.commentList = data.Data
+              for(var j=0; j<this.commentList.length; j++){
+                var item =  parseInt(this.commentList[j].userName.charCodeAt(0))%7
+                this.commentList[j].rndID = item
+              }
               this.commentIDList = data.Data.map(e => e['_id'])
               this.commentdishList = [...new Set(data.Data.map(e => e['dish']))]
               console.log('get succsess')
