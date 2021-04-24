@@ -1,5 +1,6 @@
 const Record = require('../models/record');
 
+// add a new record
 exports.record_add = (req,res) =>{
     const record = new Record({
         name: req.body.name,
@@ -7,7 +8,7 @@ exports.record_add = (req,res) =>{
         canteen: req.body.canteen,
         quantity: req.body.quantity,
         subtotal: req.body.subtotal,
-        userID: req.userData.userID
+        userID: req.userData.userID   // read user ID from the token
     });
     record.save()
         .then( () => {
@@ -18,6 +19,7 @@ exports.record_add = (req,res) =>{
         });
 }
 
+// get all record of this user
 exports.record_get = (req,res) =>{
     Record.find({userID: req.userData.userID})
         .then(Data =>{
@@ -28,11 +30,13 @@ exports.record_get = (req,res) =>{
         })
 }
 
+// delete a certain record of this user
 exports.record_delete = (req,res) =>{
     const id = req.params.id;
     Record.find({userID: req.userData.userID, _id: id})
         .then(records =>{
             if(records.length<1){
+                // if no such record of this user, respond no_such_record and 400
                 res.status(400).json({State: "no_such_record",Data:""});
             }
             else{

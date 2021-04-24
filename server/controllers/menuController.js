@@ -1,7 +1,9 @@
 const Menu = require('../models/menu');
 
+// add a new dish to the menu
 exports.menu_add = (req, res) => {
     if(req.userData.type !== "manager"){
+        // only canteen managers can perform this action
         res.status(403).json({State: "access_denied", Data: ""});
     }
     else{
@@ -15,6 +17,7 @@ exports.menu_add = (req, res) => {
             });
     }
 }
+// get information of all dished on the menu
 exports.menu_get = (req, res) => {
     Menu.find()
         .then(Data =>{
@@ -24,8 +27,10 @@ exports.menu_get = (req, res) => {
             console.log(err);
         });
 }
+// delete a certain dish by its ID
 exports.menu_delete = (req, res) => {
     if(req.userData.type !== "manager"){
+        // only canteen managers can perform this action
         res.status(403).json({State: "access_denied", Data: ""});
     }
     else{
@@ -39,8 +44,10 @@ exports.menu_delete = (req, res) => {
             });
     }
 }
+// update a certain dish by its ID
 exports.menu_update = (req, res) => {
     if(req.userData.type !== "manager"){
+        // only canteen managers can perform this action
         res.status(403).json({State: "access_denied", Data: ""});
     }
     else{

@@ -1,8 +1,9 @@
 const Cart = require('../models/cart');
 
+//add a new item into cart
 exports.cart_add = (req,res) =>{
     const cart = new Cart({
-        userID: req.userData.userID,
+        userID: req.userData.userID, //read userID from token
         dishID: req.body.dishID,
         name: req.body.name,
         price: req.body.price,
@@ -18,6 +19,7 @@ exports.cart_add = (req,res) =>{
         });
 }
 
+// get information of all items in current cart of current user
 exports.cart_get = (req,res) =>{
     Cart.find({userID: req.userData.userID})
         .then(Data =>{
@@ -28,14 +30,17 @@ exports.cart_get = (req,res) =>{
         })
 }
 
+// delete an item
 exports.cart_delete = (req,res) =>{
     const id = req.params.id;
     Cart.find({userID: req.userData.userID, _id: id})
         .then(carts =>{
             if(carts.length<1){
+                // if no such item exists in this user's cart, return 400 and no_such_item
                 res.status(400).json({State: "no_such_item",Data:""});
             }
             else{
+                // if item exists, delete it
                 Cart.findByIdAndDelete(id)
                     .then( () => {
                         res.status(200).json({State: "success",Data:""});
@@ -46,14 +51,17 @@ exports.cart_delete = (req,res) =>{
             }
         })
 }
+// update (normally the quantity) an item
 exports.cart_update = (req, res) => {
     const id = req.params.id;
     Cart.find({userID: req.userData.userID, _id: id})
         .then(carts =>{
             if(carts.length<1){
+                // if no such item exists in this user's cart, return 400 and no_such_item
                 res.status(400).json({State: "no_such_item",Data:""});
             }
             else{
+                // if item exists, update its attributes
                 Cart.findByIdAndUpdate(id, req.body)
                     .then( () => {
                         res.status(200).json({"State": "success","Data":""});

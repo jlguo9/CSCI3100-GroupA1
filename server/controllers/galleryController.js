@@ -1,13 +1,13 @@
 const Gallery = require('../models/gallery');
-// const multer = require('multer');
 
+// API for uploading a new image
 exports.image_post = (req,res,next) => {
             console.log(req.file);
             const image = new Gallery({
-                username: req.userData.name,
+                username: req.userData.name,  // read user name from the token
                 dish: req.body.dish,
                 canteen: req.body.canteen,
-                Image: req.file.path
+                Image: req.file.path    // store the url of the image
             })
             image.save()
                 .then(() => {
@@ -18,6 +18,7 @@ exports.image_post = (req,res,next) => {
                 })
 }
 
+// API for getting all images of a certain canteen
 exports.image_get = (req,res) =>{
     const canteenName = req.params.canteen;
     Gallery.find({canteen: canteenName})

@@ -4,9 +4,11 @@ const jwt = require("jsonwebtoken");
 const JWT_KEY = "secrete";
 exports.register = (req,res) => {
     if(req.body.name === ""){
+        // if name is empty, reject
         return res.status(500).json({"State": "name_null", "Data": ""});
     }
     else if(req.body.password === "") {
+        // if password is empty, reject
         return res.status(500).json({"State": "password_null", "Data": ""});
     }
    else{
@@ -18,6 +20,7 @@ exports.register = (req,res) => {
                      res.status(409).json({Status:"username_exist",Data:""});
                 }
                 else{
+                    // encrypt the password
                     bcrypt.hash(req.body.password, 10, (err, hash)=>{
                         if(err){
                             return res.status(500).json({State:"bad_req",Data:""});
@@ -25,7 +28,7 @@ exports.register = (req,res) => {
                         else {
                             const user = new User({
                                 name: req.body.name,
-                                password: hash
+                                password: hash      // only store the hash in database
                             })
                             user.save()
                                 .then( () => {
@@ -45,32 +48,35 @@ exports.register = (req,res) => {
     }
 }
 
+// API for user login
 exports.login = (req,res) => {
     User.find({name: req.query.name})
         .exec()
         .then(users => {
-            console.log(users)
-            console.log(req.query.name)
             if(users.length<1){
+                // no such user
                 return res.status(401).json({State:"auth_failed",Data:""});
             }
             else{
+                // compare the password with password in database
                 bcrypt.compare(req.query.password,users[0].password,(err,result)=>{
                     if(err){
                         return res.status(500).json({State:"auth_failed",Data:""});
                     }
                     else if(result){
+                        // name-password matched. Sign a token
                         const token = jwt.sign({
                             userID: users[0]._id,
                             name: users[0].name,
                             type: users[0].type
                         },JWT_KEY,
                         {
-                            expiresIn: "1h"
+                            expiresIn: "1h"     // expire in 1 hour
                         });
                         return res.status(200).json({State:"success",Data: token});
                     }
                     else{
+                        // not match
                         return res.status(500).json({State:"auth_failed",Data:""});
                     }
                 })
@@ -80,13 +86,14 @@ exports.login = (req,res) => {
             console.log(err);
         })
 }
+
+// log out API. Not used by frontend.
 exports.logout = (req,res) => {
     res.status(200).json({State:"success",Data:""});
 }
-//abandoned
-/*exports.change_password = (req,res) => {
 
-}*/
+// get the information (id, name, type, canteen) of a certain user by its ID
+// may return more attributes in the future when profile function get further developed
 exports.get_info = (req,res) => {
     const id = req.params.id;
     User.findById(id,"_id name type canteen")

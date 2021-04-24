@@ -12,6 +12,7 @@ const router=express.Router();
 
 const check_auth = require('./middleware/check_auth');
 const path = require('path');
+
 //set storage engine
 const storage = multer.diskStorage({
     destination: 'uploads/',
@@ -25,7 +26,7 @@ const storage = multer.diskStorage({
 const upload = multer({
     storage: storage,
     limits: {
-        filesize: 1024 * 2014 * 100
+        filesize: 1024 * 2014 * 100 //limited file size: 100M
     }
 });
 
@@ -36,21 +37,22 @@ router.delete("/menu/:id", check_auth,menuController.menu_delete);//check_auth,
 router.put("/menu/:id", check_auth,menuController.menu_update);//check_auth,
 
 //shopping cart routes
-router.get("/cart/index", check_auth,cartController.cart_get);//check_auth,
-router.post("/cart/add", check_auth,cartController.cart_add);//check_auth,
-router.delete("/cart/:id",check_auth,cartController.cart_delete);//check_auth,
-router.put("/cart/:id",check_auth,cartController.cart_update);//check_auth,
+router.get("/cart/index", check_auth,cartController.cart_get);
+router.post("/cart/add", check_auth,cartController.cart_add);
+router.delete("/cart/:id",check_auth,cartController.cart_delete);
+router.put("/cart/:id",check_auth,cartController.cart_update);
+
 //record routes
-router.get("/record/index", check_auth,recordController.record_get);//check_auth,
-router.post("/record/add", check_auth,recordController.record_add);//check_auth,
-router.delete("/record/:id",check_auth,recordController.record_delete);//check_auth,
+router.get("/record/index", check_auth,recordController.record_get);
+router.post("/record/add", check_auth,recordController.record_add);
+router.delete("/record/:id",check_auth,recordController.record_delete);
 
 //content routes
 router.get("/content/index",contentController.content_get_all);
 //router.get("/content/:id",contentController.content_get);
-//router.delete("/content/:id",check_auth,contentController.content_delete);//check_auth,
-router.put("/content/:id",check_auth,contentController.content_update);//check_auth,
-router.post("/content/publish",check_auth,contentController.content_publish);//check_auth,
+//router.delete("/content/:id",check_auth,contentController.content_delete);
+router.put("/content/:id",check_auth,contentController.content_update);
+router.post("/content/publish",check_auth,contentController.content_publish);
 
 //like routes
 router.post("/content/like",check_auth,likeController.like_it);
