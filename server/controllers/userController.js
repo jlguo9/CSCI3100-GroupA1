@@ -51,7 +51,8 @@ exports.register = (req,res) => {
                         else {
                             const user = new User({
                                 name: req.body.name,
-                                password: hash      // only store the hash in database
+                                password: hash,      // only store the hash in database
+                                avatar: req.file.path
                             })
                             user.save()
                                 .then( () => {
@@ -129,7 +130,7 @@ exports.logout = (req,res) => {
     res.status(200).json({State:"success",Data:""});
 }
 /*
-MODULE TO GET THE INFORMATION (ID, NAME, TYPE, CANTEEN) OF A CERTAIN USER BY ITS ID
+MODULE TO GET THE INFORMATION (ID, NAME, TYPE, CANTEEN, AVATAR) OF A CERTAIN USER BY ITS ID
 MODULE NAME: GET_INFO
 PROGRAMMER: GUO Jialiang 1155124399
 VERSION: 1.2 (15 APRIL 2021)
@@ -143,7 +144,7 @@ OUTPUT PARAMETERS
 // may return more attributes in the future when profile function get further developed
 exports.get_info = (req,res) => {
     const id = req.params.id;
-    User.findById(id,"_id name type canteen")
+    User.findById(id,"_id name type canteen avatar")
         .then(Data =>{
             res.status(200).json({"State": "success", Data});
         })

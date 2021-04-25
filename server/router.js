@@ -67,7 +67,7 @@ router.post("/content/like",check_auth,likeController.like_it);
 router.delete("/content/like/:id",check_auth,likeController.cancel_like);
 
 //user routes
-router.post("/user/register",userController.register);
+router.post("/user/register",upload.single('avatar'), userController.register);
 router.get("/user/login",userController.login);
 router.get("/user/logout",userController.logout);
 router.get("/user/info/:id",userController.get_info);
