@@ -52,8 +52,17 @@ exports.register = (req,res) => {
                             const user = new User({
                                 name: req.body.name,
                                 password: hash,      // only store the hash in database
-                                avatar: req.file.path
                             })
+                            if(req.file !== null){
+                                user.append("avatar", req.file.path);
+                            }
+                            // else{
+                            //     user = new User({
+                            //         name: req.body.name,
+                            //         password: hash,      // only store the hash in database
+                            //         avatar: req.file.path
+                            //     })
+                            // }
                             user.save()
                                 .then( () => {
                                     res.status(201).json({State: "success",Data:""});
