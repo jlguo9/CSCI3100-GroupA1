@@ -30,7 +30,8 @@ const userSchema = new Schema({
     },
     avatar: {
         type: String,
-        required: false
+        required: false,
+        default: "uploads\default.jfif"
     }
 })
 const User = mongoose.model("User",userSchema);
