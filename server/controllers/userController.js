@@ -49,20 +49,20 @@ exports.register = (req,res) => {
                             return res.status(500).json({State:"bad_req",Data:""});
                         }
                         else {
-                            const user = new User({
+                            let user = new User({
                                 name: req.body.name,
                                 password: hash,      // only store the hash in database
                             })
                             console.log(req.file)
                             if(req.file !== undefined){
-                                user.append("avatar", req.file.path);
+                                user = new User({
+                                    name: req.body.name,
+                                    password: hash,      // only store the hash in database
+                                    avatar: req.file.path
+                                })
                             }
                             // else{
-                            //     user = new User({
-                            //         name: req.body.name,
-                            //         password: hash,      // only store the hash in database
-                            //         avatar: req.file.path
-                            //     })
+
                             // }
                             user.save()
                                 .then( () => {
