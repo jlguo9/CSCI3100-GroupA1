@@ -53,7 +53,8 @@ exports.register = (req,res) => {
                                 name: req.body.name,
                                 password: hash,      // only store the hash in database
                             })
-                            if(req.file !== null){
+                            console.log(req.file)
+                            if(req.file !== undefined){
                                 user.append("avatar", req.file.path);
                             }
                             // else{

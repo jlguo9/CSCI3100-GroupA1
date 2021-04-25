@@ -271,6 +271,26 @@ export default {
     }
   },
   methods: {
+    getImage () {
+      this.axios
+        .get(
+          'http://localhost:3000/api/gallery/' +
+            'Benjamin Franklin Centre Staff Canteen'
+        )
+        .then(res => {
+          const { status, data } = res
+          this.list = data.Data
+          this.imageList = data.Data.map(e => e['Image'])
+          for (var j = 0; j < this.list.length; j++) {
+            this.list[j].Image =
+              'http://localhost:3000/api/gallery/' + this.imageList[j]
+            this.imageList[j] = this.list[j].Image
+          }
+          console.log(this.list)
+        })
+    },
+
+
     getComment () {
       console.log('token now is ')
       console.log(this.myToken)
@@ -282,7 +302,10 @@ export default {
         window.location.assign('/#login')
         setTimeout('window.location.reload()', 500)
         this.$message.error('Please login first!')
-      } else {
+      } 
+      
+      
+      else {
         this.axios
           .get('http://localhost:3000/api/content/index', {
             headers: {

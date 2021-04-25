@@ -41,7 +41,7 @@
                 /><br />
 
                 <input type="file" @change="onFileSelected" />
-                <button @click="onUpload" class="btn btn-purple">
+                <button @click="onUpload()" class="btn btn-purple">
                   Upload Now
                 </button>
               </div>

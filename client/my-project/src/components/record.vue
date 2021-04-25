@@ -1,5 +1,21 @@
+// MODULE NAME: RECORD
+// PROGRAMMER: SICONG YAO 1155107856
+// VERSION: 2.0 (APRIL 25, 2021)
+//
+// MODULE INVOCATION:
+//   CAN BE INVOCATED BY <ROUTER-VIEW></ROUTER-VIEW>
+//
+// PURPOSE: SEPERATE THE RECORD PAGE FROM OTHER MODULES, MAKE IT MORE EASILY TO DISPLAY.
+//          THIS MODULE IS USED FOR SHOWING USER'S RECORD, AS WELL AS PERFROMING RELEVANT ACTIONS WITH THE DISHES IN THE RECORD.     
+//
+// STRUCTURE: 
+//   (H1) RECORD HEADER AND REMOVE-ALL BUTTON
+//   (TABLE WITH DATATABLE) RECORD TABLE, DISPLAY IF ANY DISHES IN RECORD EXIST
+//   (H2) RECORD INFORMATION , DISPLAY IF NO DISH IN RECORD EXISTS
+
 <template>
   <div>
+    <!-- THIS IS THE AREA FOR RECORD HEADER AND  REMOVE-ALL BUTTON-->
     <h1 class="sub-header">
       Your History Record
       <span style="float: right">
@@ -10,6 +26,7 @@
     </h1>
     <br />
 
+    <!-- THIS IS THE AREA FOR RECORD TABLE, DISPLAY IF ANY DISHES EXIST IN USER'S RECORD -->
     <div class="table-responsive" v-if="recordList.length > 0">
       <table
         class="table table-striped table-hover"
@@ -51,6 +68,7 @@
       </table>
     </div>
 
+    <!-- THIS IS THE AREA FOR RECORD INFORMATION, DISPLAY IF NO DISH IN USER'S RECORD EXISTS -->
     <div class="table-responsive" v-if="recordList.length === 0">
       <h4>
         Your record is empty now.
@@ -69,12 +87,13 @@ export default {
     }
   },
   mounted () {
+    // WHENEVER PAGE IS MOUNTED, TRY TO GET TOKEN STORED IN LOCAL STORAGE
     this.myToken = localStorage.getItem('token')
-    console.log('mounted')
-    console.log(this.myToken)
+    // INVOCATE GET-RECORD FUNCTION 
     this.getRecord()
   },
   filters: {
+    // LET THE NUMBER TO DISPLAY WITH DOLLAR SIGN AND IN TWO DECIMAL POINTS
     formatCurrency (v) {
       var revealNum
       if (parseFloat(v) <= 0) {
@@ -84,6 +103,7 @@ export default {
       }
       return '$ ' + revealNum
     },
+    // LET THE TIMESTAMP TO DISPALY IN DISIRED FORMAT
     dateFormat (dataStr) {
       var time = new Date(dataStr)
       function timeAdd0 (str) {
@@ -116,8 +136,7 @@ export default {
 
   methods: {
     getRecord () {
-      console.log('token now is ')
-      console.log(this.myToken)
+      // IF USER DID NOT LOGIN, SHOW ERROR
       if (
         this.myToken === '' ||
         this.myToken === null ||
@@ -126,7 +145,9 @@ export default {
         window.location.assign('/#login')
         setTimeout('window.location.reload()', 500)
         this.$message.error('Please login first!')
-      } else {
+      } 
+      // ELSE, ASK BACKEND AND GET USER'S RECORD AND STORE IT IN DATA
+      else {
         this.axios
           .get('http://localhost:3000/api/record/index', {
             headers: {
@@ -146,6 +167,7 @@ export default {
       }
     },
     removeFromRecord (index, id) {
+      //ASK USER TO CONFIRM, IF YES ASK BACKEND TO DELETE THAT DISH IN THE RECORD, THEN INVOCATE GET-RECORD FUNCTION
       if (confirm('Are you sure?')) {
         this.axios
           .delete('http://localhost:3000/api/record/' + id, {
@@ -168,10 +190,12 @@ export default {
       }
     },
     clearRecord () {
+      // IF RECORD IS EMPTY, SHOW ERROR
       if (this.recordIDList.length === 0) {
         this.$message.error('Your history record is already empty.')
-        // window.alert('Your history record is already empty.')
-      } else {
+      } 
+      //ELSE, ASK USER TO CONFIRM, IF YES ASK BACKEND TO DELETE ALL DISHES IN THE RECORD, THEN INVOCATE GET-RECORD FUNCTION
+      else {
         if (confirm('Are you sure?')) {
           for (var j = 0; j < this.recordIDList.length; j++) {
             var item = this.recordIDList[j]
@@ -192,7 +216,6 @@ export default {
           this.$message.success(
             'Removing is done. Please wait few seconds for this page to refresh.'
           )
-          // window.alert("Removing is done. Please manually refresh this page again.")
           this.getRecord()
         }
       }

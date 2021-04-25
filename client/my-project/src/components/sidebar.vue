@@ -1,10 +1,24 @@
+// MODULE NAME: SIDEBAR
+// PROGRAMMER: SICONG YAO 1155107856
+// VERSION: 2.0 (APRIL 25, 2021)
+//
+// MODULE INVOCATION:
+//   <SIDEBAR> </SIDEBAR>
+//
+// PURPOSE: SEPERATE THE SIDEBAR FROM OTHER MODULES, USE IT MORE EASILY
+//
+// STRUCTURE: 
+//   DIV SIDEBAR-HEADER
+//   UL LIST COMPONENTS (LI + ROUTER LINK)
+
 <template>
   <nav id="sidebar">
+    <!-- THIS DIV IS THE SIDEBAR-HEADER -->
     <div class="sidebar-header">
       <h3 id="title">Foodification</h3>
       <strong>F</strong>
     </div>
-
+    <!-- THIS UL LISTS ALL COMPONENTS WITH ROUTER -->
     <ul class="list-unstyled components">
       <li>
         <router-link to="/" tag="li"
@@ -79,8 +93,7 @@
         >
       </li>
       <li>
-        <a
-          href="https://github.com/jlguo9/CSCI3100-GroupA1/blob/main/README.md"
+        <a href="https://github.com/jlguo9/CSCI3100-GroupA1/blob/main/README.md"
           ><i class="fas fa-question-circle"></i> FAQ</a
         >
       </li>

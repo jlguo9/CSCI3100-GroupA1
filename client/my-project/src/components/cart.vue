@@ -1,5 +1,21 @@
+// MODULE NAME: CART
+// PROGRAMMER: SICONG YAO 1155107856
+// VERSION: 2.0 (APRIL 25, 2021)
+//
+// MODULE INVOCATION:
+//   CAN BE INVOCATED BY <ROUTER-VIEW></ROUTER-VIEW>
+//
+// PURPOSE: SEPERATE THE CART PAGE FROM OTHER MODULES, MAKE IT MORE EASILY TO DISPLAY.
+//          THIS MODULE IS USED FOR SHOWING USER'S CART, AS WELL AS PERFROMING RELEVANT ACTIONS WITH DISH IN USER'S CART.     
+//
+// STRUCTURE: 
+//   (H1) CART HEADER, REMOVE-ALL BUTTON AND TRANSFER-ALL-TO-RECORD BUTTON
+//   (TABLE WITH DATATABLE) CART TABLE, DISPLAY IF ANY DISHES EXIST IN USER'S CART
+//   (H2) CART INFORMATION, DISPLAY IF NO DISH IN USER'S CART EXISTS
+
 <template>
-  <div>
+  <div class="container-fluid">
+    <!-- THIS IS THE AREA FOR CART HEADER, REMOVE-ALL BUTTON AND TRANSFER-ALL-TO-RECORD BUTTON -->
     <h1 class="sub-header">
       Your Shopping Cart
       <span style="float: right">
@@ -13,6 +29,7 @@
     </h1>
     <br />
 
+    <!-- THIS IS THE AREA FOR CART TABLE, DISPLAY IF ANY DISHES EXIST IN USER'S CART -->
     <div class="table-responsive" v-if="cartList.length > 0">
       <table
         class="table table-striped table-hover"
@@ -22,7 +39,6 @@
         <thead style="background-color: #dda300">
           <tr>
             <th>Index</th>
-            <!--            <th>ID</th>-->
             <th>Canteen Name</th>
             <th>Dish Name</th>
             <th>Dish Price</th>
@@ -79,7 +95,8 @@
         Total price of your shopping cart is {{ total | formatCurrency }}.
       </h4>
     </div>
-
+    
+    <!-- THIS IS THE AREA FOR CART INFORMATION, DISPLAY IF NO DISH IN USER'S CART EXISTS -->
     <div class="table-responsive" v-if="cartList.length === 0">
       <h4>Your shopping cart is empty now.</h4>
     </div>
@@ -98,12 +115,13 @@ export default {
     }
   },
   mounted () {
+    // WHENEVER PAGE IS MOUNTED, TRY TO GET TOKEN STORED IN LOCAL STORAGE
     this.myToken = localStorage.getItem('token')
-    console.log('mounted')
-    console.log(this.myToken)
+    // INVOCATE GET-CART FUNCTION 
     this.getCart()
   },
   filters: {
+    // LET THE NUMBER TO DISPLAY WITH DOLLAR SIGN AND IN TWO DECIMAL POINTS
     formatCurrency (v) {
       var revealNum
       if (parseFloat(v) <= 0) {
@@ -114,11 +132,9 @@ export default {
       return '$ ' + revealNum
     }
   },
-  computed: {},
   methods: {
     getCart () {
-      console.log('token now is ')
-      console.log(this.myToken)
+      // IF USER DID NOT LOGIN, SHOW ERROR
       if (
         this.myToken === '' ||
         this.myToken === null ||
@@ -127,7 +143,9 @@ export default {
         window.location.assign('/#login')
         setTimeout('window.location.reload()', 500)
         this.$message.error('Please login first!')
-      } else {
+      } 
+      // ELSE, ASK BACKEND AND GET USER'S CART AND STORE IT IN DATA, ALSO CALCULATE TOTAL PRICE
+      else {
         this.axios
           .get('http://localhost:3000/api/cart/index', {
             headers: {
@@ -147,7 +165,6 @@ export default {
               this.cartIDList = data.Data.map(e => e['_id'])
               this.total = 0
               for (var j = 0; j < this.cartQuantList.length; j++) {
-                // var item = this.cartQuantList[j]
                 this.total +=
                   parseFloat(this.cartList[j].price) *
                   parseInt(this.cartList[j].quantity)
@@ -157,6 +174,7 @@ export default {
       }
     },
     subCartQuant (index, id) {
+      // IF QUANTITY BIGGER THAN ONE, ASK BACKEND TO SUB QUANTITY BY ONE
       if (this.cartList[index].quantity > 1) {
         this.total -= parseFloat(this.cartList[index].price) * 1
         this.axios
@@ -177,7 +195,9 @@ export default {
               this.getCart()
             }
           })
-      } else {
+      } 
+      // ELSE, ASK USER TO CONFIRM, IF YES ASK BACKEND TO DELETE THAT DISH, THEN INVOCATE GET-CART FUNCTION
+      else {
         if (
           confirm(
             'This action will remove this item from your shopping cart.\nAre you sure?'
@@ -204,6 +224,7 @@ export default {
         }
       }
     },
+    //ASK BACKEND TO ADD QUANTITY BY ONE
     addCartQuant (index, id) {
       this.total += parseFloat(this.cartList[index].price) * 1
       this.axios
@@ -226,6 +247,7 @@ export default {
         })
     },
     removeFromCart (index, id) {
+      //ASK USER TO CONFIRM, IF YES ASK BACKEND TO DELETE THAT DISH IN THE CART, THEN INVOCATE GET-CART FUNCTION
       if (confirm('Are you sure?')) {
         this.axios
           .delete('http://localhost:3000/api/cart/' + id, {
@@ -250,9 +272,12 @@ export default {
       }
     },
     clearCart () {
+      // IF CART IS EMPTY, SHOW ERROR
       if (this.cartList.length === 0) {
         this.$message.error('Your shopping cart is already empty.')
-      } else {
+      } 
+      //ELSE, ASK USER TO CONFIRM, IF YES ASK BACKEND TO DELETE ALL DISHES IN THE CART, THEN INVOCATE GET-CART FUNCTION
+      else {
         if (confirm('Are you sure?')) {
           for (var j = 0; j < this.cartIDList.length; j++) {
             var item = this.cartIDList[j]
@@ -269,22 +294,21 @@ export default {
                 }
               })
           }
-          // this.$forceUpdate()
-          // window.alert('Delete is done!')
-          // this.getEmpty()
           this.$message.success(
             'Removing is done. Please wait few seconds for this page to refresh.'
           )
           setTimeout('window.location.reload()', 5000)
 
-          //  window.alert("Removing is done. Please manually refresh this page again.")
         }
       }
     },
     transferToRecord () {
+      // IF CART IS EMPTY, SHOW ERROR
       if (this.cartIDList.length === 0) {
         this.$message.error('Your shopping cart is already empty.')
-      } else {
+      } 
+      //ELSE, ASK USER TO CONFIRM, IF YES ASK BACKEND TO ADD ALL DISHES TO RECORD AND DELETE ALL DISHES IN THE CART, THEN INVOCATE GET-CART FUNCTION
+      else {
         if (confirm('Are you sure?')) {
           var copyCartIDList = this.cartIDList
           for (var j = copyCartIDList.length - 1; j >= 0; j--) {
@@ -329,10 +353,7 @@ export default {
                 if (status === 200) {
                   console.log('delete succeeds')
                   this.getCart()
-                  // this.$forceUpdate
                 }
-                // console.log('delete succeeds')
-                // this.getCart()
               })
           }
           this.total = 0

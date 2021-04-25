@@ -1,3 +1,19 @@
+// MODULE NAME: LOGIN
+// PROGRAMMER: SICONG YAO 1155107856
+// VERSION: 2.0 (APRIL 25, 2021)
+//
+// MODULE INVOCATION:
+//   CAN BE INVOCATED BY <ROUTER-VIEW></ROUTER-VIEW>
+//
+// PURPOSE: SEPERATE THE LOGIN PAGE FROM OTHER MODULES, MAKE IT MORE EASILY TO LOGIN.
+//          THIS MODULE IS USED FOR USERS TO LOGGIN THEIR ACCOUNT BY INPUTTING USERNAME AND PASSWORD. 
+//
+// STRUCTURE: 
+//   (H2) LOGIN HEADER
+//   (FORM) USERNAME-INPUT
+//   (FORM) PASSWORD-INPUT
+//   (BUTTON) LOGIN-BUTTON
+
 <template>
   <div class="row justify-content-center">
     <div class="login-wrap">
@@ -40,36 +56,25 @@ export default {
     }
   },
   mounted () {
+    // WHENEVER PAGE IS MOUNTED, TRY TO GET TOKEN STORED IN LOCAL STORAGE
     this.myToken = localStorage.getItem('token')
-    console.log('mounted')
-    console.log(this.myToken)
   },
 
   methods: {
-    // async handleLogin () {
-    //   const res = await this.$http.post('login', this.formdata)
-    //   const {
-    //     data,
-    //     meta: { msg, status }
-    //   } = res
-    //   if (status === 200) {
-    //     console.log('token:' + data.token)
-    //     localStorage.setItem('token', data.token)
-    //     this.$router.push({ name: 'home' })
-    //     this.$message.success(msg)
-    //   } else {
-    //     this.$message.error(msg)
-    //   }
-    // },
     login () {
+      // IF THERE IS ALREADY A TOKEN, ALREADY SIGNED IN, REDIRECT TO HOME PAGE
       if (this.myToken !== '' && this.myToken !== null) {
-        this.$message.warning('You have already signed in!')
+        this.$message.warning('You have already signed in! Now redirecting to home page.')
         window.location.assign('/#')
         setTimeout('window.location.reload()', 100)
       }
+      // IF INFORMATION ENTERED IS NOT COMPLETED, SHOW ERROR 
       if (this.formData.username === '' || this.formData.password === '') {
         this.$message.error('Please enter all information!')
-      } else {
+      } 
+      // ELSE TRY TO LOGIN, BACKEND WILL TEST WHETHER THE LOGIN IS SUCCESSFUL OR NOT
+      // IF YES, STORE THE TOKEN AND REDIRECT TO HOME PAGE , IF NO, SHOW ERROR
+      else {
         this.axios
           .get(
             'http://localhost:3000/api/user/login?name=' +
@@ -81,36 +86,26 @@ export default {
             const { status, data } = res
             if (status === 200) {
               this.token = data.Data
-              console.log(this.token)
               this.$message.success(
                 'Successufully login! Now redirecting to the home page.'
               )
               localStorage.setItem('token', this.token)
-              // console.log(localStorage.getItem('token'))
-              // console.log('bye')
               window.location.assign('/#')
               setTimeout('window.location.reload()', 100)
             }
           })
           .catch(err => {
-            console.log(err)
             this.$message.error(
               'Wrong username or password! Please enter again.'
             )
           })
-        // this.axios.get('http://localhost:3000/api/user/login').then(res => {
-        //   const { status, data } = res
-        //   if (status === 200) {
-        //     this.token = data.Data
-        //     console.log(this.token)
-        //   }
-        // })
       }
     }
   }
 }
 </script>
 
+// CSS STYLE FOR THIS MODULE
 <style>
 .login-wrap {
   height: 100%;
