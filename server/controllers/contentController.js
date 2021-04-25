@@ -1,6 +1,21 @@
+/*
+MODULE NAME: CONTENT
+PROGRAMMER: GUO Jialiang 1155124399
+VERSION: 1.6 (15 APRIL 2021)
+IS_COMPOSED_OF: CONTENT_GET_ALL, CONTENT_UPDATE, CONTENT_PUBLISH, CONTENT_MODEL
+PURPOSE: Achieve publish new content, get information of all contents, and update certain content functions
+ */
 const Content = require('../models/content');
-
-// get all posts
+/*
+MODULE TO GET ALL POSTS
+MODULE NAME: CONTENT_GET_ALL
+PROGRAMMER: GUO Jialiang 1155124399
+VERSION: 1.2 (15 APRIL 2021)
+PROCEDURE INVOCATION:
+    router.get("/content/index",contentController.content_get_all);
+OUTPUT PARAMETERS:
+    State, Data
+ */
 exports.content_get_all = (req,res) => {
     // the following lines can be used if in the future it requires pagination
     /*const page = req.query.page;
@@ -48,8 +63,17 @@ exports.content_delete= (req,res) =>{
             });
     }
 }*/
-
-// update a post
+/*
+MODULE TO UPDATE A POST
+MODULE NAME: CONTENT_UPDATE
+PROGRAMMER: GUO Jialiang 1155124399
+VERSION: 1.1 (15 APRIL 2021)
+PROCEDURE INVOCATION:
+    router.put("/content/:id",check_auth,contentController.content_update);
+INPUT PARAMETERS:
+    id, req
+OUTCOME: Update the item with inputted id in "contents" collection
+ */
 exports.content_update= (req,res) =>{
     const  id = req.params.id;
     if(req.userData.userID !== id){
@@ -65,8 +89,17 @@ exports.content_update= (req,res) =>{
             });
     }
 }
-
-// publish a new post
+/*
+MODULE TO PUBLISH A NEW POST
+MODULE NAME: CONTENT_PUBLISH
+PROGRAMMER: GUO Jialiang 1155124399
+VERSION: 1.2 (15 APRIL 2021)
+PROCEDURE INVOCATION:
+    router.post("/content/publish",check_auth,contentController.content_publish);
+INPUT PARAMETERS:
+    req
+OUTCOME: Add a new item to "contents" collection in MongoDB
+ */
 exports.content_publish= (req,res) =>{
     const content = new Content({
         detail: req.body.detail,

@@ -1,7 +1,30 @@
+/*
+MODULE NAME: USER
+PROGRAMMER: GUO Jialiang 1155124399
+VERSION: 1.6 (15 APRIL 2021)
+IS_COMPOSED_OF: REGISTER, LOGIN, LOGOUT, GET_INFO, USER_MODEL
+PURPOSE: Achieve user registration, log in, log out, get user information functions
+ */
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 const JWT_KEY = "secrete";
+/*
+MODULE TO REGISTER FOR AN ACCOUNT
+MODULE NAME: REGISTER
+PROGRAMMER: GUO Jialiang 1155124399
+VERSION: 1.1 (15 APRIL 2021)
+PROCEDURE INVOCATION:
+    router.post("/user/register",userController.register);
+INPUT PARAMETERS
+    json containing username and password
+Algorithm:
+    Check whether user name is NULL
+    Check whether password is NULL
+    Check whether user name exists already
+    Encrypt the password
+    Save the user name and hashed password into database
+ */
 exports.register = (req,res) => {
     if(req.body.name === ""){
         // if name is empty, reject
@@ -47,8 +70,22 @@ exports.register = (req,res) => {
             })
     }
 }
-
-// API for user login
+/*
+MODULE TO USER LOGIN
+MODULE NAME: LOGIN
+PROGRAMMER: GUO Jialiang 1155124399
+VERSION: 1.3 (15 APRIL 2021)
+PROCEDURE INVOCATION:
+    router.get("/user/login",userController.login);
+INPUT PARAMETERS
+    username and password
+Algorithm:
+    Check whether user exists
+    Check whether username and password matches
+    Sign a token
+OUTPUT PARAMETERS
+    State, Token
+ */
 exports.login = (req,res) => {
     User.find({name: req.query.name})
         .exec()
@@ -86,13 +123,23 @@ exports.login = (req,res) => {
             console.log(err);
         })
 }
-
+// MODULE NAME: LOGOUT
 // log out API. Not used by frontend.
 exports.logout = (req,res) => {
     res.status(200).json({State:"success",Data:""});
 }
-
-// get the information (id, name, type, canteen) of a certain user by its ID
+/*
+MODULE TO GET THE INFORMATION (ID, NAME, TYPE, CANTEEN) OF A CERTAIN USER BY ITS ID
+MODULE NAME: GET_INFO
+PROGRAMMER: GUO Jialiang 1155124399
+VERSION: 1.2 (15 APRIL 2021)
+PROCEDURE INVOCATION:
+    router.get("/user/info/:id",userController.get_info);
+INPUT PARAMETERS
+    id
+OUTPUT PARAMETERS
+    State, Data
+ */
 // may return more attributes in the future when profile function get further developed
 exports.get_info = (req,res) => {
     const id = req.params.id;

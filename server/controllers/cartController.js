@@ -1,6 +1,22 @@
+/*
+MODULE NAME: CART
+PROGRAMMER: GUO Jialiang 1155124399
+VERSION: 1.4 (12 APRIL 2021)
+IS_COMPOSED_OF: CART_ADD, CART_GET, CART_DELETE, CART_UPDATE, CART_MODEL
+PURPOSE: Achieve add to shopping cart, delete item, get information of all items, and update certain item functions
+ */
 const Cart = require('../models/cart');
-
-//add a new item into cart
+/*
+MODULE TO ADD A NEW ITEM INTO CART
+MODULE NAME: CART_ADD
+PROGRAMMER: GUO Jialiang 1155124399
+VERSION: 1.0 (13 APRIL 2021)
+PROCEDURE INVOCATION:
+    router.post("/cart/add", check_auth,cartController.cart_add);
+INPUT PARAMETERS:
+    req.body, req.userData
+OUTCOME: Add a new item to "carts" collection in MongoDB
+ */
 exports.cart_add = (req,res) =>{
     const cart = new Cart({
         userID: req.userData.userID, //read userID from token
@@ -18,8 +34,16 @@ exports.cart_add = (req,res) =>{
             console.log(err);
         });
 }
-
-// get information of all items in current cart of current user
+/*
+MODULE TO GET INFORMATION OF ALL ITEMS IN CURRENT CART OF CURRENT USER
+MODULE NAME: CART_GET
+PROGRAMMER: GUO Jialiang 1155124399
+VERSION: 1.0 (13 APRIL 2021)
+PROCEDURE INVOCATION:
+    router.get("/cart/index", check_auth,cartController.cart_get);
+OUTPUT PARAMETERS:
+    State, Data
+ */
 exports.cart_get = (req,res) =>{
     Cart.find({userID: req.userData.userID})
         .then(Data =>{
@@ -29,8 +53,17 @@ exports.cart_get = (req,res) =>{
             console.log(err);
         })
 }
-
-// delete an item
+/*
+MODULE TO DELETE A CERTAIN ITEM BY ITS ID
+MODULE NAME: CART_DELETE
+PROGRAMMER: GUO Jialiang 1155124399
+VERSION: 1.0 (13 APRIL 2021)
+PROCEDURE INVOCATION:
+    router.delete("/cart/:id",check_auth,cartController.cart_delete);
+INPUT PARAMETERS:
+    id
+OUTCOME: Delete the item with inputted id in "carts" collection
+ */
 exports.cart_delete = (req,res) =>{
     const id = req.params.id;
     Cart.find({userID: req.userData.userID, _id: id})
@@ -51,7 +84,17 @@ exports.cart_delete = (req,res) =>{
             }
         })
 }
-// update (normally the quantity) an item
+/*
+MODULE TO UPDATE (NORMALLY THE QUANTITY) AN ITEM
+MODULE NAME: CART_UPDATE
+PROGRAMMER: GUO Jialiang 1155124399
+VERSION: 1.0 (13 APRIL 2021)
+PROCEDURE INVOCATION:
+    router.put("/cart/:id",check_auth,cartController.cart_update);
+INPUT PARAMETERS:
+    id, req
+OUTCOME: Update the item with inputted id in "carts" collection
+ */
 exports.cart_update = (req, res) => {
     const id = req.params.id;
     Cart.find({userID: req.userData.userID, _id: id})

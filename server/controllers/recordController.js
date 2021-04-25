@@ -1,6 +1,22 @@
+/*
+MODULE NAME: MENU
+PROGRAMMER: GUO Jialiang 1155124399 & LI Zechen 1155124542
+VERSION: 1.3 (12 APRIL 2021)
+IS_COMPOSED_OF: RECORD_ADD, RECORD_GET, RECORD_DELETE, RECORD_MODEL
+PURPOSE: Achieve add record, delete record, and get information of all records functions
+ */
 const Record = require('../models/record');
-
-// add a new record
+/*
+MODULE TO ADD A NEW RECORD
+MODULE NAME: RECORD_ADD
+PROGRAMMER: LI Zechen 1155124542
+VERSION: 1.0 (12 APRIL 2021)
+PROCEDURE INVOCATION:
+    router.post("/record/add", check_auth,recordController.record_add);
+INPUT PARAMETERS:
+    req
+OUTCOME: Add a new item to "records" collection in MongoDB
+ */
 exports.record_add = (req,res) =>{
     const record = new Record({
         name: req.body.name,
@@ -18,8 +34,16 @@ exports.record_add = (req,res) =>{
             console.log(err);
         });
 }
-
-// get all record of this user
+/*
+MODULE TO GET ALL RECORD OF A CERTAIN USER
+MODULE NAME: RECORD_GET
+PROGRAMMER: LI Zechen 1155124542
+VERSION: 1.0 (12 APRIL 2021)
+PROCEDURE INVOCATION:
+    router.get("/record/index", check_auth,recordController.record_get);
+OUTPUT PARAMETERS:
+    State, Data
+ */
 exports.record_get = (req,res) =>{
     Record.find({userID: req.userData.userID})
         .then(Data =>{
@@ -29,8 +53,17 @@ exports.record_get = (req,res) =>{
             console.log(err);
         })
 }
-
-// delete a certain record of this user
+/*
+MODULE TO DELETE A CERTAIN RECORD OF A CERTAIN USER
+MODULE NAME: RECORD_DELETE
+PROGRAMMER: GUO Jialiang 1155124399
+VERSION: 1.0 (12 APRIL 2021)
+PROCEDURE INVOCATION:
+    router.delete("/record/:id",check_auth,recordController.record_delete);
+INPUT PARAMETERS:
+    id
+OUTCOME: Delete the item with inputted id in "records" collection
+ */
 exports.record_delete = (req,res) =>{
     const id = req.params.id;
     Record.find({userID: req.userData.userID, _id: id})

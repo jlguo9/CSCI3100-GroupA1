@@ -1,3 +1,12 @@
+/*
+PROGRAM APP – Program provide backend service for website Foodification
+PROGRAMMER: GUO Jialiang 1155124399
+VERSION 2: written 20-3-2021
+REVISION 2.7: 15-4-2021 to allow cross domain access.
+PURPOSE: Connect to MongoDB; Load express module; Route frontend requests to corresponding
+middlewares and controllers and proceed by interacting with database.
+ALGORITHM: Accept HTTP request, pass it to handlers and proceed.
+ */
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');

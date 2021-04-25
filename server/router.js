@@ -1,3 +1,11 @@
+/*
+MODULE TO ROUTE HTTP REQUESTS
+MODULE NAME: ROUTER
+PROGRAMMER: GUO Jialiang 1155124399
+VERSION: 2.6 (15 APRIL 2021)
+PROCEDURE INVOCATION:
+    app.use('/api',router)
+ */
 const userController = require('./controllers/userController');
 const likeController = require('./controllers/likeController');
 const menuController = require('./controllers/menuController');
@@ -32,9 +40,9 @@ const upload = multer({
 
 //menu routes
 router.get("/menu/index", menuController.menu_get);
-router.post("/menu/add", check_auth,menuController.menu_add);//check_auth,
-router.delete("/menu/:id", check_auth,menuController.menu_delete);//check_auth,
-router.put("/menu/:id", check_auth,menuController.menu_update);//check_auth,
+router.post("/menu/add", check_auth,menuController.menu_add);
+router.delete("/menu/:id", check_auth,menuController.menu_delete);
+router.put("/menu/:id", check_auth,menuController.menu_update);
 
 //shopping cart routes
 router.get("/cart/index", check_auth,cartController.cart_get);

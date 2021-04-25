@@ -1,6 +1,13 @@
+/*
+MODULE NAME: LIKE
+PROGRAMMER: GUO Jialiang 1155124399
+VERSION: 1.2 (15 APRIL 2021)
+IS_COMPOSED_OF: LIKE_IT, CANCEL_LIKE, LIKE_MODEL
+PURPOSE: Achieve like and cancel like functions
+ */
 const Like = require('../models/like');
 const Content =  require('../models/content');
-
+// MODEL NAME: LIKE_IT
 // API for liking a certain post. It firstly determine whether the user has liked it already
 // if not, save the post-user relation and add 1 to "likeNum" of the post in "content" collection
 exports.like_it = (req, res) => {
@@ -35,7 +42,7 @@ exports.like_it = (req, res) => {
             console.log(err);
         })
 }
-
+// MODEL NAME: CANCEL_LIKE
 // API for cancelling liking a certain post. It firstly determine whether the user has liked it already
 // if so, delete the post-user relation and decrease "likeNum" of the post in "content" collection by 1
 exports.cancel_like = (req, res) => {

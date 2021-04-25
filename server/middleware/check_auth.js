@@ -1,3 +1,16 @@
+/*
+MODULE TO VERIFY AND ANALYSE TOKENS
+MODULE NAME: CHECK_AUTH
+PROGRAMMER: GUO Jialiang 1155124399
+VERSION: 2.0 (14 APRIL 2021)
+PROCEDURE INVOCATION:
+    Use as middleware in router. E.g., router.get("/cart/index", check_auth, cartController.cart_get).
+INPUT PARAMETERS:
+    req
+OUTPUT PARAMETERS:
+    req
+    userData
+ */
 const jwt = require('jsonwebtoken');
 const JWT_KEY = "secrete";
 // This middleware is to verify and analyze the token submitted by browser
