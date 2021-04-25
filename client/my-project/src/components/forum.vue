@@ -10,7 +10,7 @@
                   <div class="d-flex flex-row user-info">
                     <img
                       class="rounded-circle"
-                      :src="imageList[index]"
+                      :src="value.avatar"
                       width="50px"
                       height="50px"
                     />
@@ -313,59 +313,17 @@ export default {
           .then(res => {
             const { status, data } = res
             if (status === 200) {
-              
               this.commentList = data.Data
               this.commentIDList = data.Data.map(e => e['_id'])
               this.commentdishList = [...new Set(data.Data.map(e => e['dish']))]
-              console.log('get succsess')
+              for(var k=0;k<this.commentList.length;k++){
+                this.commentList[k].avatar = 'http://localhost:3000/api/gallery/' + this.commentList[k].avatar
+              }
             }
           })
-      for(var k=0;k<this.commentList.length;k++){
-        this.axios
-          .get('http://localhost:3000/api/user/info/'+this.commentList[k].ownID)
-          .then(res=>{
-            const{ status,data} = res
-            if(status === 200){
-              this.imageList[k] = 'http://localhost:3000/api/gallery/' + data.Data.avatar
-            }
-          })
-      }
+  
       }
     },
-    // getComment () {
-    //   console.log('token now is ')
-    //   console.log(this.myToken)
-    //   if (
-    //     this.myToken === '' ||
-    //     this.myToken === null ||
-    //     this.myToken === undefined
-    //   ) {
-    //     window.location.assign('/#login')
-    //     setTimeout('window.location.reload()', 500)
-    //     this.$message.error('Please login first!')
-    //   } 
-    //   else {
-    //     this.axios
-    //       .get('http://localhost:3000/api/content/index', {
-    //         headers: {
-    //           Authorization: `token ${this.myToken}`
-    //         }
-    //       })
-    //       .then(res => {
-    //         const { status, data } = res
-    //         if (status === 200) {
-    //           this.commentList = data.Data
-    //           for(var j=0; j<this.commentList.length; j++){
-    //             var item =  parseInt(this.commentList[j].userName.charCodeAt(0))%7
-    //             this.commentList[j].rndID = item
-    //           }
-    //           this.commentIDList = data.Data.map(e => e['_id'])
-    //           this.commentdishList = [...new Set(data.Data.map(e => e['dish']))]
-    //           console.log('get succsess')
-    //         }
-    //       })
-    //   }
-    // },
     addComment () {
       if (
         this.commentedcanteen === '' ||
@@ -381,7 +339,6 @@ export default {
               canteen: this.commentedcanteen,
               dish: this.commenteddish,
               detail: this.detail,
-              userName: this.myToken,
               likeNum: 0,
               date: new Date()
                 .toJSON()
