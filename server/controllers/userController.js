@@ -116,7 +116,8 @@ exports.login = (req,res) => {
                         const token = jwt.sign({
                             userID: users[0]._id,
                             name: users[0].name,
-                            type: users[0].type
+                            type: users[0].type,
+                            avatar: users[0].avatar
                         },JWT_KEY,
                         {
                             expiresIn: "1h"     // expire in 1 hour

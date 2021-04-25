@@ -39,6 +39,10 @@ const contentSchema = new Schema({
         type: Number,
         required: false,
         default: 5
+    },
+    avatar: {
+        type: String,
+        required: false
     }
 },{timestamps: true})
 

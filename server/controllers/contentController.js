@@ -107,7 +107,8 @@ exports.content_publish= (req,res) =>{
         userName: req.userData.name,  //read user name from token
         canteen: req.body.canteen,
         dish: req.body.dish,
-        rating: req.body.rating
+        rating: req.body.rating,
+        avatar: req.userData.avatar
     });
     content.save()
         .then( () => {
