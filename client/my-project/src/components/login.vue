@@ -61,8 +61,15 @@ export default {
   },
 
   methods: {
+    // METHOD: LOGIN
+    // PURPOSE: LOGIN TO AN EXISTED ACCOUNT
+    // INPUT PARAMTER: NONE
+    // ALGORITHM: 1. CHECK WHETHER THERE IS ALREADY A TOKEN, IF YES MEANS ALREADY SIGNED IN, THEN REDIRECT TO HOME PAGE
+    //            2. IF NO, CHECK WHETHER INFORMATION ENTERED IS NOT COMPLETED, IF YES, SHOW ERROR
+    //            3. IF NO, TRY TO LOGIN BY SENDING GET COMMAND, BACKEND WILL TEST WHETHER THE LOGIN IS SUCCESSFUL OR NOT
+    //               IF YES, REDIRECT TO LOGIN PAGE, IF NO, SHOW ERROR
     login () {
-      // IF THERE IS ALREADY A TOKEN, ALREADY SIGNED IN, REDIRECT TO HOME PAGE
+      // IF THERE IS ALREADY A TOKEN, MEANS ALREADY SIGNED IN, THEN REDIRECT TO HOME PAGE
       if (this.myToken !== '' && this.myToken !== null) {
         this.$message.warning('You have already signed in! Now redirecting to home page.')
         window.location.assign('/#')
@@ -73,7 +80,8 @@ export default {
         this.$message.error('Please enter all information!')
       } 
       // ELSE TRY TO LOGIN, BACKEND WILL TEST WHETHER THE LOGIN IS SUCCESSFUL OR NOT
-      // IF YES, STORE THE TOKEN AND REDIRECT TO HOME PAGE , IF NO, SHOW ERROR
+      // IF YES, STORE THE TOKEN AND REDIRECT TO HOME PAGE 
+      // IF NO, SHOW ERROR
       else {
         this.axios
           .get(

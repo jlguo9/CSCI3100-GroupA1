@@ -33,10 +33,10 @@
         <el-form-item label="Password (No less than 6 characters)">
           <el-input v-model="formData.password"></el-input>
         </el-form-item>
+        <!-- FORM FOR UPLOADING PROFILE PHOTO -->
         <el-form-item label="(Optional) Upload Your Profile Photo">
           <input type="file" @change="onFileSelected" />
         </el-form-item>
-
         <!-- REGISTER BUTTON -->
         <button
           class="btn btn-purple"
@@ -68,12 +68,24 @@ export default {
     this.myToken = localStorage.getItem('token')
   },
   methods: {
+    // METHOD: ONFILESELECTED
+    // PURPOSE: GET THE PHOTO SELECTED
+    // INPUT PARAMTER: EVENT OF SELECTING A PHOTO
+    // ALGORITHM: 1. STORE THE FILE BY EXTRACTING FROM THE EVENT OF SELECTING A PHOTO
     onFileSelected (event) {
       console.log(event)
       this.selectedFile = event.target.files[0]
     },
+    // METHOD: REGISTER
+    // PURPOSE: REGISTER A NEW ACCOUNT
+    // INPUT PARAMTER: NONE
+    // ALGORITHM: 1. CHECK WHETHER THERE IS ALREADY A TOKEN, IF YES MEANS ALREADY SIGNED IN, THEN REDIRECT TO HOME PAGE
+    //            2. IF NO, CHECK WHETHER INFORMATION ENTERED IS NOT COMPLETED, IF YES, SHOW ERROR
+    //            3. IF NO, CHECK WHETHER NEW PASSWORD IS LESS THAN 6, IF YES, SHOW ERROR
+    //            4. IF NO, TRY TO REGISTER BY SENDING POST COMMAND, BACKEND WILL TEST WHETHER THE REGISTRATION IS SUCCESSFUL OR NOT
+    //               IF YES, REDIRECT TO LOGIN PAGE, IF NO, SHOW ERROR
     register () {
-      // IF THERE IS ALREADY A TOKEN, ALREADY SIGNED IN, REDIRECT TO HOME PAGE
+      // IF THERE IS ALREADY A TOKEN, MEANS ALREADY SIGNED IN, THEN REDIRECT TO HOME PAGE
       if (this.myToken !== '' && this.myToken !== null) {
         this.$message.warning('You have already signed in!')
         window.location.assign('/#')
@@ -90,7 +102,8 @@ export default {
         )
       } 
       // ELSE TRY TO REGISTER, BACKEND WILL TEST WHETHER THE REGISTRATION IS SUCCESSFUL OR NOT
-      // IF YES, REDIRECT TO LOGIN PAGE, IF NO, SHOW ERROR
+      // IF YES, REDIRECT TO LOGIN PAGE
+      // IF NO, SHOW ERROR
       else {
         const fd = new FormData()
         console.log(this.selectedFile)

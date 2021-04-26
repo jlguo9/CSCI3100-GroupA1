@@ -93,7 +93,13 @@ export default {
     this.getRecord()
   },
   filters: {
-    // LET THE NUMBER TO DISPLAY WITH DOLLAR SIGN AND IN TWO DECIMAL POINTS
+    // FILTER: FORMATCURRENCY
+    // PURPOSE: LET THE NUMBER TO DISPLAY WITH DOLLAR SIGN AND IN TWO DECIMAL POINTS
+    // INPUT PARAMTER: ANY VALUE
+    // ALGORITHM: 1. TRANSFORM THE INPUT VALUE TO FLOATING VALUE 
+    //            2. CHECK WHETHER THE FLOATING VALUE IS NO GREATER THAN 0
+    //            3. IF YES, LET IT BE 0. ELSE LET IT BE OF TWO DECIMAL PLACES
+    //            4. ADD AN ADDITIONAL DOLLAR SIGN IN THE END
     formatCurrency (v) {
       var revealNum
       if (parseFloat(v) <= 0) {
@@ -103,7 +109,12 @@ export default {
       }
       return '$ ' + revealNum
     },
-    // LET THE TIMESTAMP TO DISPALY IN DISIRED FORMAT
+    // FILTER: DATEFORMAT
+    // PURPOSE: LET THE TIMESTAMP TO DISPLAY IN THE FORMAT OF YYYY-MM-DD HH-MM-SS
+    // INPUT PARAMTER: DATESTR
+    // ALGORITHM: 1. GET CURRENT YYYY, MM, DD, HH, MM, SS
+    //            2. ADD 0 WHENEVER POSSIBLE
+    //            3. RETURN THE WHOLE STR TOGETHER
     dateFormat (dataStr) {
       var time = new Date(dataStr)
       function timeAdd0 (str) {
@@ -133,8 +144,13 @@ export default {
       )
     }
   },
-
   methods: {
+    // METHOD: GETRECORD
+    // PURPOSE: GET THE USER'S RECORD FROM THE DATABASE 
+    // INPUT PARAMTER: NONE
+    // ALGORITHM: 1. CHECK WHETHER THE USER DID NOT LOGIN, 
+    //               IF YES, SHOW ERROR AND REDICT TO LOGIN PAGE 
+    //            2. IF NO, ASK BACKEND AND GET USER'S RECORD BY SENDING GET COMMAND, AND STORE IT IN DATA
     getRecord () {
       // IF USER DID NOT LOGIN, SHOW ERROR
       if (
@@ -166,6 +182,11 @@ export default {
           })
       }
     },
+    // METHOD: REMOVEFROMRECORD
+    // PURPOSE: REMOVE A CERTAIN ITEM IN THE USER'S RECORD
+    // INPUT PARAMTER: (INDEX,ID)
+    // ALGORITHM: 1. ASK USER TO CONFIRM
+    //               IF YES ASK BACKEND TO DELETE THAT DISH IN THE RECORD BY SENDING DELETE COMMAND, THEN INVOCATE GET-RECORD FUNCTION
     removeFromRecord (index, id) {
       //ASK USER TO CONFIRM, IF YES ASK BACKEND TO DELETE THAT DISH IN THE RECORD, THEN INVOCATE GET-RECORD FUNCTION
       if (confirm('Are you sure?')) {
@@ -189,6 +210,13 @@ export default {
         this.getRecord()
       }
     },
+    // METHOD: CLEARRECORD
+    // PURPOSE: REMOVE ALL ITEMS IN THE USER'S RECORD
+    // INPUT PARAMTER: NONE
+    // ALGORITHM: 1. CHECK WHETHER THE RECORD IS EMPTY,
+    //               IF YES, SHOW ERROR 
+    //            2. IF NO, ASK USER TO CONFIRM
+    //               IF YES ASK BACKEND TO DELETE ALL DISH IN THE RECORD BY SENDING DELETE COMMAND USING FOR-LOOP, THEN INVOCATE GET-RECORD FUNCTION
     clearRecord () {
       // IF RECORD IS EMPTY, SHOW ERROR
       if (this.recordIDList.length === 0) {

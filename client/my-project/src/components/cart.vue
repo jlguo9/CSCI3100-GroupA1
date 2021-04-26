@@ -121,7 +121,13 @@ export default {
     this.getCart()
   },
   filters: {
-    // LET THE NUMBER TO DISPLAY WITH DOLLAR SIGN AND IN TWO DECIMAL POINTS
+    // FILTER: FORMATCURRENCY
+    // PURPOSE: LET THE NUMBER TO DISPLAY WITH DOLLAR SIGN AND IN TWO DECIMAL POINTS
+    // INPUT PARAMTER: ANY VALUE
+    // ALGORITHM: 1. TRANSFORM THE INPUT VALUE TO FLOATING VALUE 
+    //            2. CHECK WHETHER THE FLOATING VALUE IS NO GREATER THAN 0
+    //            3. IF YES, LET IT BE 0. ELSE LET IT BE OF TWO DECIMAL PLACES
+    //            4. ADD AN ADDITIONAL DOLLAR SIGN IN THE END
     formatCurrency (v) {
       var revealNum
       if (parseFloat(v) <= 0) {
@@ -133,6 +139,12 @@ export default {
     }
   },
   methods: {
+    // METHOD: GETCART
+    // PURPOSE: GET THE USER'S CART FROM THE DATABASE 
+    // INPUT PARAMTER: NONE
+    // ALGORITHM: 1. CHECK WHETHER THE USER DID NOT LOGIN, 
+    //               IF YES, SHOW ERROR AND REDICT TO LOGIN PAGE 
+    //            2. IF NO, ASK BACKEND AND GET USER'S CART BY SENDING GET COMMAND, AND STORE IT IN DATA, ALSO CALCULATE TOTAL PRICE
     getCart () {
       // IF USER DID NOT LOGIN, SHOW ERROR
       if (
@@ -144,7 +156,7 @@ export default {
         setTimeout('window.location.reload()', 500)
         this.$message.error('Please login first!')
       } 
-      // ELSE, ASK BACKEND AND GET USER'S CART AND STORE IT IN DATA, ALSO CALCULATE TOTAL PRICE
+      // ELSE, ASK BACKEND AND GET USER'S CART BY SENDING GET COMMAND, AND STORE IT IN DATA, ALSO CALCULATE TOTAL PRICE
       else {
         this.axios
           .get('http://localhost:3000/api/cart/index', {
@@ -154,10 +166,8 @@ export default {
           })
           .then(res => {
             const { status, data } = res
-            console.log(status)
             if (status === 200) {
               this.cartList = data.Data
-              console.log(data)
               $(document).ready(function () {
                 $('#mydatatable2').DataTable()
               })
@@ -173,8 +183,15 @@ export default {
           })
       }
     },
+    // METHOD: SUBCARTQUANT
+    // PURPOSE: SUB THE QUANTITY OF ONE ITEM IN THE USER'S CART
+    // INPUT PARAMTER: (INDEX,ID)
+    // ALGORITHM: 1. CHECK WHETHER THE QUANTITY OF THAT ITEM IS BIGGER THAN ONE 
+    //               IF YES, ASK BACKEND TO SUB QUANTITY BY ONE BY SENDING PUT COMMAND
+    //            2. IF NO, ASK USER TO CONFIRM, 
+    //               IF YES ASK BACKEND TO DELETE THAT DISH BY SENDING DELETE COMMAND, THEN INVOCATE GET-CART FUNCTION
     subCartQuant (index, id) {
-      // IF QUANTITY BIGGER THAN ONE, ASK BACKEND TO SUB QUANTITY BY ONE
+      // IF QUANTITY BIGGER THAN ONE, IF YES, ASK BACKEND TO SUB QUANTITY BY ONE
       if (this.cartList[index].quantity > 1) {
         this.total -= parseFloat(this.cartList[index].price) * 1
         this.axios
@@ -211,7 +228,6 @@ export default {
             })
             .then(res => {
               const { status } = res
-              console.log(status)
               if (status === 200) {
                 this.getCart()
                 this.$message.success('Deleting is done.')
@@ -224,7 +240,10 @@ export default {
         }
       }
     },
-    //ASK BACKEND TO ADD QUANTITY BY ONE
+    // METHOD: ADDCARTQUANT
+    // PURPOSE: ADD THE QUANTITY OF ONE ITEM IN THE USER'S CART
+    // INPUT PARAMTER: (INDEX,ID)
+    // ALGORITHM: 1.  ASK BACKEND TO ADD QUANTITY BY ONE BY SENDING PUT COMMAND
     addCartQuant (index, id) {
       this.total += parseFloat(this.cartList[index].price) * 1
       this.axios
@@ -246,8 +265,13 @@ export default {
           }
         })
     },
+    // METHOD: REMOVEFROMCART
+    // PURPOSE: REMOVE A CERTAIN ITEM IN THE USER'S CART
+    // INPUT PARAMTER: (INDEX,ID)
+    // ALGORITHM: 1. ASK USER TO CONFIRM
+    //               IF YES ASK BACKEND TO DELETE THAT DISH IN THE CART BY SENDING DELETE COMMAND, THEN INVOCATE GET-CART FUNCTION
     removeFromCart (index, id) {
-      //ASK USER TO CONFIRM, IF YES ASK BACKEND TO DELETE THAT DISH IN THE CART, THEN INVOCATE GET-CART FUNCTION
+      //ASK USER TO CONFIRM, IF YES ASK BACKEND TO DELETE THAT DISH IN THE CART BY SENDING DELETE COMMAND, THEN INVOCATE GET-CART FUNCTION
       if (confirm('Are you sure?')) {
         this.axios
           .delete('http://localhost:3000/api/cart/' + id, {
@@ -257,11 +281,8 @@ export default {
           })
           .then(res => {
             const { status } = res
-            console.log(status)
             if (status === 200) {
-              console.log('shit')
               this.getCart()
-              console.log(this.cartList.length)
               if (this.cartList.length === 1) {
                 location.reload()
               }
@@ -271,12 +292,19 @@ export default {
         this.getCart()
       }
     },
+    // METHOD: CLEARCART
+    // PURPOSE: REMOVE ALL ITEMS IN THE USER'S CART
+    // INPUT PARAMTER: NONE
+    // ALGORITHM: 1. CHECK WHETHER THE CART IS EMPTY,
+    //               IF YES, SHOW ERROR 
+    //            2. IF NO, ASK USER TO CONFIRM
+    //               IF YES ASK BACKEND TO DELETE ALL DISH IN THE CART BY SENDING DELETE COMMAND USING FOR-LOOP, THEN INVOCATE GET-CART FUNCTION
     clearCart () {
       // IF CART IS EMPTY, SHOW ERROR
       if (this.cartList.length === 0) {
         this.$message.error('Your shopping cart is already empty.')
       } 
-      //ELSE, ASK USER TO CONFIRM, IF YES ASK BACKEND TO DELETE ALL DISHES IN THE CART, THEN INVOCATE GET-CART FUNCTION
+      //ELSE, ASK USER TO CONFIRM, IF YES ASK BACKEND TO DELETE ALL DISHES IN THE CART BY SENDING DELETE COMMAND USING FOR-LOOP, THEN INVOCATE GET-CART FUNCTION
       else {
         if (confirm('Are you sure?')) {
           for (var j = 0; j < this.cartIDList.length; j++) {
@@ -302,18 +330,23 @@ export default {
         }
       }
     },
+    // METHOD: TRANSFERTORECORD
+    // PURPOSE: TRANSFER ALL ITEMS IN THE USER'S CART TO USER'S RECORD
+    // INPUT PARAMTER: NONE
+    // ALGORITHM: 1. CHECK WHETHER THE CART IS EMPTY,
+    //               IF YES, SHOW ERROR 
+    //            2. IF NO, ASK USER TO CONFIRM
+    //               IF YES ASK BACKEND TO TRANSFER ALL DISH IN THE CART TO RECORD BY SENDING POST+DELETE COMMAND USING FOR-LOOP, THEN INVOCATE GET-CART FUNCTION
     transferToRecord () {
       // IF CART IS EMPTY, SHOW ERROR
       if (this.cartIDList.length === 0) {
         this.$message.error('Your shopping cart is already empty.')
       } 
-      //ELSE, ASK USER TO CONFIRM, IF YES ASK BACKEND TO ADD ALL DISHES TO RECORD AND DELETE ALL DISHES IN THE CART, THEN INVOCATE GET-CART FUNCTION
+      //ELSE, ASK USER TO CONFIRM, IF YES ASK BACKEND TO ADD ALL DISHES TO RECORD AND DELETE ALL DISHES IN THE CART BY SENDING POST+DELETE COMMAND USING FOR-LOOP, THEN INVOCATE GET-CART FUNCTION
       else {
         if (confirm('Are you sure?')) {
           var copyCartIDList = this.cartIDList
           for (var j = copyCartIDList.length - 1; j >= 0; j--) {
-            console.log('below is j')
-            console.log(j)
             this.axios
               .post(
                 'http://localhost:3000/api/record/add',
@@ -335,13 +368,9 @@ export default {
                 }
               )
               .then(res => {
-                console.log('post succeeds')
                 this.getCart()
               })
             var item = copyCartIDList[j]
-            console.log('below is id')
-            console.log(item)
-            console.log('now is deleting the above id')
             this.axios
               .delete('http://localhost:3000/api/cart/' + item, {
                 headers: {
@@ -351,7 +380,6 @@ export default {
               .then(res => {
                 const { status } = res
                 if (status === 200) {
-                  console.log('delete succeeds')
                   this.getCart()
                 }
               })
