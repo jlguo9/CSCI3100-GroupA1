@@ -143,10 +143,10 @@ export default {
     // PURPOSE: GET THE USER'S CART FROM THE DATABASE 
     // INPUT PARAMTER: NONE
     // ALGORITHM: 1. CHECK WHETHER THE USER DID NOT LOGIN, 
-    //               IF YES, SHOW ERROR AND REDICT TO LOGIN PAGE 
-    //            2. IF NO, ASK BACKEND AND GET USER'S CART BY SENDING GET COMMAND, AND STORE IT IN DATA, ALSO CALCULATE TOTAL PRICE
+    //               IF YES, SHOW ERROR AND REDIRECT TO LOGIN PAGE 
+    //            2. IF NO, ASK BACKEND TO GET USER'S CART BY SENDING GET COMMAND, AND STORE IT IN DATA, ALSO CALCULATE TOTAL PRICE
     getCart () {
-      // IF USER DID NOT LOGIN, SHOW ERROR
+      // IF USER DID NOT LOGIN, SHOW ERROR AND REDIRECT TO LOGIN PAGE 
       if (
         this.myToken === '' ||
         this.myToken === null ||
@@ -156,7 +156,7 @@ export default {
         setTimeout('window.location.reload()', 500)
         this.$message.error('Please login first!')
       } 
-      // ELSE, ASK BACKEND AND GET USER'S CART BY SENDING GET COMMAND, AND STORE IT IN DATA, ALSO CALCULATE TOTAL PRICE
+      // ELSE, ASK BACKEND TO GET USER'S CART BY SENDING GET COMMAND, AND STORE IT IN DATA, ALSO CALCULATE TOTAL PRICE
       else {
         this.axios
           .get('http://localhost:3000/api/cart/index', {

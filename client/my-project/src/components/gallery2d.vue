@@ -1,5 +1,21 @@
+// MODULE NAME: GALLERY2D
+// PROGRAMMER: SICONG YAO 1155107856
+// VERSION: 2.0 (APRIL 25, 2021)
+//
+// MODULE INVOCATION:
+//   CAN BE INVOCATED BY <ROUTER-LINK></ROUTER-LINK>
+//
+// PURPOSE: SEPERATE THE 2D-SUB-GALLERY PAGE FROM OTHER MODULES, MAKE IT MORE EASILY TO DISPLAY.
+//          THIS MODULE IS USED FOR SHOWING ALL DISH PHOTOS OF LI WAI CHUN BUILDING CAFÉ
+//
+// STRUCTURE: 
+//   (H1,BUTTON, H2) GALLERY HEADER AND BUTTON FOR REDIRECTING TO LAST PAGE
+//   (LIGHT-GALLERY) FOR DISPLAY THE PHOTO IN LIGHT-GALLERY
+//   (UL) LIST OF DISH PHOTOS OF LI WAI CHUN BUILDING CAFÉ
+
 <template>
   <div id="gallery2d" class="container-fluid">
+    <!-- THIS IS GALLERY HEADER AND BUTTON FOR REDIRECTING TO LAST PAGE -->
     <div>
       <h1>
         Gallery:
@@ -12,6 +28,7 @@
       <h2>Li Wai Chun Building Café</h2>
     </div>
  
+    <!-- THIS IS VUE-PLUG-IN FOR DISPLAY THE PHOTO IN LIGHT-GALLERY -->
     <light-gallery
       :images="imageList"
       :index="index"
@@ -19,6 +36,7 @@
       @close="index = null"
     ></light-gallery>
 
+    <!-- THIS IS LIST OF DISH PHOTOS OF LI WAI CHUN BUILDING CAFÉ -->
     <div class="container-fluid" style="padding:0px; margin:0px">
       <ul style="list-style:none; display:inline;float:center">
         <div class="container-fluid" style="padding:0px; margin:0px">
@@ -60,9 +78,14 @@ export default {
     }
   },
   mounted () {
+    // WHENEVER PAGE IS MOUNTED, INVOCATE GET-IMAGE FUNCTION 
     this.getImage()
   },
   methods: {
+    // METHOD: GETIMAGE
+    // PURPOSE: GET ALL DISH PHOTOS OF LI WAI CHUN BUILDING CAFÉ FROM THE DATABASE  FROM THE DATABASE 
+    // INPUT PARAMTER: NONE
+    // ALGORITHM: 1. ASK BACKEND TO GET DISH PHOTOS OF LI WAI CHUN BUILDING CAFÉ FROM THE DATABASE BY SENDING GET COMMAND, AND STORE IT IN DATA
     getImage () {
       this.axios
         .get(

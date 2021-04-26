@@ -1,9 +1,24 @@
+// MODULE NAME: GALLERY6
+// PROGRAMMER: SICONG YAO 1155107856
+// VERSION: 2.0 (APRIL 25, 2021)
+//
+// MODULE INVOCATION:
+//   CAN BE INVOCATED BY <ROUTER-VIEW></ROUTER-VIEW>
+//
+// PURPOSE: SEPERATE THE 6TH-GALLERY MAIN PAGE FROM OTHER MODULES, MAKE IT MORE EASILY TO DISPLAY.
+//          THIS MODULE IS USED FOR REDIRECTING USERS TO SUB-GALLERIES IN THE NEW ASIA COLLEGE
+//
+// STRUCTURE: 
+//   (H1,H2) GALLERY HEADER
+//   (UL) LIST OF HYPERLINKS OF SUB-GALLERIES IN THE NEW ASIA COLLEGE
+
 <template>
   <div>
     <div class="container-fluid" id="gallery6">
+      <!-- THIS IS THE GALLERY HEADER -->
       <h1>Gallery</h1>
       <h2>Canteens in New Asia College</h2>
-
+      <!-- THIS IS THE LIST OF HYPERLINKS OF SUB-GALLERIES IN THE NEW ASIA COLLEGE -->
       <ul class="components">
         <li>
           <router-link to="/gallery6a" tag="li"

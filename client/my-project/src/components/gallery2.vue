@@ -1,9 +1,24 @@
+// MODULE NAME: GALLERY2
+// PROGRAMMER: SICONG YAO 1155107856
+// VERSION: 2.0 (APRIL 25, 2021)
+//
+// MODULE INVOCATION:
+//   CAN BE INVOCATED BY <ROUTER-VIEW></ROUTER-VIEW>
+//
+// PURPOSE: SEPERATE THE 2ND-GALLERY MAIN PAGE FROM OTHER MODULES, MAKE IT MORE EASILY TO DISPLAY.
+//          THIS MODULE IS USED FOR REDIRECTING USERS TO SUB-GALLERIES IN THE CHUNG CHI COLLEGE
+//
+// STRUCTURE: 
+//   (H1,H2) GALLERY HEADER
+//   (UL) LIST OF HYPERLINKS OF SUB-GALLERIES IN THE CHUNG CHI COLLEGE
+
 <template>
   <div>
     <div class="container-fluid" id="gallery2">
+      <!-- THIS IS THE GALLERY HEADER -->
       <h1>Gallery</h1>
       <h2>Canteens in Chung Chi College</h2>
-
+      <!-- THIS IS THE LIST OF HYPERLINKS OF SUB-GALLERIES IN THE CHUNG CHI COLLEGE -->
       <ul class="components">
         <li>
           <router-link to="/gallery2a" tag="li"><a>Café 330</a> </router-link>

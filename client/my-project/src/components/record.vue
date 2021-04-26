@@ -149,10 +149,10 @@ export default {
     // PURPOSE: GET THE USER'S RECORD FROM THE DATABASE 
     // INPUT PARAMTER: NONE
     // ALGORITHM: 1. CHECK WHETHER THE USER DID NOT LOGIN, 
-    //               IF YES, SHOW ERROR AND REDICT TO LOGIN PAGE 
-    //            2. IF NO, ASK BACKEND AND GET USER'S RECORD BY SENDING GET COMMAND, AND STORE IT IN DATA
+    //               IF YES, SHOW ERROR AND REDIRECT TO LOGIN PAGE 
+    //            2. IF NO, ASK BACKEND TO GET USER'S RECORD BY SENDING GET COMMAND, AND STORE IT IN DATA
     getRecord () {
-      // IF USER DID NOT LOGIN, SHOW ERROR
+      // IF USER DID NOT LOGIN, SHOW ERROR AND REDIRECT TO LOGIN PAGE
       if (
         this.myToken === '' ||
         this.myToken === null ||
@@ -162,7 +162,7 @@ export default {
         setTimeout('window.location.reload()', 500)
         this.$message.error('Please login first!')
       } 
-      // ELSE, ASK BACKEND AND GET USER'S RECORD AND STORE IT IN DATA
+      // ELSE, ASK BACKEND TO GET USER'S RECORD AND STORE IT IN DATA
       else {
         this.axios
           .get('http://localhost:3000/api/record/index', {

@@ -1,9 +1,24 @@
+// MODULE NAME: GALLERY11
+// PROGRAMMER: SICONG YAO 1155107856
+// VERSION: 2.0 (APRIL 25, 2021)
+//
+// MODULE INVOCATION:
+//   CAN BE INVOCATED BY <ROUTER-VIEW></ROUTER-VIEW>
+//
+// PURPOSE: SEPERATE THE 11TH-GALLERY MAIN PAGE FROM OTHER MODULES, MAKE IT MORE EASILY TO DISPLAY.
+//          THIS MODULE IS USED FOR REDIRECTING USERS TO SUB-GALLERIES IN OTHER PLACES
+//
+// STRUCTURE: 
+//   (H1,H2) GALLERY HEADER
+//   (UL) LIST OF HYPERLINKS OF SUB-GALLERIES IN OTHER PLACES
+
 <template>
   <div>
     <div class="container-fluid" id="gallery11">
+      <!-- THIS IS THE GALLERY HEADER -->
       <h1>Gallery</h1>
       <h2>Canteens in Other Places</h2>
-
+      <!-- THIS IS THE LIST OF HYPERLINKS OF SUB-GALLERIES IN OTHER PLACES -->
       <ul class="components">
         <li>
           <router-link to="/gallery11a" tag="li"><a>The Stage</a> </router-link>

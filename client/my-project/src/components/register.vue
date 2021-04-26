@@ -106,7 +106,6 @@ export default {
       // IF NO, SHOW ERROR
       else {
         const fd = new FormData()
-        console.log(this.selectedFile)
         fd.append('avatar', this.selectedFile)
         fd.append('name', this.formData.username)
         fd.append('password', this.formData.password)

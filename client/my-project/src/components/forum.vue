@@ -1,5 +1,21 @@
+// MODULE NAME: FORUM
+// PROGRAMMER: SICONG YAO 1155107856
+// VERSION: 2.0 (APRIL 25, 2021)
+//
+// MODULE INVOCATION:
+//   CAN BE INVOCATED BY <ROUTER-VIEW></ROUTER-VIEW>
+//
+// PURPOSE: SEPERATE THE FORUM PAGE FROM OTHER MODULES, MAKE IT MORE EASILY TO REGISTER.
+//          THIS MODULE IS USED FOR USERS TO SHARE THEIR COMMENTS ON CERTAIN DISHES, AS WELL AS INTERACT WITH OTHERS' COMMENTS.     
+//
+// STRUCTURE: 
+//   (UL) COMMENT, INCLUDING USER-PROFILE-PHOTO, USERNAME, COMMENT-TIME, COMMENT-CANTEEN, COMMENT-DISH, COMMENT, NUMBER OF LIKES, SHARE BUTTON
+//   (BUTTON) NEW-COMMENT
+//   (COLLAPSED AREA) COLLAPSED AREA FOR INPUTTING NEW COMMENT, INCLUDING OPTION BOX FOR SELECTING CANTEEN AND DISH, INPUTTING TEXT BOX FOR INPUTTING COMMENT
+
 <template>
   <div id="forum">
+    <!-- THIS IS THE AREA FOR DISPLAYING ALL COMMENTS -->
     <ul style="list-style:none">
       <li v-for="(value, index) in commentList" :key="index">
         <div class="container mt-5">
@@ -67,9 +83,9 @@
         </div>
       </li>
     </ul>
-
+    <!-- THIS IS A LINE -->
     <div class="line"></div>
-
+    <!-- THIS IS THE  BUTTON FOR ADDING NEW COMMENT -->
     <div class="d-flex justify-content-center">
       <button
         class="btn btn-purple"
@@ -83,6 +99,7 @@
       </button>
     </div>
     <br />
+    <!-- THIS IS THE COLLAPSED AREA FOR INPUTTING INFORMATION OF NEW COMMENT -->
     <div class="container justify-content-center">
       <div class="d-flex justify-content-center row">
         <div class="col-md-8">
@@ -236,12 +253,18 @@ export default {
     }
   },
   mounted () {
+    // WHENEVER PAGE IS MOUNTED, TRY TO GET TOKEN STORED IN LOCAL STORAGE
     this.myToken = localStorage.getItem('token')
-    console.log('mounted')
-    console.log(this.myToken)
+    // INVOCATE GET-COMMENT FUNCTION 
     this.getComment()
   },
   filters: {
+    // FILTER: DATEFORMAT
+    // PURPOSE: LET THE TIMESTAMP TO DISPLAY IN THE FORMAT OF YYYY-MM-DD HH-MM-SS
+    // INPUT PARAMTER: DATESTR
+    // ALGORITHM: 1. GET CURRENT YYYY, MM, DD, HH, MM, SS
+    //            2. ADD 0 WHENEVER POSSIBLE
+    //            3. RETURN THE WHOLE STR TOGETHER
     dateFormat (dataStr) {
       var time = new Date(dataStr)
       function timeAdd0 (str) {
@@ -272,28 +295,13 @@ export default {
     }
   },
   methods: {
-    // getImage () {
-    //   this.axios
-    //     .get(
-    //       'http://localhost:3000/api/gallery/' +
-    //         'Benjamin Franklin Centre Staff Canteen'
-    //     )
-    //     .then(res => {
-    //       const { status, data } = res
-    //       this.list = data.Data
-    //       this.imageList = data.Data.map(e => e['Image'])
-    //       for (var j = 0; j < this.list.length; j++) {
-    //         this.list[j].Image =
-    //           'http://localhost:3000/api/gallery/' + this.imageList[j]
-    //         this.imageList[j] = this.list[j].Image
-    //       }
-    //       console.log(this.list)
-    //     })
-    // },
-
+    // METHOD: GETCOMMENT
+    // PURPOSE: GET ALL USER'S COMMENTS FROM THE DATABASE, INCLUDING USER-PROFILE-PHOTO, USERNAME, COMMENT-TIME, COMMENT-CANTEEN, COMMENT-DISH, COMMENT, NUMBER OF LIKES, SHARE BUTTON 
+    // INPUT PARAMTER: NONE
+    // ALGORITHM: 1. CHECK WHETHER THE USER DID NOT LOGIN, 
+    //               IF YES, SHOW ERROR AND REDIRECT TO LOGIN PAGE 
+    //            2. IF NO, ASK BACKEND TO GET ALL USER'S COMMENTS BY SENDING GET COMMAND, AND STORE IT IN DATA
     getComment () {
-      console.log('token now is ')
-      console.log(this.myToken)
       if (
         this.myToken === '' ||
         this.myToken === null ||
@@ -324,6 +332,11 @@ export default {
   
       }
     },
+    // METHOD: ADDCOMMENT
+    // PURPOSE: ADD A NEW COMMENT
+    // INPUT PARAMTER: NONE
+    // ALGORITHM: 1. CHECK WHETHER IF INFORMATION ENTERED IS NOT COMPLETED, IF NOT COMPLETED, SHOW ERROR
+    //            2. IF COMPLETED, ASK BACKEND TO ADD THE NEW COMMENT BY SENDING POST COMMAND
     addComment () {
       if (
         this.commentedcanteen === '' ||
@@ -363,8 +376,13 @@ export default {
         this.detail = ''
       }
     },
+    // METHOD: LIKECOMMENT
+    // PURPOSE: LIKE OR UNLIKE A CERTAIN COMMENT
+    // INPUT PARAMTER: (LIKES,ID,INDEX)
+    // ALGORITHM: 1. ASK BACKEND TO LIKE THE COMMENT BY SENDING POST COMMAND. 
+    //               IF SUCCESSFUL (CAN LIKE), INVOCATE THE GET-COMMENT FUNCTION TO UPDATE THE LIKE NUMBER.
+    //               IF UNSUCESSFUL (CAN NOT LIKE, CAN ONLY UNLIKE), ASK BACKEND TO UNLIKE THE COMMENT BY SENDING DELETE COMMAND, THEN INVOCATE THE GET-COMMENT FUNCTION TO UPDATE THE LIKE NUMBER.
     likeComment (Likes, id, index) {
-      console.log('like success')
       this.axios
         .post(
           'http://localhost:3000/api/content/like',
@@ -382,7 +400,6 @@ export default {
           setTimeout(this.getComment, 300)
         })
         .catch(err => {
-          console.log(err)
           this.axios
             .delete('http://localhost:3000/api/content/like/' + id, {
               headers: {
