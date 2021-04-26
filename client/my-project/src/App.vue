@@ -1,10 +1,24 @@
+// MODULE NAME: APP
+// PROGRAMMER: SICONG YAO 1155107856
+// VERSION: 2.0 (APRIL 25, 2021)
+//
+// MODULE INVOCATION: NA
+
+// PURPOSE: THE MAIN FILE TO DISPLAY ALL MODULES USING ROUTER-VIEW 
+//
+// STRUCTURE: 
+//   (SIDEVAR) SIDEBAR
+//   (NAV) TOP NAV-BAR
+//   (ROUTER-VIEW) ALL MODULES THAT WILL DISPLAY ACCORDINGLY
+
 <template>
   <div class="wrapper">
-    <!-- Sidebar  -->
+    <!-- THIS IS THE SIDEBAR  -->
     <sidebar></sidebar>
 
-    <!-- Page Content  -->
+    <!-- THIS IS THE PAGE CONTENT  -->
     <div id="content">
+      <!-- THIS IS THE TOP NAV-BAR -->
       <nav class="navbar navbar-expand navbar-light bg-light">
         <div class="container-fluid" id="myHeader">
           <button type="button" id="sidebarCollapse" class="btn btn-purple">
@@ -39,16 +53,16 @@
         </div>
       </nav>
 
+      <!-- THIS IS THE MODULE THAT WILL DISPLAY ACCORDINGLY -->
       <div class="justify-content-center">
         <router-view></router-view>
       </div>
     </div>
   </div>
-
-  <!-- </div> -->
 </template>
 
 <script>
+//IMPORT ALL MODULES 
 import sidebar from './components/sidebar.vue'
 import intro from './components/intro.vue'
 import canteenMenu from './components/canteenMenu.vue'
@@ -116,11 +130,15 @@ export default {
     }
   },
   mounted () {
+    // WHENEVER PAGE IS MOUNTED, TRY TO GET TOKEN STORED IN LOCAL STORAGE
     this.myToken = localStorage.getItem('token')
-    console.log('mounted')
-    console.log(this.myToken)
   },
   methods: {
+    // METHOD: EXIT
+    // PURPOSE: EXIT FROM AN EXISTED ACCOUNT
+    // INPUT PARAMTER: NONE
+    // ALGORITHM: 1. REMOVE THE TOKEN STORED IN THE LOCAL STORAGE AND DISPLAY A SUCCESS MESSAGE
+    //            2. REDIRECT TO THE HOME PAGE
     exit () {
       localStorage.removeItem('token')
       this.myToken = ''
@@ -129,8 +147,6 @@ export default {
       )
       window.location.assign('/#')
       setTimeout('window.location.reload()', 1000)
-      console.log('clear')
-      console.log(localStorage.getItem('token'))
     }
   },
   name: 'App',

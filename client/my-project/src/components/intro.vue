@@ -1,7 +1,23 @@
+// MODULE NAME: INTRO
+// PROGRAMMER: SICONG YAO 1155107856
+// VERSION: 2.0 (APRIL 25, 2021)
+//
+// MODULE INVOCATION:
+//   <SIDEBAR> </SIDEBAR>
+//
+// PURPOSE: SEPERATE THE SIDEBAR FROM OTHER MODULES, USE IT MORE EASILY
+//          SHOWS THE PHOTO CAROUSEL AND THE TEXT FOR THE HOME PAGE  
+//
+// STRUCTURE: 
+//   (H1) INTRO-HEADER
+//   (OL, DIV*N, A) LIST OF PHOTO CAROUSEL, INCLUDING PHOTO AND  BUTTON TO GO TO NEXT OR LAST PICTURE
+//   (P*N) MAIN TEXT
+
 <template>
   <div id="intro" class="container-fluid">
+    <!-- THIS IS THE INTRO-HEADER -->
     <h1>Welcome to Foodification!</h1>
-
+    <!-- THIS IS THE PHOTO CAROUSEL -->
     <div
       id="carouselExampleIndicators"
       class="carousel slide "
@@ -66,7 +82,7 @@
         <span class="sr-only">Next</span>
       </a>
     </div>
-
+    <!-- THIS IS THE MAIN TEXT -->
     <h2>Overview</h2>
 
     <p>
@@ -120,19 +136,6 @@
     <li>YAO Sicong 1155107856</li>
     </ul>
     </h5>
-
-    <!-- <div class="line"></div> -->
-
-    <!-- <h3>Lorem Ipsum Dolor</h3>
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-      est laborum.
-    </p> -->
   </div>
 </template>
 
