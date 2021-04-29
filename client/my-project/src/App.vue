@@ -122,6 +122,7 @@ import gallery12 from './components/gallery12.vue'
 import forum from './components/forum.vue'
 import login from './components/login.vue'
 import register from './components/register.vue'
+import pay from './components/pay';
 
 export default {
   data () {
@@ -209,7 +210,8 @@ export default {
     gallery12: gallery12,
     forum: forum,
     login: login,
-    register: register
+    register: register,
+    pay: pay
   }
 }
 </script>

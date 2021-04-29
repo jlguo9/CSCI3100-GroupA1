@@ -125,7 +125,6 @@ export default {
               'Successful Registration! Now redirecting to the login page.'
             )
             window.location.assign('/#login')
-            setTimeout('window.location.reload()', 100)
           })
           .catch(err => {
             if (err.response.status === 409) {

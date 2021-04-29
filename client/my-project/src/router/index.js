@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import HelloWorld from '@/components/HelloWorld'
 import intro from '@/components/intro'
 import canteenMenu from '@/components/canteenMenu'
 import cart from '@/components/cart'
@@ -59,6 +58,7 @@ import gallery11c from '@/components/gallery11c'
 import gallery12 from '@/components/gallery12'
 import login from '@/components/login'
 import register from '@/components/register'
+import pay from '@/components/pay'
 
 Vue.use(Router)
 
@@ -354,6 +354,11 @@ export default new Router({
       path: '/register',
       name: 'register',
       component: register
+    },
+    {
+      path: '/pay',
+      name: 'pay',
+      component: pay
     }
   ]
 })

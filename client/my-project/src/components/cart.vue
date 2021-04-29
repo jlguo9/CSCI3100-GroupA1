@@ -9,21 +9,21 @@
 //          THIS MODULE IS USED FOR SHOWING USER'S CART, AS WELL AS PERFROMING RELEVANT ACTIONS WITH DISH IN USER'S CART.     
 //
 // STRUCTURE: 
-//   (H1) CART HEADER, REMOVE-ALL BUTTON AND TRANSFER-ALL-TO-RECORD BUTTON
+//   (H1) CART HEADER, REMOVE-ALL BUTTON AND PAY-NOW BUTTON
 //   (TABLE WITH DATATABLE) CART TABLE, DISPLAY IF ANY DISHES EXIST IN USER'S CART
 //   (H2) CART INFORMATION, DISPLAY IF NO DISH IN USER'S CART EXISTS
 
 <template>
   <div class="container-fluid">
-    <!-- THIS IS THE AREA FOR CART HEADER, REMOVE-ALL BUTTON AND TRANSFER-ALL-TO-RECORD BUTTON -->
+    <!-- THIS IS THE AREA FOR CART HEADER, REMOVE-ALL BUTTON AND PAY-NOW BUTTON -->
     <h1 class="sub-header">
       Your Shopping Cart
       <span style="float: right">
         <a class="btn btn-danger" href="/#/cart" @click="clearCart()"
-          >Remove All</a
+          v-show="cartList.length!==0" >Remove All</a
         >&nbsp;
-        <a class="btn btn-purple" href="/#/cart" @click="transferToRecord()"
-          >Transfer All to Record</a
+        <a class="btn btn-purple" href="/#/pay"
+          v-show="cartList.length!==0" >Pay Now!</a
         >
       </span>
     </h1>
@@ -327,69 +327,6 @@ export default {
           )
           setTimeout('window.location.reload()', 5000)
 
-        }
-      }
-    },
-    // METHOD: TRANSFERTORECORD
-    // PURPOSE: TRANSFER ALL ITEMS IN THE USER'S CART TO USER'S RECORD
-    // INPUT PARAMTER: NONE
-    // ALGORITHM: 1. CHECK WHETHER THE CART IS EMPTY,
-    //               IF YES, SHOW ERROR 
-    //            2. IF NO, ASK USER TO CONFIRM
-    //               IF YES ASK BACKEND TO TRANSFER ALL DISH IN THE CART TO RECORD BY SENDING POST+DELETE COMMAND USING FOR-LOOP, THEN INVOCATE GET-CART FUNCTION
-    transferToRecord () {
-      // IF CART IS EMPTY, SHOW ERROR
-      if (this.cartIDList.length === 0) {
-        this.$message.error('Your shopping cart is already empty.')
-      } 
-      //ELSE, ASK USER TO CONFIRM, IF YES ASK BACKEND TO ADD ALL DISHES TO RECORD AND DELETE ALL DISHES IN THE CART BY SENDING POST+DELETE COMMAND USING FOR-LOOP, THEN INVOCATE GET-CART FUNCTION
-      else {
-        if (confirm('Are you sure?')) {
-          var copyCartIDList = this.cartIDList
-          for (var j = copyCartIDList.length - 1; j >= 0; j--) {
-            this.axios
-              .post(
-                'http://localhost:3000/api/record/add',
-                {
-                  time: new Date()
-                    .toJSON()
-                    .slice(0, 10)
-                    .replace(/-/g, '/'),
-                  canteen: this.cartList[j].canteen,
-                  name: this.cartList[j].name,
-                  price: this.cartList[j].price,
-                  subtotal: this.cartList[j].price * this.cartList[j].quantity,
-                  quantity: this.cartList[j].quantity
-                },
-                {
-                  headers: {
-                    Authorization: `Basic ${this.myToken}`
-                  }
-                }
-              )
-              .then(res => {
-                this.getCart()
-              })
-            var item = copyCartIDList[j]
-            this.axios
-              .delete('http://localhost:3000/api/cart/' + item, {
-                headers: {
-                  Authorization: `token ${this.myToken}`
-                }
-              })
-              .then(res => {
-                const { status } = res
-                if (status === 200) {
-                  this.getCart()
-                }
-              })
-          }
-          this.total = 0
-          this.getCart()
-          this.$message.success(
-            'Transfering is done. Please wait few seconds for this page to refresh.'
-          )
-          setTimeout('window.location.reload()', 5000)
         }
       }
     }
