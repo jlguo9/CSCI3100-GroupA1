@@ -14,7 +14,9 @@ Therefore, we aim to create an information-sharing platform that can share dinin
 
 Developed in HTML, CSS, JavaScript
 
-Framework: Vue.js
+Framework: Vue.js (Using Vue-cli)
+
+Library and Plug-ins Used: Bootstrap, DataTables, Element UI, Vue-light-gallery, Axios
 
 ## Backend
 
@@ -26,19 +28,21 @@ Framework: Express
 
 ## How to start
 
-Firstly, run backend server by executing following commands in terminal under server/:
+Firstly, run backend server by executing following commands in terminal:
 
+    $ cd server
     $ npm install
     $ nodemon
-  
+
 If you don't have nodemon on your machine, you may use the following command instead:
 
     $ npm start
-  
-Then run frontend in another terminal under client/my-project
 
-    $npm install
-    $npm npm run dev
+Then run frontend in another terminal under 
+
+    $ cd client/my-project
+    $ npm install
+    $ npm run dev
 
 Finally visit localhost:8080 in browser:)
 
